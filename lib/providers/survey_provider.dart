@@ -38,5 +38,7 @@ class SurveyProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void endSurvey() {}
+  void endSurvey() {
+    debugPrint('Survey has ended');
+  }
 }

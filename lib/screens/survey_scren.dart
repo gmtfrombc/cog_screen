@@ -11,7 +11,6 @@ class SurveyScreen extends StatelessWidget {
     return Consumer<SurveyProvider>(
       builder: (context, surveyProvider, child) {
         Question currentQuestion = surveyProvider.currentQuestion;
-
         return Scaffold(
           appBar: AppBar(
             title: const Text('Survey'),
@@ -40,13 +39,28 @@ class SurveyScreen extends StatelessWidget {
   }
 
   Widget _buildAnswerWidget(Question question, SurveyProvider surveyProvider) {
+    TextEditingController controller = TextEditingController(); // Add this line
+
+    // ... other code ...
+
     switch (question.type) {
       case QuestionType.numeric:
-        return TextField(
-          keyboardType: TextInputType.number,
-          onSubmitted: (value) {
-            // Process numeric input
-          },
+        return Column(
+          children: [
+            TextField(
+              controller: controller, // Use the controller
+              keyboardType: TextInputType.number,
+              // Removed the onSubmitted callback
+            ),
+            ElevatedButton(
+              child: const Text('Submit'),
+              onPressed: () {
+                // Process numeric input
+                surveyProvider.addResponse(controller.text);
+                surveyProvider.nextQuestion();
+              },
+            ),
+          ],
         );
       case QuestionType.yesNo:
         return Column(
@@ -55,42 +69,52 @@ class SurveyScreen extends StatelessWidget {
               child: const Text('Yes'),
               onPressed: () {
                 // Process Yes answer
+                surveyProvider.addResponse('Yes');
+                surveyProvider.nextQuestion();
               },
             ),
             ElevatedButton(
               child: const Text('No'),
               onPressed: () {
                 // Process No answer
+                surveyProvider.addResponse('No');
+                surveyProvider.nextQuestion();
               },
             ),
           ],
         );
       case QuestionType.multipleChoice:
         return _buildMultipleChoice(question, surveyProvider);
-      default:
-        return const Text('Unknown question type');
     }
   }
 
   Widget _buildMultipleChoice(
       Question question, SurveyProvider surveyProvider) {
-    return ListView(
-      shrinkWrap: true,
-      children: question.options!.map((option) {
-        return RadioListTile<String>(
-          title: Text(option),
-          value: option,
-          groupValue: surveyProvider.selectedOption,
-          onChanged: (value) {
-            // Process multiple choice answer
-            if (value != null) {
-              surveyProvider.selectOption(value);
-              // You may want to call a method to process the response here
-              surveyProvider.addResponse(value);
+    return Column(
+      children: [
+        ...question.options!.map((option) {
+          return RadioListTile<String>(
+            title: Text(option),
+            value: option,
+            groupValue: surveyProvider.selectedOption,
+            onChanged: (value) {
+              if (value != null) {
+                surveyProvider.selectOption(value);
+              }
+            },
+          );
+        }).toList(),
+        ElevatedButton(
+          child: const Text('Submit'),
+          onPressed: () {
+            // Make sure an option is selected before allowing the user to submit
+            if (surveyProvider.selectedOption != null) {
+              surveyProvider.addResponse(surveyProvider.selectedOption!);
+              surveyProvider.nextQuestion();
             }
           },
-        );
-      }).toList(),
+        ),
+      ],
     );
   }
 }
