@@ -1,5 +1,6 @@
 import 'package:cog_screen/models/survey_model.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
+import 'package:cog_screen/screens/survey_result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,10 +11,51 @@ class SurveyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<SurveyProvider>(
       builder: (context, surveyProvider, child) {
+        // Check if we need to show the finish instruction
+        if (surveyProvider.shouldShowFinishInstruction) {
+          return _buildInstructionScreen(
+            context,
+            "When you are finished, select \"I'm done.\"",
+            () => surveyProvider.seeFinishInstruction(),
+          );
+        }
+        // Check if we need to show instructions before question 4
+        if (surveyProvider.shouldShowInstructionForQuestion4) {
+          return _buildInstructionScreen(
+            context,
+            "Copy a clock face and put the time at 10 past 11",
+            () => surveyProvider.seeInstructionForQuestion4(),
+          );
+        }
+
+        // Check if we need to show instructions before question 7
+        if (surveyProvider.shouldShowInstructionForQuestion7) {
+          return _buildInstructionScreen(
+            context,
+            "Count the number of animals you can think of",
+            () => surveyProvider.seeInstructionForQuestion7(),
+          );
+        }
+        if (surveyProvider.surveyEnded) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (ModalRoute.of(context)!.isCurrent) {
+              // Navigate to the results screen
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => SurveyResultScreen(
+                  totalScore: surveyProvider.totalScore,
+                  onRestart: surveyProvider.restartSurvey,
+                ),
+              ));
+            }
+          });
+        }
+        // If no instructions need to be shown, show the current question
         Question currentQuestion = surveyProvider.currentQuestion;
+
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Survey'),
+            title: const Text('Cognitive Screen'),
+            automaticallyImplyLeading: false,
           ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -27,8 +69,7 @@ class SurveyScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
-                _buildAnswerWidget(currentQuestion,
-                    surveyProvider), // Use Provider to manage state
+                _buildAnswerWidget(currentQuestion, surveyProvider),
                 // Add navigation buttons if needed
               ],
             ),
@@ -38,10 +79,28 @@ class SurveyScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildInstructionScreen(
+      BuildContext context, String instruction, VoidCallback onContinue) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Instructions")),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(instruction),
+            ElevatedButton(
+              onPressed: onContinue,
+              child: const Text('Continue'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildAnswerWidget(Question question, SurveyProvider surveyProvider) {
     TextEditingController controller = TextEditingController(); // Add this line
-
-    // ... other code ...
 
     switch (question.type) {
       case QuestionType.numeric:
@@ -53,7 +112,7 @@ class SurveyScreen extends StatelessWidget {
               // Removed the onSubmitted callback
             ),
             ElevatedButton(
-              child: const Text('Submit'),
+              child: const Text('Next'),
               onPressed: () {
                 // Process numeric input
                 surveyProvider.addResponse(controller.text);

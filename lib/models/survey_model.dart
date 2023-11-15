@@ -5,6 +5,7 @@ class Question {
   int scoreValue = 1;
   dynamic correctAnswer;
   List<String>? options;
+
   Question({
     required this.id,
     required this.questionText,
@@ -15,15 +16,25 @@ class Question {
   });
 
   bool validateAnswer(String userAnswer) {
-    if (type == QuestionType.numeric || type == QuestionType.yesNo) {
-      return userAnswer.trim() == correctAnswer.toString().trim();
-    } else if (type == QuestionType.multipleChoice) {
-      return options != null &&
-          options![int.tryParse(userAnswer) ?? -1] == correctAnswer;
+    switch (type) {
+      case QuestionType.numeric:
+        // For numeric questions, we expect the answer to be exactly the same
+        // after trimming and considering decimal places
+        return userAnswer.trim() == correctAnswer.toString().trim();
+      case QuestionType.yesNo:
+        // For yes/no questions, the answer should match either "Yes" or "No"
+        return userAnswer.trim().toLowerCase() ==
+            correctAnswer.toString().toLowerCase();
+      case QuestionType.multipleChoice:
+        // For multiple-choice questions, the answer should be one of the options
+        // and should match the correct answer
+        return options != null && userAnswer.trim() == correctAnswer;
+      default:
+        return false;
     }
-    return false;
   }
 }
+
 
 enum QuestionType { numeric, yesNo, multipleChoice }
 

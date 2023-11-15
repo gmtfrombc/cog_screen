@@ -6,7 +6,8 @@ List<Question> hardcodedQuestions = [
     id: "1",
     questionText: "What is today’s date? (mm/dd/yyyy)",
     type: QuestionType.numeric,
-    correctAnswer: DateFormat('MM/dd/yyyy').format(DateTime.now()), // Current date
+    correctAnswer:
+        DateFormat('MM/dd/yyyy').format(DateTime.now()), // Current date
   ),
   Question(
     id: "2",
@@ -16,7 +17,8 @@ List<Question> hardcodedQuestions = [
   ),
   Question(
     id: "3",
-    questionText: r"If you are buying $13.40 of groceries how much change do you receive back from a $20 bill?",
+    questionText:
+        r"If you are buying $13.40 of groceries how much change do you receive back from a $20 bill?",
     type: QuestionType.numeric,
     correctAnswer: "6.60",
   ),
@@ -50,8 +52,12 @@ List<Question> hardcodedQuestions = [
     questionText: "Are you finished (select the correct answer)?",
     type: QuestionType.multipleChoice,
     options: [
-      "Yes I’m finished", "I’m done", "I am finished", "I am done", "Yes I’m done"
+      "Yes I’m finished",
+      "I’m done",
+      "I am finished",
+      "I am done",
+      "Yes I’m done"
     ],
-    correctAnswer: "I'mm done",
+    correctAnswer: "I'm done",
   ),
 ];

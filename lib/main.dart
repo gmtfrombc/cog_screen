@@ -1,7 +1,7 @@
 import 'package:cog_screen/data/survey_data.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/home_screen.dart';
-import 'package:cog_screen/screens/survey_scren.dart';
+import 'package:cog_screen/screens/survey_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
