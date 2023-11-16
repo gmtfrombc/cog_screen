@@ -73,19 +73,35 @@ class SurveyProvider extends ChangeNotifier {
     // Update the score based on the current question and user's answer
     updateScore(currentQuestion, userAnswer);
     notifyListeners();
+    debugPrint('User Answer: $userAnswer, Current Score: $_totalScore');
   }
 
   void updateScore(Question question, String userAnswer) {
-    if (question.id == "1" &&
-        question.correctAnswer ==
-            DateFormat('MM/dd/yyyy').format(DateTime.now())) {
-      _totalScore += 1;
-    } else if (question.id == "7") {
+    // Handling the date question
+    if (question.id == "1") {
+      try {
+        DateTime userDate = DateFormat('MM/dd/yyyy').parse(userAnswer.trim());
+        DateTime currentDate = DateTime.now();
+        if (userDate.year == currentDate.year &&
+            userDate.month == currentDate.month &&
+            userDate.day == currentDate.day) {
+          _totalScore += 1;
+        }
+      } catch (e) {
+        // Handle parse error if the user input is not a valid date
+        debugPrint("Error parsing date: $e");
+      }
+    }
+    // Handling Question 7 with custom scoring logic
+    else if (question.id == "7") {
       _totalScore += calculateScoreForQuestion7(userAnswer);
-    } else if (question.validateAnswer(userAnswer)) {
+    }
+    // Handling other questions
+    else if (question.validateAnswer(userAnswer)) {
       _totalScore += 1;
     }
-    notifyListeners(); // Notify listeners about the change in total score
+
+    notifyListeners(); // Notify listeners of the score update
   }
 
   int calculateScoreForQuestion7(String userAnswer) {
@@ -110,7 +126,6 @@ class SurveyProvider extends ChangeNotifier {
       if (_questions[_currentQuestionIndex].id == '7') {
         _hasSeenInstructionForQuestion7 = false;
       }
-
       _currentQuestionIndex++;
       _selectOption = null;
     } else {

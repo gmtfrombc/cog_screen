@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Question {
   String id;
   final String questionText;
@@ -18,16 +20,27 @@ class Question {
   bool validateAnswer(String userAnswer) {
     switch (type) {
       case QuestionType.numeric:
-        // For numeric questions, we expect the answer to be exactly the same
-        // after trimming and considering decimal places
-        return userAnswer.trim() == correctAnswer.toString().trim();
+        // Special handling for the date question
+        if (id == "1") {
+          try {
+            DateTime userDate =
+                DateFormat('MM/dd/yyyy').parse(userAnswer.trim());
+            DateTime currentDate = DateTime.now();
+            return userDate.year == currentDate.year &&
+                userDate.month == currentDate.month &&
+                userDate.day == currentDate.day;
+          } catch (e) {
+            // If parsing fails, the answer is incorrect
+            return false;
+          }
+        } else {
+          // For other numeric questions
+          return userAnswer.trim() == correctAnswer.toString().trim();
+        }
       case QuestionType.yesNo:
-        // For yes/no questions, the answer should match either "Yes" or "No"
         return userAnswer.trim().toLowerCase() ==
             correctAnswer.toString().toLowerCase();
       case QuestionType.multipleChoice:
-        // For multiple-choice questions, the answer should be one of the options
-        // and should match the correct answer
         return options != null && userAnswer.trim() == correctAnswer;
       default:
         return false;
@@ -36,7 +49,7 @@ class Question {
 }
 
 
-enum QuestionType { numeric, yesNo, multipleChoice }
+enum QuestionType { numeric, yesNo, multipleChoice, date }
 
 class UserResponse {
   String questionId;

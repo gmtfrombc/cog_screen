@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 List<Question> hardcodedQuestions = [
   Question(
     id: "1",
-    questionText: "What is today’s date? (mm/dd/yyyy)",
-    type: QuestionType.numeric,
+    questionText: "What is today’s date?",
+    type: QuestionType.date,
     correctAnswer:
         DateFormat('MM/dd/yyyy').format(DateTime.now()), // Current date
   ),
@@ -58,6 +58,6 @@ List<Question> hardcodedQuestions = [
       "I am done",
       "Yes I’m done"
     ],
-    correctAnswer: "I'm done",
+    correctAnswer: "I am done",
   ),
 ];

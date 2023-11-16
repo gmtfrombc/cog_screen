@@ -1,7 +1,9 @@
 import 'package:cog_screen/models/survey_model.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/survey_result_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SurveyScreen extends StatelessWidget {
@@ -15,7 +17,7 @@ class SurveyScreen extends StatelessWidget {
         if (surveyProvider.shouldShowFinishInstruction) {
           return _buildInstructionScreen(
             context,
-            "When you are finished, select \"I'm done.\"",
+            "When you are finished, select I am done",
             () => surveyProvider.seeFinishInstruction(),
           );
         }
@@ -69,7 +71,7 @@ class SurveyScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
-                _buildAnswerWidget(currentQuestion, surveyProvider),
+                _buildAnswerWidget(currentQuestion, surveyProvider, context),
                 // Add navigation buttons if needed
               ],
             ),
@@ -99,7 +101,8 @@ class SurveyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAnswerWidget(Question question, SurveyProvider surveyProvider) {
+  Widget _buildAnswerWidget(
+      Question question, SurveyProvider surveyProvider, BuildContext context) {
     TextEditingController controller = TextEditingController(); // Add this line
 
     switch (question.type) {
@@ -144,6 +147,8 @@ class SurveyScreen extends StatelessWidget {
         );
       case QuestionType.multipleChoice:
         return _buildMultipleChoice(question, surveyProvider);
+      case QuestionType.date: // Add this case
+        return _buildDatePicker(question, surveyProvider, context);
     }
   }
 
@@ -174,6 +179,69 @@ class SurveyScreen extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+
+  Widget _buildDatePicker(
+      Question question, SurveyProvider surveyProvider, BuildContext context) {
+    return ElevatedButton(
+      child: const Text('Select Date'),
+      onPressed: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (BuildContext context) {
+            return DatePickerBottomSheet(
+              onConfirm: (DateTime selectedDate) {
+                String formattedDate =
+                    DateFormat('MM/dd/yyyy').format(selectedDate);
+                surveyProvider.addResponse(formattedDate);
+                surveyProvider.nextQuestion();
+                Navigator.pop(context); // Close the bottom sheet
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class DatePickerBottomSheet extends StatefulWidget {
+  final Function(DateTime) onConfirm;
+
+  const DatePickerBottomSheet({Key? key, required this.onConfirm})
+      : super(key: key);
+
+  @override
+  DatePickerBottomSheetState createState() => DatePickerBottomSheetState();
+}
+
+class DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
+  DateTime selectedDate = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 3,
+      child: Column(
+        children: [
+          Expanded(
+            child: CupertinoDatePicker(
+              mode: CupertinoDatePickerMode.date,
+              initialDateTime: DateTime(2020, 1, 1),
+              onDateTimeChanged: (DateTime newDate) {
+                selectedDate = newDate;
+              },
+              minimumYear: 2000, // Adjust as needed
+              maximumYear: 2025, // Adjust as needed
+            ),
+          ),
+          ElevatedButton(
+            child: const Text('Confirm'),
+            onPressed: () => widget.onConfirm(selectedDate),
+          ),
+        ],
+      ),
     );
   }
 }
