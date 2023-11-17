@@ -84,7 +84,10 @@ class SurveyScreen extends StatelessWidget {
   Widget _buildInstructionScreen(
       BuildContext context, String instruction, VoidCallback onContinue) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Instructions")),
+      appBar: AppBar(
+        title: const Text("Instructions"),
+        automaticallyImplyLeading: false,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
