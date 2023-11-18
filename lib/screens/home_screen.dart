@@ -11,10 +11,10 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            'Take the Cogntive Screen',
+            'Take the Cognitive Screen',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(

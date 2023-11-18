@@ -13,11 +13,13 @@ class ProtocolScreen extends StatelessWidget {
         children: [
           const Text(
               'The following is the memory improvement protocol we recommend...'),
-          ListView(
-            children: const [
-              Text('Essential Oils: Rose, orange, eucalyptus...'),
-              // Include other steps
-            ],
+          Expanded(
+            child: ListView(
+              children: const [
+                Text('Essential Oils: Rose, orange, eucalyptus...'),
+                // Include other steps
+              ],
+            ),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pushNamed(context, '/survey'),

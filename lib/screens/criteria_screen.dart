@@ -41,7 +41,8 @@ class CriteriaScreen extends StatelessWidget {
                 // Proceed to next screen if all questions are answered
                 Navigator.pushNamed(context, '/advice');
               } else {
-                // Show an alert or some feedback to answer all questions
+                // Show an alert or
+                Navigator.pushNamed(context, '/advice');
               }
             },
             child: const Icon(Icons.navigate_next),

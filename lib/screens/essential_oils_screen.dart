@@ -14,10 +14,22 @@ class EssentialOilScreen extends StatelessWidget {
               child: Text(
                   'Research has backed the positive effects that essential oils have...')),
           TextButton(
-            onPressed: () => openLink('URL'),
-            child: const Text('Learn more about this important research'),
+            onPressed: () => openLink(
+              'URL',
+            ),
+            child: const Text(
+              'Learn more about this important research',
+            ),
           ),
-          // More content as necessary
+          ElevatedButton(
+            onPressed: () => Navigator.pushNamed(
+              context,
+              '/protocol',
+            ),
+            child: const Text(
+              'Protocol',
+            ),
+          ),
         ],
       ),
     );
