@@ -30,11 +30,11 @@ class Question {
                 userDate.month == currentDate.month &&
                 userDate.day == currentDate.day;
           } catch (e) {
-            // If parsing fails, the answer is incorrect
+            //parsing didn't work
             return false;
           }
         } else {
-          // For other numeric questions
+          // this is for all the other numeric questions
           return userAnswer.trim() == correctAnswer.toString().trim();
         }
       case QuestionType.yesNo:
@@ -47,7 +47,6 @@ class Question {
     }
   }
 }
-
 
 enum QuestionType { numeric, yesNo, multipleChoice, date }
 

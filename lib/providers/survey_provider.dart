@@ -1,6 +1,8 @@
 import 'package:cog_screen/models/survey_model.dart';
+import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class SurveyProvider extends ChangeNotifier {
   final List<Question> _questions;
@@ -117,7 +119,9 @@ class SurveyProvider extends ChangeNotifier {
     }
   }
 
-  void nextQuestion() {
+  void nextQuestion(BuildContext context) {
+    debugPrint('Current index: $_currentQuestionIndex');
+    debugPrint('Questions length: ${_questions.length}');
     if (_currentQuestionIndex < _questions.length - 1) {
       // Check for specific question IDs before incrementing the index
       if (_questions[_currentQuestionIndex].id == '4') {
@@ -129,15 +133,21 @@ class SurveyProvider extends ChangeNotifier {
       _currentQuestionIndex++;
       _selectOption = null;
     } else {
-      endSurvey();
+      endSurvey(context);
     }
     notifyListeners();
   }
 
-  void endSurvey() {
-    // Navigate to a new screen that shows the survey results
+  void endSurvey(BuildContext context) {
+    debugPrint('End survey called');
     _surveyEnded = true;
     notifyListeners();
+
+    // Use Provider.of to access AppNavigationProvider
+    final appNavigationProvider =
+        Provider.of<AppNavigationProvider>(context, listen: false);
+    appNavigationProvider.navigateTo(1); // Index for SurveyResultScreen
+    debugPrint('navigateTo called with index 1');
   }
 
   // Method to reset the survey and start over

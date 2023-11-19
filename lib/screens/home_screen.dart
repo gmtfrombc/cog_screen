@@ -1,14 +1,15 @@
+import 'package:cog_screen/screens/survey_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('Building HomeScreen');
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cogntive Screening Tool'),
-      ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,11 +23,14 @@ class HomeScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/survey');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SurveyScreen(),
+                ),
+              );
             },
-            child: const Text(
-              'Begin',
-            ),
+            child: const Text('Begin'),
           ),
         ],
       )),

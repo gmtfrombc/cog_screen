@@ -1,23 +1,25 @@
 import 'package:cog_screen/models/survey_model.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
-import 'package:cog_screen/screens/survey_result_screen.dart';
+import 'package:cog_screen/screens/countdown_timer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SurveyScreen extends StatelessWidget {
-  const SurveyScreen({super.key});
+  const SurveyScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Consumer<SurveyProvider>(
       builder: (context, surveyProvider, child) {
-        // Check if we need to show the finish instruction
+        // Check if I need to show the finish instruction
         if (surveyProvider.shouldShowFinishInstruction) {
           return _buildInstructionScreen(
             context,
-            "When you are finished, select I am done",
+            "When you are finished the survey, select: 'I am done.'",
             () => surveyProvider.seeFinishInstruction(),
           );
         }
@@ -25,35 +27,46 @@ class SurveyScreen extends StatelessWidget {
         if (surveyProvider.shouldShowInstructionForQuestion4) {
           return _buildInstructionScreen(
             context,
-            "Copy a clock face and put the time at 10 past 11",
+            "Get a piece of blank paper. Copy a clock face and put the time at 5 minutes past 11.",
             () => surveyProvider.seeInstructionForQuestion4(),
           );
         }
 
         // Check if we need to show instructions before question 7
         if (surveyProvider.shouldShowInstructionForQuestion7) {
-          return _buildInstructionScreen(
-            context,
-            "Count the number of animals you can think of",
-            () => surveyProvider.seeInstructionForQuestion7(),
-          );
-        }
-        if (surveyProvider.surveyEnded) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (ModalRoute.of(context)!.isCurrent) {
-              // Navigate to the results screen
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => SurveyResultScreen(
-                  totalScore: surveyProvider.totalScore,
-                  onRestart: surveyProvider.restartSurvey,
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text("Instructions"),
+              automaticallyImplyLeading: false,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Grab another piece of paper. When you are ready, start the timer. Write down the number of animals you can think of (don't worry about spelling)",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 20),
+                    CountdownTimer(
+                      onTimerComplete: () {
+                        surveyProvider.seeInstructionForQuestion7();
+                      },
+                    ),
+                  ],
                 ),
-              ));
-            }
-          });
+              ),
+            ),
+          );
         }
         // If no instructions need to be shown, show the current question
         Question currentQuestion = surveyProvider.currentQuestion;
-
         return Scaffold(
           appBar: AppBar(
             title: const Text('Cognitive Screen'),
@@ -90,15 +103,27 @@ class SurveyScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(instruction),
-            ElevatedButton(
-              onPressed: onContinue,
-              child: const Text('Continue'),
-            ),
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                instruction,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: onContinue,
+                child: const Text('Continue'),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -112,56 +137,76 @@ class SurveyScreen extends StatelessWidget {
       case QuestionType.numeric:
         return Column(
           children: [
-            TextField(
-              controller: controller, // Use the controller
-              keyboardType: TextInputType.number,
-              // Removed the onSubmitted callback
+            SizedBox(
+              width: 200,
+              child: TextField(
+                controller: controller, // Use the controller
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+                // Removed the onSubmitted callback
+              ),
+            ),
+            const SizedBox(
+              height: 20,
             ),
             ElevatedButton(
               child: const Text('Next'),
               onPressed: () {
                 // Process numeric input
                 surveyProvider.addResponse(controller.text);
-                surveyProvider.nextQuestion();
+                surveyProvider.nextQuestion(context);
               },
             ),
           ],
         );
       case QuestionType.yesNo:
-        return Column(
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
               child: const Text('Yes'),
               onPressed: () {
                 // Process Yes answer
                 surveyProvider.addResponse('Yes');
-                surveyProvider.nextQuestion();
+                surveyProvider.nextQuestion(context);
               },
+            ),
+            const SizedBox(
+              width: 10,
             ),
             ElevatedButton(
               child: const Text('No'),
               onPressed: () {
                 // Process No answer
                 surveyProvider.addResponse('No');
-                surveyProvider.nextQuestion();
+                surveyProvider.nextQuestion(context);
               },
             ),
           ],
         );
       case QuestionType.multipleChoice:
-        return _buildMultipleChoice(question, surveyProvider);
+        return _buildMultipleChoice(question, surveyProvider, context);
       case QuestionType.date: // Add this case
         return _buildDatePicker(question, surveyProvider, context);
     }
   }
 
   Widget _buildMultipleChoice(
-      Question question, SurveyProvider surveyProvider) {
+      Question question, SurveyProvider surveyProvider, BuildContext context) {
     return Column(
       children: [
         ...question.options!.map((option) {
           return RadioListTile<String>(
-            title: Text(option),
+            title: Text(
+              option,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             value: option,
             groupValue: surveyProvider.selectedOption,
             onChanged: (value) {
@@ -170,14 +215,14 @@ class SurveyScreen extends StatelessWidget {
               }
             },
           );
-        }).toList(),
+        }),
         ElevatedButton(
           child: const Text('Submit'),
           onPressed: () {
             // Make sure an option is selected before allowing the user to submit
             if (surveyProvider.selectedOption != null) {
               surveyProvider.addResponse(surveyProvider.selectedOption!);
-              surveyProvider.nextQuestion();
+              surveyProvider.nextQuestion(context);
             }
           },
         ),
@@ -187,24 +232,26 @@ class SurveyScreen extends StatelessWidget {
 
   Widget _buildDatePicker(
       Question question, SurveyProvider surveyProvider, BuildContext context) {
-    return ElevatedButton(
-      child: const Text('Select Date'),
-      onPressed: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (BuildContext context) {
-            return DatePickerBottomSheet(
-              onConfirm: (DateTime selectedDate) {
-                String formattedDate =
-                    DateFormat('MM/dd/yyyy').format(selectedDate);
-                surveyProvider.addResponse(formattedDate);
-                surveyProvider.nextQuestion();
-                Navigator.pop(context); // Close the bottom sheet
-              },
-            );
-          },
-        );
-      },
+    return Center(
+      child: ElevatedButton(
+        child: const Text('Select Date'),
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return DatePickerBottomSheet(
+                onConfirm: (DateTime selectedDate) {
+                  String formattedDate =
+                      DateFormat('MM/dd/yyyy').format(selectedDate);
+                  surveyProvider.addResponse(formattedDate);
+                  surveyProvider.nextQuestion(context);
+                  Navigator.pop(context); // Close the bottom sheet
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
@@ -212,8 +259,7 @@ class SurveyScreen extends StatelessWidget {
 class DatePickerBottomSheet extends StatefulWidget {
   final Function(DateTime) onConfirm;
 
-  const DatePickerBottomSheet({Key? key, required this.onConfirm})
-      : super(key: key);
+  const DatePickerBottomSheet({super.key, required this.onConfirm});
 
   @override
   DatePickerBottomSheetState createState() => DatePickerBottomSheetState();
@@ -231,12 +277,13 @@ class DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
           Expanded(
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
+              //set to Jan 1 2020. Change it needed.
               initialDateTime: DateTime(2020, 1, 1),
               onDateTimeChanged: (DateTime newDate) {
                 selectedDate = newDate;
               },
-              minimumYear: 2000, // Adjust as needed
-              maximumYear: 2025, // Adjust as needed
+              minimumYear: 2000,
+              maximumYear: 2025,
             ),
           ),
           ElevatedButton(
