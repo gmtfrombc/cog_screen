@@ -13,7 +13,7 @@ class CognitiveBasicsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Basic Information'),
+            Text('Basic Information '),
           ],
         ),
       ),
