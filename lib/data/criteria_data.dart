@@ -2,7 +2,7 @@ import 'package:cog_screen/models/criteria.dart';
 
 List<Criteria> criteriaDataList = [
   Criteria(
-    statement: '•Known odor sensitivities',
+    statement: 'Known odor sensitivities',
   ),
   Criteria(
     statement:

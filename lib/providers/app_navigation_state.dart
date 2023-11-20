@@ -5,11 +5,8 @@ class AppNavigationProvider with ChangeNotifier {
 
   int get currentIndex => _currentIndex;
 
-  void navigateTo(int index) {
-    debugPrint('navigateTo called with index: $index');
-    debugPrint('Current index before update: $_currentIndex');
+  void changeIndex(int index) {
     _currentIndex = index;
     notifyListeners();
-    debugPrint('Current index set to $index and listeners notified');
   }
 }

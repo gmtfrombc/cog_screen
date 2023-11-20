@@ -1,8 +1,6 @@
 import 'package:cog_screen/models/survey_model.dart';
-import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class SurveyProvider extends ChangeNotifier {
   final List<Question> _questions;
@@ -15,6 +13,7 @@ class SurveyProvider extends ChangeNotifier {
   bool _hasSeenInstructionForQuestion7 = false;
   bool _surveyEnded = false;
   bool _hasSeenFinishInstruction = false;
+  bool get isLastQuestion => _currentQuestionIndex == _questions.length - 1;
 
   List<Question> get questions => _questions;
   List<UserResponse> get userResponses => _userResponses;
@@ -115,6 +114,7 @@ class SurveyProvider extends ChangeNotifier {
     } else if (numOfAnimals >= 6 && numOfAnimals <= 12) {
       return 2;
     } else {
+      debugPrint('Total score from animals is 3 and total score is: $_totalScore');
       return 3;
     }
   }
@@ -142,12 +142,9 @@ class SurveyProvider extends ChangeNotifier {
     debugPrint('End survey called');
     _surveyEnded = true;
     notifyListeners();
-
-    // Use Provider.of to access AppNavigationProvider
-    final appNavigationProvider =
-        Provider.of<AppNavigationProvider>(context, listen: false);
-    appNavigationProvider.navigateTo(1); // Index for SurveyResultScreen
-    debugPrint('navigateTo called with index 1');
+    // Use Navigator to navigate to SurveyResultScreen
+    Navigator.pushNamed(context, '/surveyResultScreen');
+    debugPrint('Navigator.pushNamed called with route /surveyResultScreen');
   }
 
   // Method to reset the survey and start over

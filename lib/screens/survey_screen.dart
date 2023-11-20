@@ -1,4 +1,5 @@
 import 'package:cog_screen/models/survey_model.dart';
+import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/countdown_timer.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,9 +8,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SurveyScreen extends StatelessWidget {
-  const SurveyScreen({
+  SurveyScreen({
     super.key,
   });
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class SurveyScreen extends StatelessWidget {
         if (surveyProvider.shouldShowFinishInstruction) {
           return _buildInstructionScreen(
             context,
-            "When you are finished the survey, select: 'I am done.'",
+            "When you are finished the survey, select the answer: 'I am done.'",
             () => surveyProvider.seeFinishInstruction(),
           );
         }
@@ -27,7 +29,7 @@ class SurveyScreen extends StatelessWidget {
         if (surveyProvider.shouldShowInstructionForQuestion4) {
           return _buildInstructionScreen(
             context,
-            "Get a piece of blank paper. Copy a clock face and put the time at 5 minutes past 11.",
+            "Get a piece of blank paper. Copy a clock face and put the time at 5 minutes past 11. Once you are done, click 'Continue'",
             () => surveyProvider.seeInstructionForQuestion4(),
           );
         }
@@ -46,7 +48,7 @@ class SurveyScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Grab another piece of paper. When you are ready, start the timer. Write down the number of animals you can think of (don't worry about spelling)",
+                      "Grab another piece of paper. When you are ready, start the timer. Then write down as many animals as you can think of in 15 seconds (don't worry about spelling)",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -131,8 +133,20 @@ class SurveyScreen extends StatelessWidget {
 
   Widget _buildAnswerWidget(
       Question question, SurveyProvider surveyProvider, BuildContext context) {
-    TextEditingController controller = TextEditingController(); // Add this line
-
+    TextEditingController controller = TextEditingController();
+    TextInputType keyboardType = TextInputType.text; // Default type
+    keyboardType = const TextInputType.numberWithOptions(
+        decimal: true); // Number pad with decimal for specific question
+    bool shouldShowDollarSign =
+        question.id == '3'; // Replace 2 with the index of your question
+    if (question.id == '2' || question.id == '7') {
+      // Replace with your question ID
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_focusNode.canRequestFocus) {
+          _focusNode.requestFocus();
+        }
+      });
+    }
     switch (question.type) {
       case QuestionType.numeric:
         return Column(
@@ -140,14 +154,17 @@ class SurveyScreen extends StatelessWidget {
             SizedBox(
               width: 200,
               child: TextField(
+                focusNode: _focusNode,
                 controller: controller, // Use the controller
-                keyboardType: TextInputType.number,
+                keyboardType: keyboardType,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),
-                // Removed the onSubmitted callback
+                decoration: shouldShowDollarSign
+                    ? const InputDecoration(prefixText: '\$')
+                    : const InputDecoration(), // Use the boolean here
               ),
             ),
             const SizedBox(
@@ -156,9 +173,16 @@ class SurveyScreen extends StatelessWidget {
             ElevatedButton(
               child: const Text('Next'),
               onPressed: () {
-                // Process numeric input
-                surveyProvider.addResponse(controller.text);
-                surveyProvider.nextQuestion(context);
+                debugPrint(
+                    'Next button pressed with answer: ${controller.text}');
+                surveyProvider
+                    .addResponse(controller.text); // Add user response
+                if (surveyProvider.isLastQuestion) {
+                  Provider.of<AppNavigationProvider>(context, listen: false)
+                      .changeIndex(1);
+                } else {
+                  surveyProvider.nextQuestion(context);
+                }
               },
             ),
           ],
@@ -222,7 +246,10 @@ class SurveyScreen extends StatelessWidget {
             // Make sure an option is selected before allowing the user to submit
             if (surveyProvider.selectedOption != null) {
               surveyProvider.addResponse(surveyProvider.selectedOption!);
-              surveyProvider.nextQuestion(context);
+              // Delay the call to nextQuestion by 1 frame
+              Future.delayed(Duration.zero, () {
+                surveyProvider.nextQuestion(context);
+              });
             }
           },
         ),
@@ -240,7 +267,7 @@ class SurveyScreen extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return DatePickerBottomSheet(
-                onConfirm: (DateTime selectedDate) {
+                onConfirm: (selectedDate) {
                   String formattedDate =
                       DateFormat('MM/dd/yyyy').format(selectedDate);
                   surveyProvider.addResponse(formattedDate);
@@ -267,28 +294,55 @@ class DatePickerBottomSheet extends StatefulWidget {
 
 class DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   DateTime selectedDate = DateTime.now();
+  bool dateSelected = false;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height / 3,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
-            child: CupertinoDatePicker(
-              mode: CupertinoDatePickerMode.date,
-              //set to Jan 1 2020. Change it needed.
-              initialDateTime: DateTime(2020, 1, 1),
-              onDateTimeChanged: (DateTime newDate) {
-                selectedDate = newDate;
-              },
-              minimumYear: 2000,
-              maximumYear: 2025,
+            child: Center(
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                initialDateTime: DateTime(2020, 1, 1),
+                onDateTimeChanged: (DateTime newDate) {
+                  selectedDate = newDate;
+                  dateSelected = true;
+                },
+                minimumYear: 2000,
+                maximumYear: 2025,
+              ),
             ),
           ),
           ElevatedButton(
             child: const Text('Confirm'),
-            onPressed: () => widget.onConfirm(selectedDate),
+            onPressed: () {
+              if (!dateSelected) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Date Selection'),
+                      content: const Text('Please select a date.'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                widget.onConfirm(selectedDate);
+              }
+            },
           ),
         ],
       ),
