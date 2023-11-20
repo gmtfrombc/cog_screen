@@ -2,36 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  //Primary and Secondary Colors
   static const Color _primaryColor = Color(0xFF405f53); // Deep green
   static const Color _secondaryColor = Color(0xFF555b89); // Muted blue
   static const Color _primaryBackgroundColor =
       Color(0xFFfaf4ed); // Off white background
 
-//Additional Colors from Styling Guide
-  static const Color _primaryVariant1 = Color(0xFFB9DDD4);
-  static const Color _primaryVariant2 = Color(0xFFF2644E); // Shade 1
-  static const Color _colorFBDACB = Color(0xFFFBDACB); // Shade 2
-// Shade 3
-  static const Color _color7D5E7A = Color(0xFF7D5E7A); // Shade 4
-  static const Color _color7E9E93 = Color(0xFF7E9E93); // Shade 5
-  static const Color _color9E9D8F = Color(0xFF9E9D8F); // Shade 6
-  static const Color _colorF79F8C = Color(0xFFF79F8C); // Shade 7
-  static const Color _colorA5616C = Color(0xFFA5616C); // Shade 8
-
-//Getters for colors
   static Color get primaryColor => _primaryColor;
   static Color get secondaryColor => _secondaryColor;
   static Color get primaryBackgroundColor => _primaryBackgroundColor;
-  static Color get primaryVariant1 => _primaryVariant1;
-  static Color get primaryVariant2 => _primaryVariant2;
-  static Color get colorFBDACB => _colorFBDACB;
-
-  static Color get color7D5E7A => _color7D5E7A;
-  static Color get color7E9E93 => _color7E9E93;
-  static Color get color9E9D8F => _color9E9D8F;
-  static Color get colorF79F8C => _colorF79F8C;
-  static Color get colorA5616C => _colorA5616C;
 
   static ThemeData get lightTheme {
     return ThemeData(
@@ -39,17 +17,15 @@ class AppTheme {
       // The colorScheme property handles app-wide color theming
       colorScheme: const ColorScheme(
         primary: _primaryColor,
-        primaryContainer: _primaryVariant1,
+        onPrimary: Colors.white, // Text/icon color on top of primary
         secondary: _secondaryColor,
-        secondaryContainer: _primaryVariant2,
-        surface: _color7D5E7A,
+        onSecondary: Colors.white, // Text/icon color on top of secondary
+        error: Colors.red, // Default color for error, can be customized
+        onError: Colors.white, // Text/icon color on top of error
         background: _primaryBackgroundColor,
-        error: _colorF79F8C,
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
-        onSurface: Colors.white,
-        onBackground: Colors.black,
-        onError: Colors.white,
+        onBackground: Colors.black, // Text/icon color on top of background
+        surface: Colors.white,
+        onSurface: Colors.black, // Text/icon color on top of surface
         brightness: Brightness.light,
       ),
       scaffoldBackgroundColor: _primaryBackgroundColor,
@@ -58,16 +34,18 @@ class AppTheme {
       ),
       textTheme: TextTheme(
         titleLarge: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: GoogleFonts.outfit().fontFamily,
-            color: _colorA5616C),
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: GoogleFonts.outfit().fontFamily,
+        ),
         displayLarge: const TextStyle(
           fontSize: 72.0,
           fontWeight: FontWeight.bold,
         ),
         bodyMedium: const TextStyle(
-            fontSize: 14.0, fontWeight: FontWeight.w400, color: _color9E9D8F),
+          fontSize: 14.0,
+          fontWeight: FontWeight.w400,
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -106,7 +84,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: _colorFBDACB),
+          borderSide: const BorderSide(color: _primaryColor),
         ),
         // Other properties like labelStyle, hintStyle, etc.
       ),

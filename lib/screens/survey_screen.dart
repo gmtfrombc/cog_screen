@@ -33,7 +33,6 @@ class SurveyScreen extends StatelessWidget {
             () => surveyProvider.seeInstructionForQuestion4(),
           );
         }
-
         // Check if we need to show instructions before question 7
         if (surveyProvider.shouldShowInstructionForQuestion7) {
           return Scaffold(
@@ -51,6 +50,7 @@ class SurveyScreen extends StatelessWidget {
                       "Grab another piece of paper. When you are ready, start the timer. Then write down as many animals as you can think of in 15 seconds (don't worry about spelling)",
                       style: TextStyle(
                         fontSize: 20,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
@@ -82,7 +82,10 @@ class SurveyScreen extends StatelessWidget {
                 Text(
                   currentQuestion.questionText,
                   style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
@@ -114,6 +117,7 @@ class SurveyScreen extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -161,6 +165,7 @@ class SurveyScreen extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
+                  color: Colors.black,
                 ),
                 decoration: shouldShowDollarSign
                     ? const InputDecoration(prefixText: '\$')
@@ -173,8 +178,6 @@ class SurveyScreen extends StatelessWidget {
             ElevatedButton(
               child: const Text('Next'),
               onPressed: () {
-                debugPrint(
-                    'Next button pressed with answer: ${controller.text}');
                 surveyProvider
                     .addResponse(controller.text); // Add user response
                 if (surveyProvider.isLastQuestion) {
@@ -228,8 +231,7 @@ class SurveyScreen extends StatelessWidget {
             title: Text(
               option,
               style: const TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
+                  fontWeight: FontWeight.w600, color: Colors.black),
             ),
             value: option,
             groupValue: surveyProvider.selectedOption,
@@ -261,7 +263,9 @@ class SurveyScreen extends StatelessWidget {
       Question question, SurveyProvider surveyProvider, BuildContext context) {
     return Center(
       child: ElevatedButton(
-        child: const Text('Select Date'),
+        child: const Text(
+          'Select Date',
+        ),
         onPressed: () {
           showModalBottomSheet(
             context: context,

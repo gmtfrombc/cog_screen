@@ -12,7 +12,6 @@ class StartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('Building HomeScreen');
     final appNavigationProvider = Provider.of<AppNavigationProvider>(
       context,
     );
@@ -30,7 +29,11 @@ class StartScreen extends StatelessWidget {
           children: [
             const Text(
               'Take the Cognitive Screen',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
             const SizedBox(
               height: 20,

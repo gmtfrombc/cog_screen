@@ -10,6 +10,7 @@ class SurveyResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String imagePath = 'lib/assets/images/dT_EO3.jpeg';
     final theme = Theme.of(context);
     final appNavigationProvider = Provider.of<AppNavigationProvider>(
       context,
@@ -26,28 +27,55 @@ class SurveyResultScreen extends StatelessWidget {
             crossAxisAlignment:
                 CrossAxisAlignment.stretch, // Stretch to fill width
             children: [
-              Container(
-                padding: const EdgeInsets.only(
-                  top: 28,
-                  bottom: 28,
-                ), // Increased padding
-                color: theme
-                    .colorScheme.secondary, // Secondary color as background
+              Padding(
+                padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  'Your total score is: ${surveyProvider.totalScore}/10',
+                  'Your CogHealth Screening Score: ${surveyProvider.totalScore}/10',
                   style: theme.textTheme.titleLarge?.copyWith(
-                    fontSize: 26, // Increased font size
+                    fontSize: 32, // Increased font size
                   ),
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: 30),
-              Text(
-                "Would you like to learn about medically validated treatments that have been shown to support cognitive health?",
-                textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium,
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Text(
+                  AppConstants.cogHealthExplanation,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
+              Opacity(
+                opacity: 0.6, // Adjust opacity as needed
+                child: SizedBox(
+                  width: 50,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10), // Rounded corners
+                    child: Image.asset(
+                      imagePath,
+                      fit: BoxFit.cover,
+                      height: 100, // Set a fixed height for the image
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Text(
+                  AppConstants.cogHealthMore,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: ElevatedButton(

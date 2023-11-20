@@ -74,7 +74,6 @@ class SurveyProvider extends ChangeNotifier {
     // Update the score based on the current question and user's answer
     updateScore(currentQuestion, userAnswer);
     notifyListeners();
-    debugPrint('User Answer: $userAnswer, Current Score: $_totalScore');
   }
 
   void updateScore(Question question, String userAnswer) {
@@ -114,14 +113,11 @@ class SurveyProvider extends ChangeNotifier {
     } else if (numOfAnimals >= 6 && numOfAnimals <= 12) {
       return 2;
     } else {
-      debugPrint('Total score from animals is 3 and total score is: $_totalScore');
       return 3;
     }
   }
 
   void nextQuestion(BuildContext context) {
-    debugPrint('Current index: $_currentQuestionIndex');
-    debugPrint('Questions length: ${_questions.length}');
     if (_currentQuestionIndex < _questions.length - 1) {
       // Check for specific question IDs before incrementing the index
       if (_questions[_currentQuestionIndex].id == '4') {
@@ -139,12 +135,10 @@ class SurveyProvider extends ChangeNotifier {
   }
 
   void endSurvey(BuildContext context) {
-    debugPrint('End survey called');
     _surveyEnded = true;
     notifyListeners();
     // Use Navigator to navigate to SurveyResultScreen
     Navigator.pushNamed(context, '/surveyResultScreen');
-    debugPrint('Navigator.pushNamed called with route /surveyResultScreen');
   }
 
   // Method to reset the survey and start over

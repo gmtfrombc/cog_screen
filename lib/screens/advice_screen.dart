@@ -1,11 +1,16 @@
-import 'package:cog_screen/app_theme.dart';
+import 'package:cog_screen/providers/app_navigation_state.dart';
+import 'package:cog_screen/utilities/bottom_bar_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AdviceScreen extends StatelessWidget {
   const AdviceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final appNavigationProvider = Provider.of<AppNavigationProvider>(
+      context,
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -22,7 +27,7 @@ class AdviceScreen extends StatelessWidget {
             child: Text(
               'Strategies for Supporting Your Cognitive Health',
               style: TextStyle(
-                fontSize: 36,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -36,32 +41,35 @@ class AdviceScreen extends StatelessWidget {
               children: [
                 _buildCard(context, 'Understanding Cognitive Health', '/basics',
                     'lib/assets/images/brain_food.jpeg'),
-                _buildCard(context, 'Lifestyle Measures for Cognitive Health',
+                _buildCard(context, 'Lifestyle Strategies for a Health Brain',
                     '/lifestyle', 'lib/assets/images/brain_outdoor_dog.jpeg'),
                 _buildCard(
                     context,
                     'Essential Oils, Memory, and Cognitive Health',
                     '/integrative',
                     'lib/assets/images/dT_EO2.jpeg'),
-                // ... more cards as needed ...
               ],
             ),
           ),
         ],
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: appNavigationProvider.currentIndex,
+        context: context,
+        appNavigationProvider: appNavigationProvider,
+      ),
     );
-  } //lib/assets/images/dT_EO1.jpeg
+  }
 
   Widget _buildCard(
       BuildContext context, String title, String route, String imagePath) {
     return Card(
-      color: AppTheme.primaryVariant1,
       elevation: 4.0,
-      margin: const EdgeInsets.symmetric(horizontal: 13.0, vertical: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, route),
         child: Padding(
-          padding: const EdgeInsets.all(17.0),
+          padding: const EdgeInsets.all(12.0),
           child: Row(
             crossAxisAlignment:
                 CrossAxisAlignment.center, // Center items vertically
@@ -83,7 +91,7 @@ class AdviceScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.black,
@@ -107,7 +115,7 @@ class AdviceScreen extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.only(
-                    left: 12.0), // Padding between image and icon
+                    left: 8.0), // Padding between image and icon
                 child: Icon(Icons.chevron_right, color: Colors.black),
               ),
             ],

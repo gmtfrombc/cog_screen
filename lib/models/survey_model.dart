@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class Question {
@@ -23,7 +22,6 @@ class Question {
       case QuestionType.numeric:
         // Special handling for the date question
         if (id == "1") {
-          debugPrint('validate answer for id=1 (date)');
           try {
             DateTime userDate =
                 DateFormat('MM/dd/yyyy').parse(userAnswer.trim());
@@ -35,10 +33,7 @@ class Question {
             //parsing didn't work
             return false;
           }
-        } else {
-          debugPrint('validate answer for $id (numeric)');
-          debugPrint(
-              'userAnswer is: $userAnswer and correct answer is: $correctAnswer'); // this is for all the other numeric questions
+        } else {// this is for all the other numeric questions
           return userAnswer.trim() == correctAnswer.toString().trim();
         }
       case QuestionType.yesNo:

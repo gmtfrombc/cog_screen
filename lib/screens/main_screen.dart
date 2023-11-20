@@ -16,8 +16,6 @@ class MainScreen extends StatelessWidget {
     // Use Consumer to listen to the navigation state
     return Consumer<AppNavigationProvider>(
         builder: (context, navigationState, child) {
-      debugPrint(
-          'MainScreen Consumer rebuild with index: ${navigationState.currentIndex}');
       return Scaffold(
         appBar: AppBar(
           title: const Text('Cognitive Screen'),
