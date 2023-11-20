@@ -21,46 +21,41 @@ class SurveyResultScreen extends StatelessWidget {
       ),
       body: Consumer<SurveyProvider>(
         builder: (context, surveyProvider, child) {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    minWidth: double.infinity, // Makes the card take full width
-                    minHeight: 80.0, // Minimum height for the card
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment:
+                CrossAxisAlignment.stretch, // Stretch to fill width
+            children: [
+              Container(
+                padding: const EdgeInsets.only(
+                  top: 28,
+                  bottom: 28,
+                ), // Increased padding
+                color: theme
+                    .colorScheme.secondary, // Secondary color as background
+                child: Text(
+                  'Your total score is: ${surveyProvider.totalScore}/10',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontSize: 26, // Increased font size
                   ),
-                  child: Card(
-                    elevation: theme.cardTheme.elevation,
-                    shape: theme.cardTheme.shape,
-                    color: theme.cardTheme.color,
-                    child: Padding(
-                      padding: const EdgeInsets.all(28.0), // Increased padding
-                      child: Text(
-                        'Your total score is: ${surveyProvider.totalScore}/10',
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontSize: 26, // Increased font size
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Text(
-                  "Would you like to learn about medically validated treatments that have been shown to support cognitive health?",
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyMedium,
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton(
+              ),
+              const SizedBox(height: 30),
+              Text(
+                "Would you like to learn about medically validated treatments that have been shown to support cognitive health?",
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: ElevatedButton(
                   onPressed: () => _showLearnMoreSheet(context),
                   child: const Text('Learn More'),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         },
       ),
@@ -99,7 +94,7 @@ class SurveyResultScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context); // Close the bottom sheet
                   Navigator.pushNamed(
-                      context, '/criteria'); // Navigate to CriteriaScreen
+                      context, '/advice'); // Navigate to CriteriaScreen
                 },
               ),
               ElevatedButton(

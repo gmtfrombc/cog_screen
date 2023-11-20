@@ -1,26 +1,28 @@
-import 'package:cog_screen/app_theme.dart';
-import 'package:cog_screen/providers/criteria_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cog_screen/providers/criteria_provider.dart';
+import 'package:cog_screen/app_theme.dart'; // Assuming this is where your AppTheme class is defined
 
 class CriteriaScreen extends StatelessWidget {
   const CriteriaScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CriteriaProvider>(
-      builder: (context, provider, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Inclusion/Exclusion Criteria'),
-          ),
-          body: ListView.builder(
-            itemCount: provider.criteriaList.length,
+    final criteriaProvider =
+        Provider.of<CriteriaProvider>(context, listen: false);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Inclusion/Exclusion Criteria'),
+      ),
+      body: Consumer<CriteriaProvider>(
+        builder: (context, criteriaProvider, child) {
+          return ListView.builder(
+            itemCount: criteriaProvider.criteriaList.length,
             padding: const EdgeInsets.only(bottom: 80), // Padding for FAB
             itemBuilder: (context, index) {
-              var criteria = provider.criteriaList[index];
+              var criteria = criteriaProvider.criteriaList[index];
               return Card(
-                // Increased bottom padding for each card
                 margin:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: Row(
@@ -42,31 +44,31 @@ class CriteriaScreen extends StatelessWidget {
                       ),
                     ),
                     _responseButton(context, criteria.response == true, 'Yes',
-                        () => provider.setResponse(index, true)),
+                        () => criteriaProvider.setResponse(index, true)),
                     const SizedBox(width: 4), // A small gap between buttons
                     _responseButton(context, criteria.response == false, 'No',
-                        () => provider.setResponse(index, false)),
+                        () => criteriaProvider.setResponse(index, false)),
                   ],
                 ),
               );
             },
-          ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: AppTheme.secondaryColor,
-            onPressed: () {
-              if (provider.allAnswered()) {
-                Navigator.pushNamed(context, '/advice');
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Please answer all questions.")),
-                );
-              }
-            },
-            child: const Icon(Icons.navigate_next),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        );
-      },
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppTheme.secondaryColor,
+        onPressed: () {
+          if (criteriaProvider.allAnswered()) {
+            Navigator.pushNamed(context, '/advice');
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Please answer all questions.")),
+            );
+          }
+        },
+        child: const Icon(Icons.navigate_next),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
