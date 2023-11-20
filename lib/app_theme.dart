@@ -7,6 +7,10 @@ class AppTheme {
   static const Color _primaryBackgroundColor =
       Color(0xFFfaf4ed); // Off white background
 
+  static Color get primaryColor => _primaryColor;
+  static Color get secondaryColor => _secondaryColor;
+  static Color get primaryBackgroundColor => _primaryBackgroundColor;
+
   static ThemeData get lightTheme {
     return ThemeData(
       fontFamily: GoogleFonts.outfit().fontFamily,

@@ -36,7 +36,8 @@ List<Question> hardcodedQuestions = [
   ),
   Question(
     id: "6",
-    questionText: "Is the long hand at 11 and short hand at 5?",
+    questionText:
+        "Is the long hand pointing at 5 and the short hand pointing at 11?",
     type: QuestionType.yesNo,
     correctAnswer: "Yes",
   ),
@@ -49,7 +50,7 @@ List<Question> hardcodedQuestions = [
   ),
   Question(
     id: "8",
-    questionText: "Are you finished (select the correct answer)?",
+    questionText: "Are you finished? (select the correct answer below)",
     type: QuestionType.multipleChoice,
     options: [
       "Yes I’m finished",

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class IntegrativeScren extends StatelessWidget {
-  const IntegrativeScren({super.key});
+class IntegrativeScreen extends StatelessWidget {
+  const IntegrativeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

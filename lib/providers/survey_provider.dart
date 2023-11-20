@@ -13,6 +13,7 @@ class SurveyProvider extends ChangeNotifier {
   bool _hasSeenInstructionForQuestion7 = false;
   bool _surveyEnded = false;
   bool _hasSeenFinishInstruction = false;
+  bool get isLastQuestion => _currentQuestionIndex == _questions.length - 1;
 
   List<Question> get questions => _questions;
   List<UserResponse> get userResponses => _userResponses;
@@ -113,11 +114,14 @@ class SurveyProvider extends ChangeNotifier {
     } else if (numOfAnimals >= 6 && numOfAnimals <= 12) {
       return 2;
     } else {
+      debugPrint('Total score from animals is 3 and total score is: $_totalScore');
       return 3;
     }
   }
 
-  void nextQuestion() {
+  void nextQuestion(BuildContext context) {
+    debugPrint('Current index: $_currentQuestionIndex');
+    debugPrint('Questions length: ${_questions.length}');
     if (_currentQuestionIndex < _questions.length - 1) {
       // Check for specific question IDs before incrementing the index
       if (_questions[_currentQuestionIndex].id == '4') {
@@ -129,15 +133,18 @@ class SurveyProvider extends ChangeNotifier {
       _currentQuestionIndex++;
       _selectOption = null;
     } else {
-      endSurvey();
+      endSurvey(context);
     }
     notifyListeners();
   }
 
-  void endSurvey() {
-    // Navigate to a new screen that shows the survey results
+  void endSurvey(BuildContext context) {
+    debugPrint('End survey called');
     _surveyEnded = true;
     notifyListeners();
+    // Use Navigator to navigate to SurveyResultScreen
+    Navigator.pushNamed(context, '/surveyResultScreen');
+    debugPrint('Navigator.pushNamed called with route /surveyResultScreen');
   }
 
   // Method to reset the survey and start over
