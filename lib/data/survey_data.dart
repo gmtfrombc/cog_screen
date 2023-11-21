@@ -4,53 +4,54 @@ import 'package:intl/intl.dart';
 List<Question> hardcodedQuestions = [
   Question(
     id: "1",
-    questionText: "What is today’s date?",
+    questionText: "Question 1: What is today’s date?",
     type: QuestionType.date,
     correctAnswer:
         DateFormat('MM/dd/yyyy').format(DateTime.now()), // Current date
   ),
   Question(
     id: "2",
-    questionText: r"How many 20 cent pieces are in $2.40?",
+    questionText: r"Question 2: How many 20 cent pieces are in $2.40?",
     type: QuestionType.numeric,
     correctAnswer: "12",
   ),
   Question(
     id: "3",
     questionText:
-        r"If you are buying $13.40 of groceries how much change do you receive back from a $20 bill?",
+        r"Question 3: If you are buying $13.40 of groceries how much change do you receive back from a $20 bill?",
     type: QuestionType.numeric,
     correctAnswer: "6.60",
   ),
   Question(
     id: "4",
-    questionText: "Does your clock have a face with numbers?",
+    questionText: "Question 4: Does your clock have a face with numbers?",
     type: QuestionType.yesNo,
     correctAnswer: "Yes",
   ),
   Question(
     id: "5",
-    questionText: "Are the hands pointing at 5 and 11?",
+    questionText: "Question 5: Are the hands pointing at 5 and 11?",
     type: QuestionType.yesNo,
     correctAnswer: "Yes",
   ),
   Question(
     id: "6",
     questionText:
-        "Is the long hand pointing at 5 and the short hand pointing at 11?",
+        "Question 6; Is the long hand pointing at 5 and the short hand pointing at 11?",
     type: QuestionType.yesNo,
     correctAnswer: "Yes",
   ),
   // Question 7 requires custom scoring logic due to its range-based answer
   Question(
     id: "7",
-    questionText: "How many animals did you write down?",
+    questionText: "Question 7: How many animals did you write down?",
     type: QuestionType.numeric,
     correctAnswer: null, // Custom scoring logic required
   ),
   Question(
     id: "8",
-    questionText: "Are you finished? (select the correct answer below)",
+    questionText:
+        "Question 8: Are you finished? (select the correct answer below)",
     type: QuestionType.multipleChoice,
     options: [
       "Yes I’m finished",

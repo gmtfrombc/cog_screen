@@ -37,7 +37,6 @@ class SurveyResultScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.all(14.0),
                 child: Text(
@@ -49,7 +48,6 @@ class SurveyResultScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
               Opacity(
                 opacity: 0.6, // Adjust opacity as needed
                 child: SizedBox(
@@ -59,7 +57,7 @@ class SurveyResultScreen extends StatelessWidget {
                     child: Image.asset(
                       imagePath,
                       fit: BoxFit.cover,
-                      height: 100, // Set a fixed height for the image
+                      height: 180, // Set a fixed height for the image
                     ),
                   ),
                 ),
@@ -77,7 +75,12 @@ class SurveyResultScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: const EdgeInsets.only(
+                  top: 5.0,
+                  bottom: 5.0,
+                  left: 20.0,
+                  right: 20.0,
+                ),
                 child: ElevatedButton(
                   onPressed: () => _showLearnMoreSheet(context),
                   child: const Text('Learn More'),

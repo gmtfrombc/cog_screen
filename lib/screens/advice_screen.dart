@@ -1,5 +1,6 @@
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/utilities/bottom_bar_navigator.dart';
+import 'package:cog_screen/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -39,14 +40,23 @@ class AdviceScreen extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.all(8.0),
               children: [
-                _buildCard(context, 'Understanding Cognitive Health', '/basics',
+                _buildCard(
+                    context,
+                    'Understanding Cognitive Health',
+                    AppConstants.understandingCognitiveHealth,
+                    '/basics',
                     'lib/assets/images/brain_food.jpeg'),
-                _buildCard(context, 'Lifestyle Strategies for a Health Brain',
-                    '/lifestyle', 'lib/assets/images/brain_outdoor_dog.jpeg'),
+                _buildCard(
+                    context,
+                    'Lifestyle Strategies for a Health Brain',
+                    AppConstants.lifestyleStrategies,
+                    '/lifestyle',
+                    'lib/assets/images/brain_outdoor_dog.jpeg'),
                 _buildCard(
                     context,
                     'Essential Oils, Memory, and Cognitive Health',
-                    '/integrative',
+                    AppConstants.essentialOils,
+                    '/criteria',
                     'lib/assets/images/dT_EO2.jpeg'),
               ],
             ),
@@ -61,8 +71,8 @@ class AdviceScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCard(
-      BuildContext context, String title, String route, String imagePath) {
+  Widget _buildCard(BuildContext context, String title, String description,
+      String route, String imagePath) {
     return Card(
       elevation: 4.0,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),

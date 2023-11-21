@@ -2,29 +2,30 @@ import 'package:cog_screen/models/criteria.dart';
 
 List<Criteria> criteriaDataList = [
   Criteria(
-    statement: 'Known odor sensitivities',
+    statement:
+        'Do you have any known alleriges, sensitivies, or reactions to odors or inhalents?',
   ),
   Criteria(
     statement:
-        'Asthma, allergies, or an odor exposure which produces symptom similar to a moderate to severe allergy or asthma attack',
+        'Do you have ssthma or allergies such that an odor exposure could produce a moderate to severe attack',
   ),
   Criteria(
     statement:
-        'Neurological disorder such as Parkinson’s disease, MS, brain cyst or tumor, or aneurysm,',
+        'Any neurological disorder such as Parkinson’s disease, MS, brain cyst or tumor, or aneurysm,',
   ),
   Criteria(
     statement:
-        'Major health problems: uncontrolled T2DM or hypertension, nutritional deficiency, or thyroid disease,',
+        'Any major health problems: uncontrolled T2DM, hypertension, nutritional deficiency, or thyroid disease,',
   ),
   Criteria(
     statement:
-        'Significant psychiatric disorder such as schizophrenia, bipolar disorder, untreated or symptomatic anxiety or ADHD',
+        'Any psychiatric problems such as untreated or symptomatic bipoloar disorder, depression, anxiety, or ADHD',
   ),
   Criteria(
     statement:
-        'Cognitive impairment from Alzheimers disease , traumatic brain injury, stroke',
+        'Do you have any cognitive impairment from Alzheimers disease , traumatic brain injury, stroke',
   ),
   Criteria(
-    statement: 'Alcohol or substance abuse within the last 2 years',
+    statement: 'Have you had any issues with alcohol or substance abuse within the last 2 years',
   ),
 ];
