@@ -56,7 +56,7 @@ class AdviceScreen extends StatelessWidget {
                     context,
                     'Essential Oils, Memory, and Cognitive Health',
                     AppConstants.essentialOils,
-                    '/criteria',
+                    'essentialOils',
                     'lib/assets/images/dT_EO2.jpeg'),
               ],
             ),

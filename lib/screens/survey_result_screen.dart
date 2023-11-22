@@ -32,7 +32,7 @@ class SurveyResultScreen extends StatelessWidget {
                 child: Text(
                   'Your CogHealth Screening Score: ${surveyProvider.totalScore}/10',
                   style: theme.textTheme.titleLarge?.copyWith(
-                    fontSize: 32, // Increased font size
+                    fontSize: 28, // Increased font size
                   ),
                   textAlign: TextAlign.center,
                 ),

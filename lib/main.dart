@@ -6,6 +6,7 @@ import 'package:cog_screen/providers/criteria_provider.dart';
 import 'package:cog_screen/screens/advice_screen.dart';
 import 'package:cog_screen/screens/cognitive_basics_screen.dart';
 import 'package:cog_screen/screens/criteria_screen.dart';
+import 'package:cog_screen/screens/essential_oils_screen.dart';
 import 'package:cog_screen/screens/lifestyle_screen.dart';
 import 'package:cog_screen/screens/shopping_cart_screen.dart';
 import 'package:cog_screen/screens/start_screen.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         '/criteria': (context) => const CriteriaScreen(),
         '/advice': (context) => const AdviceScreen(),
         '/lifestyle': (context) => const LifestyleScreen(),
+        'essentialOils': (context)=> const EssentialOilScreen(),
       },
     );
   }
