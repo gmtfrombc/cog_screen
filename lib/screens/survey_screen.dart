@@ -2,6 +2,8 @@ import 'package:cog_screen/models/survey_model.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/countdown_timer.dart';
+import 'package:cog_screen/themes/app_theme.dart';
+import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -35,17 +37,21 @@ class SurveyScreen extends StatelessWidget {
         }
         // Check if we need to show instructions before question 7
         if (surveyProvider.shouldShowInstructionForQuestion7) {
+          final screenHeight = MediaQuery.of(context).size.height;
+
           return Scaffold(
-            appBar: AppBar(
-              title: const Text("Instructions"),
-              automaticallyImplyLeading: false,
+            appBar: CustomAppBar(
+              title: 'CogHealth',
+              backgroundColor: AppTheme.primaryBackgroundColor,
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SizedBox(height: screenHeight * 0.15),
                     const Text(
                       "Flip over your piece of paper.\n\nWhen you are ready, start the timer\n\nWrite down as many animals as you can think of in 15 seconds (don't worry about spelling)",
                       style: TextStyle(
@@ -69,16 +75,20 @@ class SurveyScreen extends StatelessWidget {
         }
         // If no instructions need to be shown, show the current question
         Question currentQuestion = surveyProvider.currentQuestion;
+        final screenHeight = MediaQuery.of(context).size.height;
+
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Cognitive Screen'),
-            automaticallyImplyLeading: false,
+          appBar: CustomAppBar(
+            title: 'CogHealth',
+            backgroundColor: AppTheme.primaryBackgroundColor,
           ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: screenHeight * 0.15),
                 Text(
                   currentQuestion.questionText,
                   style: const TextStyle(
@@ -101,17 +111,22 @@ class SurveyScreen extends StatelessWidget {
 
   Widget _buildInstructionScreen(
       BuildContext context, String instruction, VoidCallback onContinue) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Instructions"),
-        automaticallyImplyLeading: false,
+      appBar: CustomAppBar(
+        title: 'CogHealth',
+        backgroundColor: AppTheme.primaryBackgroundColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                  height: screenHeight * 0.15), // Adjust this value as needed
               Text(
                 instruction,
                 style: const TextStyle(

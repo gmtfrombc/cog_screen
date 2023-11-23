@@ -79,7 +79,15 @@ flutter:
     - lib/assets/images/brain_health_about2.jpeg
     - lib/assets/images/brain_outdoor_dog.jpeg
     - lib/assets/images/brain_outdoor_hike.jpeg
-   
+    - lib/assets/images/pm_icon_small.png
+    - lib/assets/images/pm_icon_full.png
+    - lib/assets/images/cog_health_start2.png
+    - lib/assets/images/cog_health_start.jpeg
+    - lib/assets/images/memory_health.png
+    - lib/assets/images/research1.jpeg
+    - lib/assets/images/research2.jpeg
+    - lib/assets/images/research3.jpeg
+    - lib/assets/images/research4.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

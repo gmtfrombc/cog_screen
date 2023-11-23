@@ -1,4 +1,5 @@
-import 'package:cog_screen/app_theme.dart';
+import 'package:cog_screen/screens/protocol_screen.dart';
+import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/data/survey_data.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
@@ -14,6 +15,7 @@ import 'package:cog_screen/screens/survey_result_screen.dart';
 import 'package:cog_screen/screens/survey_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cog_screen/screens/spashscreen.dart'; // Import your SplashScreen widget
 
 void main() {
   runApp(
@@ -44,6 +46,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cognitive Screening Tool',
       theme: AppTheme.lightTheme,
+      initialRoute:
+          '/splashscreen', // Set the initial route to the splash screen
       routes: {
         '/': (context) => const StartScreen(),
         '/survey': (context) => SurveyScreen(),
@@ -54,7 +58,10 @@ class MyApp extends StatelessWidget {
         '/criteria': (context) => const CriteriaScreen(),
         '/advice': (context) => const AdviceScreen(),
         '/lifestyle': (context) => const LifestyleScreen(),
-        'essentialOils': (context)=> const EssentialOilScreen(),
+        '/essentialOils': (context) => const EssentialOilScreen(),
+        '/protocol': (context) => const ProtocolScreen(),
+        '/splashscreen': (context) =>
+            const SplashScreen(), // Add your SplashScreen route
       },
     );
   }

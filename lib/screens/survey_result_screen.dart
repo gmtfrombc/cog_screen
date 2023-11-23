@@ -1,7 +1,10 @@
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
-import 'package:cog_screen/utilities/bottom_bar_navigator.dart';
+import 'package:cog_screen/themes/app_theme.dart';
+import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/utilities/constants.dart';
+import 'package:cog_screen/widgets/custom_app_bar.dart';
+import 'package:cog_screen/widgets/gradient_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,30 +13,35 @@ class SurveyResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imagePath = 'lib/assets/images/dT_EO3.jpeg';
+    String imagePath = 'lib/assets/images/cog_health_start2.png';
     final theme = Theme.of(context);
     final appNavigationProvider = Provider.of<AppNavigationProvider>(
       context,
     );
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Survey Results'),
-        automaticallyImplyLeading: false,
+      appBar: CustomAppBar(
+        title: 'CogHealth',
+        backgroundColor: AppTheme.primaryBackgroundColor,
       ),
       body: Consumer<SurveyProvider>(
         builder: (context, surveyProvider, child) {
+          String resultText = surveyProvider.totalScore == 0
+              ? 'Complete the CogHealth Screen'
+              : 'Your CogHealth Screening Score: ${surveyProvider.totalScore}/10';
+
           return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment:
                 CrossAxisAlignment.stretch, // Stretch to fill width
             children: [
+              const SizedBox(
+                height: 30,
+              ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  'Your CogHealth Screening Score: ${surveyProvider.totalScore}/10',
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontSize: 28, // Increased font size
-                  ),
+                  resultText,
+                  style: theme.textTheme.titleLarge?.copyWith(fontSize: 28),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -48,21 +56,12 @@ class SurveyResultScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Opacity(
-                opacity: 0.6, // Adjust opacity as needed
-                child: SizedBox(
-                  width: 50,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10), // Rounded corners
-                    child: Image.asset(
-                      imagePath,
-                      fit: BoxFit.cover,
-                      height: 180, // Set a fixed height for the image
-                    ),
-                  ),
+              Center(
+                child: GradientImage(
+                  imagePath: imagePath,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.all(14.0),
                 child: Text(
@@ -73,6 +72,9 @@ class SurveyResultScreen extends StatelessWidget {
                     fontWeight: FontWeight.w300,
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.only(

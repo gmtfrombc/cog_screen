@@ -1,8 +1,9 @@
 import 'package:cog_screen/utilities/constants.dart';
+import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cog_screen/providers/criteria_provider.dart';
-import 'package:cog_screen/app_theme.dart'; // Assuming this is where your AppTheme class is defined
+import 'package:cog_screen/themes/app_theme.dart'; // Assuming this is where your AppTheme class is defined
 
 class CriteriaScreen extends StatefulWidget {
   const CriteriaScreen({super.key});
@@ -25,8 +26,10 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
         Provider.of<CriteriaProvider>(context, listen: false);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Inclusion/Exclusion Criteria'),
+      appBar: CustomAppBar(
+        title: 'CogHealth',
+        backgroundColor: AppTheme.primaryBackgroundColor,
+        showLeading: true,
       ),
       body: Consumer<CriteriaProvider>(
         builder: (context, criteriaProvider, child) {
@@ -110,7 +113,7 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
         backgroundColor: AppTheme.secondaryColor,
         onPressed: () {
           if (criteriaProvider.allAnswered()) {
-            Navigator.pushNamed(context, '/advice');
+            _showProgressIndicator();
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Please answer all questions.")),
@@ -120,6 +123,54 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
         child: const Icon(Icons.navigate_next),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+    );
+  }
+
+  void _showProgressIndicator() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.of(context).pop(); // Close the progress indicator dialog
+      _showCompletionDialog();
+    });
+  }
+
+  void _showCompletionDialog() {
+    final criteriaProvider =
+        Provider.of<CriteriaProvider>(context, listen: false);
+
+    // Check if all answers are 'No'
+    bool allNo = criteriaProvider.criteriaList
+        .every((criteria) => criteria.response == false);
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text("Assessment Complete"),
+        content: Text(allNo
+            ? "Your assessment has been accepted, please click 'Okay' to continue."
+            : "We can't approve your assessment at this time. We recommend you review your results with your primary care health provider."),
+        actions: <Widget>[
+          ElevatedButton(
+            child: const Text('Okay'),
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+              if (allNo) {
+                Navigator.pushNamed(
+                    context, '/protocol'); // Navigate to the protocol screen
+              } else {
+                Navigator.pushNamed(context,
+                    '/essentialOils'); // Navigate back to the essential oils screen
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 

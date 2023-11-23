@@ -3,6 +3,8 @@
 
 import 'package:cog_screen/screens/shopping_cart_screen.dart';
 import 'package:cog_screen/screens/survey_result_screen.dart';
+import 'package:cog_screen/themes/app_theme.dart';
+import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:cog_screen/screens/start_screen.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +19,9 @@ class MainScreen extends StatelessWidget {
     return Consumer<AppNavigationProvider>(
         builder: (context, navigationState, child) {
       return Scaffold(
-        appBar: AppBar(
-          title: const Text('Cognitive Screen'),
+        appBar: CustomAppBar(
+          title: 'Cognitive Screening Tool',
+          backgroundColor: AppTheme.primaryBackgroundColor,
         ),
         body: IndexedStack(
           index: navigationState.currentIndex,

@@ -1,5 +1,5 @@
 import 'package:cog_screen/providers/app_navigation_state.dart';
-import 'package:cog_screen/utilities/bottom_bar_navigator.dart';
+import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
