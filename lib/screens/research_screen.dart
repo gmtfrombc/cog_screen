@@ -2,8 +2,8 @@ import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class CognitiveBasicsScreen extends StatelessWidget {
-  const CognitiveBasicsScreen({super.key});
+class ResearchScreen extends StatelessWidget {
+  const ResearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class CognitiveBasicsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Basic Information'),
+            Text('Research Studies '),
           ],
         ),
       ),

@@ -23,7 +23,7 @@ class SurveyScreen extends StatelessWidget {
         if (surveyProvider.shouldShowFinishInstruction) {
           return _buildInstructionScreen(
             context,
-            "When you are finished the CogHealth Screen, select: 'I am done.'",
+            "When you are finished the CogHealth Test, select: 'I am done.'",
             () => surveyProvider.seeFinishInstruction(),
           );
         }
@@ -31,7 +31,7 @@ class SurveyScreen extends StatelessWidget {
         if (surveyProvider.shouldShowInstructionForQuestion4) {
           return _buildInstructionScreen(
             context,
-            "Get your piece of blank paper.\n\nCopy a clock face and put the time at 5 minutes past 11. \n\nOnce you are done, click 'Continue'",
+            "Get your piece of blank paper.\n\nCopy a clock face with numbers and put the time at 5 minutes past 11. \n\nOnce you are done, click 'Continue'",
             () => surveyProvider.seeInstructionForQuestion4(),
           );
         }

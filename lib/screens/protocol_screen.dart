@@ -25,7 +25,7 @@ class ProtocolScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'This protocol involves using a diffuser with various essential oil odorants. Follow the steps below to ensure proper usage:',
+                        'For this protocol use a diffuser with the essential oils listed. Feel free to substitute for your favorite essential oils. Follow these steps to ensure proper usage:',
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 20),
@@ -40,7 +40,7 @@ class ProtocolScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        'Continue this regimen at home for 6 months, changing the diffuser water daily before going to bed.',
+                        'Continue this regimen, changing the diffuser water daily before going to bed.',
                         style: TextStyle(fontSize: 16),
                       ),
                     ],

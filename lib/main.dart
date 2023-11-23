@@ -1,4 +1,5 @@
 import 'package:cog_screen/screens/protocol_screen.dart';
+import 'package:cog_screen/screens/research_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/data/survey_data.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
         '/lifestyle': (context) => const LifestyleScreen(),
         '/essentialOils': (context) => const EssentialOilScreen(),
         '/protocol': (context) => const ProtocolScreen(),
+        '/research': (context) => const ResearchScreen(),
         '/splashscreen': (context) =>
             const SplashScreen(), // Add your SplashScreen route
       },
