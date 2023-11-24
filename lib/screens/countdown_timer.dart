@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:flutter/material.dart';
-//import 'package:audioplayers/audioplayers.dart';
+import 'package:vibration/vibration.dart';
 
 class CountdownTimer extends StatefulWidget {
   final VoidCallback onTimerComplete;
@@ -19,7 +19,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
   int _remainingSeconds = 15;
 
   void _startTimer() {
-    _remainingSeconds = 1;
+    _remainingSeconds = 2;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_remainingSeconds > 0) {
         setState(() {
@@ -28,6 +28,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
       } else {
         _timer?.cancel();
         widget.onTimerComplete();
+        _triggerVibration();
       }
     });
   }
@@ -38,7 +39,12 @@ class _CountdownTimerState extends State<CountdownTimer> {
     super.dispose();
   }
 
-  @override
+  void _triggerVibration() async {
+    if (await Vibration.hasVibrator() ?? false) {
+      Vibration.vibrate(duration: 1000); // Vibrate for 1 second
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
