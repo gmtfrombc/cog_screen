@@ -1,5 +1,7 @@
 import 'package:cog_screen/providers/app_navigation_state.dart';
+import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
+import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +14,10 @@ class ShoppingCartScreen extends StatelessWidget {
       context,
     );
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Shopping Cart'),
+      appBar: CustomAppBar(
+        title: 'CogHealth',
+        backgroundColor: AppTheme.primaryBackgroundColor,
+        showLeading: true,
       ),
       body: const Center(
         child: Column(

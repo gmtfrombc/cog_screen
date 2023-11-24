@@ -75,6 +75,7 @@ class AdviceScreen extends StatelessWidget {
       String route, String imagePath) {
     return Card(
       elevation: 4.0,
+      color: AppTheme.primaryBackgroundColor,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, route),

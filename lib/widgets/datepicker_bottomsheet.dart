@@ -20,7 +20,7 @@ class DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
       height: MediaQuery.of(context).size.height / 3,
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
             child: Center(
@@ -36,31 +36,36 @@ class DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
               ),
             ),
           ),
-          ElevatedButton(
-            child: const Text('Confirm'),
-            onPressed: () {
-              if (!dateSelected) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Date Selection'),
-                      content: const Text('Please select a date.'),
-                      actions: <Widget>[
-                        TextButton(
-                          child: const Text('OK'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              } else {
-                widget.onConfirm(selectedDate);
-              }
-            },
+          Padding(
+            padding: const EdgeInsets.only(
+              bottom: 16,
+            ),
+            child: ElevatedButton(
+              child: const Text('Confirm'),
+              onPressed: () {
+                if (!dateSelected) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Date Selection'),
+                        content: const Text('Please select a date.'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  widget.onConfirm(selectedDate);
+                }
+              },
+            ),
           ),
         ],
       ),

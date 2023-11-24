@@ -69,7 +69,7 @@ class SurveyResultScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontSize: 14,
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),

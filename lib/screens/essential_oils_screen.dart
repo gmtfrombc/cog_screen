@@ -39,10 +39,20 @@ class EssentialOilScreen extends StatelessWidget {
                   child: Text(
                     'Essential Oils \nand Cognitive Health',
                     style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        height: 1.1),
+                  ),
+                ),
+                Positioned(
+                  top: MediaQuery.of(context).padding.top +
+                      0, // Adjust for status bar height
+                  left: 10, // Adjust as per your design
+                  child: IconButton(
+                    icon: const Icon(Icons.chevron_left,
+                        size: 30, color: Colors.black45),
+                    onPressed: () => Navigator.of(context).pop(),
                   ),
                 ),
               ],
@@ -51,72 +61,82 @@ class EssentialOilScreen extends StatelessWidget {
               height: 10,
             ),
             Card(
-              margin: const EdgeInsets.all(8.0),
-              elevation: 6.0,
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
               ),
+              color: AppTheme.primaryBackgroundColor,
               child: InkWell(
                 onTap: () => Navigator.pushNamed(context, '/criteria'),
                 child: Container(
-                  padding: const EdgeInsets.fromLTRB(
-                      16.0, 16.0, 16.0, 4.0), // Reduced bottom padding
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize
-                        .min, // Ensure the column takes minimum space
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.memory,
-                            color: AppTheme.primaryColor.withOpacity(0.8),
-                            size: 30.0,
-                          ),
-                          const SizedBox(width: 10),
-                          const Expanded(
-                            child: Text(
-                              'Memory Enhancement Protocol',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8.0),
-                      const Text(
-                        AppConstants.memoryEnhancement,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w100,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Align(
-                        alignment:
-                            Alignment.bottomRight, // Align to bottom-right
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min, // Take minimum space
+                  color: AppTheme.primaryBackgroundColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize
+                          .min, // Ensure the column takes minimum space
+                      children: [
+                        Row(
                           children: [
-                            Text(
-                              'View Protocol',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Theme.of(context).primaryColor,
-                              ),
+                            Icon(
+                              Icons.memory,
+                              color: AppTheme.primaryColor.withOpacity(0.8),
+                              size: 30.0,
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.chevron_right, size: 30),
-                              color: Theme.of(context).primaryColor,
-                              onPressed: () =>
-                                  Navigator.pushNamed(context, '/criteria'),
+                            const SizedBox(width: 10),
+                            const Expanded(
+                              child: Text(
+                                'Memory Enhancement Protocol',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 8.0),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
+                          child: Text(
+                            AppConstants.memoryEnhancement,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w100,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment:
+                              Alignment.bottomRight, // Align to bottom-right
+                          child: Row(
+                            mainAxisSize:
+                                MainAxisSize.min, // Take minimum space
+                            children: [
+                              Text(
+                                'View Protocol',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.chevron_right, size: 30),
+                                color: Theme.of(context).primaryColor,
+                                onPressed: () =>
+                                    Navigator.pushNamed(context, '/criteria'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -188,46 +208,55 @@ class EssentialOilScreen extends StatelessWidget {
   Widget _buildCard(BuildContext context, String title, String description,
       String route, String imagePath) {
     return Card(
-      margin: const EdgeInsets.all(8.0), // Add some margin around each card
+      margin: const EdgeInsets.all(8.0),
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, route),
-        child: SizedBox(
-          width: 160,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 90,
-                width: 160, // Fixed height for the image
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
+        child: Container(
+          color: AppTheme.primaryBackgroundColor,
+          child: SizedBox(
+            width: 160,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 90,
+                  width: 160,
+                  child: Image.asset(
+                    imagePath,
+                    fit: BoxFit.cover,
                   ),
-                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  description,
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    fontSize: 10,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12, // Increased font size
+                      color: Colors.black, // Consistent text color
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    description,
+                    style: const TextStyle(
+                      fontSize: 10, // Increased font size
+                      fontWeight: FontWeight.w100,
+                      color: Colors.black, // Consistent text color
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

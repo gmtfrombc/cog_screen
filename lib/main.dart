@@ -15,28 +15,34 @@ import 'package:cog_screen/screens/start_screen.dart';
 import 'package:cog_screen/screens/survey_result_screen.dart';
 import 'package:cog_screen/screens/survey_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:cog_screen/screens/splashscreen.dart'; // Import your SplashScreen widget
 
 void main() {
-  runApp(
-    MultiProvider(
-      // Change this to MultiProvider
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => AppNavigationProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => SurveyProvider(questions: hardcodedQuestions),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => CriteriaProvider(), // Add your CriteriaProvider
-        ),
-        // Add other global providers here if needed in the future
-      ],
-      child: const MyApp(),
-    ),
-  );
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure everything is initialized
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => AppNavigationProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => SurveyProvider(questions: hardcodedQuestions),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => CriteriaProvider(),
+          ),
+          // Add other global providers here if needed
+        ],
+        child: const MyApp(),
+      ),
+    );
+  });
 }
 
 class MyApp extends StatelessWidget {

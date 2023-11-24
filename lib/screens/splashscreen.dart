@@ -81,22 +81,21 @@ class SplashScreenState extends State<SplashScreen>
               },
               child: Image.asset(
                 'lib/assets/images/pm_icon_full.png', // Replace with your logo asset path
-                width: 200,
-                height: 100,
+                width: 300,
+                height: 200,
               ),
             ),
             Positioned(
-              bottom:
-                  0, // Adjust this value to position 'LABS' closer to the bottom of the logo
+              bottom: 30,
+              left: 93,
               child: FadeTransition(
                 opacity: _opacityAnimation,
                 child: const Text(
                   "LABS",
                   style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w300, // Thinner font weight
-                    color: Colors.black38,
-                  ),
+                      fontSize: 38,
+                      fontWeight: FontWeight.w100, // Thinner font weight
+                      color: Colors.black45),
                 ),
               ),
             ),

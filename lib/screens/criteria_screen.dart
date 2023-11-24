@@ -51,6 +51,9 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
                         .bodyLarge
                         ?.copyWith(fontSize: 18, fontWeight: FontWeight.w700),
                   ),
+                  const SizedBox(
+                    height: 30,
+                  ),
                 ],
               ),
               Padding(
@@ -64,6 +67,9 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
                       ),
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
               Expanded(
                 child: ListView.builder(
                   controller: _scrollController,
@@ -75,20 +81,33 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
                     dynamic criteria = criteriaProvider.criteriaList[index];
                     return ConstrainedBox(
                       constraints: const BoxConstraints(
-                        minHeight: 120,
+                        minHeight: 140,
                       ),
                       child: Card(
+                        color: AppTheme.primaryBackgroundColor,
+                        elevation: 6,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 4.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        elevation: 2,
-                        shadowColor: Colors.grey.withOpacity(0.5),
-                        child: Padding(
+                        // shape: RoundedRectangleBorder(
+                        //   borderRadius: BorderRadius.circular(12.0),
+                        // ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppTheme.primaryBackgroundColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 2,
+                                blurRadius: 4,
+                                offset: const Offset(
+                                    0, -2), // Changes position of shadow
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(
+                                12.0), // Adjust radius to your preference
+                          ),
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0,
-                              vertical: 4.0), // Reduced vertical padding
+                              horizontal: 12.0, vertical: 4.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
