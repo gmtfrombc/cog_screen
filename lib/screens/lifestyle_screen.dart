@@ -1,3 +1,5 @@
+import 'package:cog_screen/themes/app_theme.dart';
+import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class LifestyleScreen extends StatelessWidget {
@@ -6,26 +8,18 @@ class LifestyleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: const Text('Lifestyle Measures for Cognitive Health')),
-      body: ListView(
-        children: const [
-          Card(
-            child: Text('Nutrition'),
-          ),
-          Card(
-            child: Text('Activity'),
-          ),
-          Card(
-            child: Text('Sleep'),
-          ),
-          Card(
-            child: Text('Managing Stress'),
-          ),
-          Card(
-            child: Text('Relationships'),
-          ),
-        ],
+      appBar: CustomAppBar(
+        title: 'CogHealth',
+        backgroundColor: AppTheme.primaryBackgroundColor,
+        showLeading: true,
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Lifestyle Information'),
+          ],
+        ),
       ),
     );
   }

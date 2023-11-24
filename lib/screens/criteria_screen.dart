@@ -36,31 +36,39 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
           return Column(
             children: [
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.medical_services,
-                    color: AppTheme.primaryColor,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    'Medical Questionnaire',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontSize: 18, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.medical_services,
+                      color: AppTheme.primaryColor,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'Medical Questionnaire',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.only(
+                  top: 8.0,
+                  left: 20.0,
+                  right: 8.0,
+                  bottom: 8.0,
+                ),
                 child: Text(
                   AppConstants.medAdvice,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,

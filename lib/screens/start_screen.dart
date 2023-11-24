@@ -59,8 +59,15 @@ class StartScreen extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 10),
+            const Text(
+              "When you are ready, select 'Begin'",
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             const SizedBox(height: 30),
-
             ElevatedButton(
               onPressed: () {
                 surveyProvider.restartSurvey();

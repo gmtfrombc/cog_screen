@@ -7,7 +7,7 @@ class AppConstants {
   static const String cogHealthMore =
       "If you would like to consider integrative treatment options that support cognitive health, including essential oils, then select 'Learn More' below.";
   static const String cogHealthStart =
-      "The CogHealth Test is a simple tool for assessing memory and cognitive health. It consists of 8 questions and has a maximum score of 10. You will need a two-sided piece of paper and a pen to complete the screen.\n\n When you are ready, select 'Begin'.";
+      "The CogHealth Test is a simple tool for assessing memory and cognitive health. It consists of 8 questions and has a maximum score of 10. You will need a two-sided piece of paper and a pen to complete the screen.";
 
   static const String understandingCognitiveHealth =
       "Our cognitive health is a reflection of our brain health. It is the ability to think clearly, remember, and learn new things. Cognitive health is important at every stage of life. It is important to understand that cognitive health is not static. It can change over time and can be improved with the right interventions.";

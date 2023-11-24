@@ -18,23 +18,24 @@ class CustomBottomNavigationBar extends StatelessWidget {
     return SizedBox(
       height: 110,
       child: BottomNavigationBar(
-        currentIndex: currentIndex,
+        currentIndex: appNavigationProvider.currentIndex,
         onTap: (index) {
-          if (currentIndex != index) {
-            appNavigationProvider.changeIndex(index);
-            switch (index) {
-              case 0:
-                Navigator.pushNamed(context, '/');
-                break;
-              case 1:
-                Navigator.pushNamed(context, '/results');
-                break;
-              case 2:
-                Navigator.pushNamed(context, '/shoppingCart');
-                break;
-              // Add other cases for other screens...
-            }
+          String route;
+          switch (index) {
+            case 0:
+              route = '/';
+              break;
+            case 1:
+              route = '/results';
+              break;
+            case 2:
+              route = '/shoppingCart';
+              break;
+            // Add other cases for different indices...
+            default:
+              route = '/';
           }
+          appNavigationProvider.navigateToScreen(route, context);
         },
         items: const [
           BottomNavigationBarItem(
@@ -51,6 +52,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
           // Add other items here...
         ],
+        selectedItemColor: Theme.of(context).primaryColor,
       ),
     );
   }

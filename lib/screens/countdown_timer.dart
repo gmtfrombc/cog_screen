@@ -1,7 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:async';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 //import 'package:audioplayers/audioplayers.dart';
@@ -18,7 +17,6 @@ class CountdownTimer extends StatefulWidget {
 class _CountdownTimerState extends State<CountdownTimer> {
   Timer? _timer;
   int _remainingSeconds = 15;
-  final AudioPlayer _audioPlayer = AudioPlayer();
 
   void _startTimer() {
     _remainingSeconds = 1;
@@ -29,20 +27,14 @@ class _CountdownTimerState extends State<CountdownTimer> {
         });
       } else {
         _timer?.cancel();
-        _playChime();
         widget.onTimerComplete();
       }
     });
   }
 
-  Future<void> _playChime() async {
-    await _audioPlayer.play(AssetSource('audio/chime.mp3'));
-  }
-
   @override
   void dispose() {
     _timer?.cancel();
-    _audioPlayer.dispose();
     super.dispose();
   }
 
