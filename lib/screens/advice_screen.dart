@@ -100,12 +100,14 @@ class AdviceScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
-                      style: TextStyle(
+                    Text(
+                      description,
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.black,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
                     ),
                   ],
                 ),
@@ -124,8 +126,7 @@ class AdviceScreen extends StatelessWidget {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(
-                    left: 8.0), // Padding between image and icon
+                padding: EdgeInsets.only(left: 8.0),
                 child: Icon(Icons.chevron_right, color: Colors.black),
               ),
             ],

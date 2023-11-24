@@ -16,7 +16,7 @@ import 'package:cog_screen/screens/survey_result_screen.dart';
 import 'package:cog_screen/screens/survey_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cog_screen/screens/spashscreen.dart'; // Import your SplashScreen widget
+import 'package:cog_screen/screens/splashscreen.dart'; // Import your SplashScreen widget
 
 void main() {
   runApp(
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           '/splashscreen', // Set the initial route to the splash screen
       routes: {
         '/': (context) => const StartScreen(),
-        '/survey': (context) => SurveyScreen(),
+        '/survey': (context) => const SurveyScreen(),
         '/results': (context) => const SurveyResultScreen(),
         '/surveyResultScreen': (context) => const SurveyResultScreen(),
         '/basics': (context) => const CognitiveBasicsScreen(),

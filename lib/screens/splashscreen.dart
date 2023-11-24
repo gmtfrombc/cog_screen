@@ -37,7 +37,7 @@ class SplashScreenState extends State<SplashScreen>
 
     _controller.forward().then(
       (_) {
-        Future.delayed(const Duration(milliseconds: 500), () {
+        Future.delayed(const Duration(milliseconds: 1500), () {
           Navigator.of(context).pushReplacement(PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 const StartScreen(),
@@ -94,7 +94,7 @@ class SplashScreenState extends State<SplashScreen>
                   "LABS",
                   style: TextStyle(
                     fontSize: 32,
-                    fontWeight: FontWeight.w200, // Thinner font weight
+                    fontWeight: FontWeight.w300, // Thinner font weight
                     color: Colors.black38,
                   ),
                 ),

@@ -4,113 +4,38 @@ import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/countdown_timer.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cog_screen/widgets/datepicker_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class SurveyScreen extends StatelessWidget {
-  SurveyScreen({
+class SurveyScreen extends StatefulWidget {
+  const SurveyScreen({
     super.key,
   });
+
+  @override
+  State<SurveyScreen> createState() => _SurveyScreenState();
+}
+
+class _SurveyScreenState extends State<SurveyScreen> {
   final FocusNode _focusNode = FocusNode();
+  final TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    _controller.dispose(); // Dispose the focus node
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SurveyProvider>(
-      builder: (context, surveyProvider, child) {
-        // Check if I need to show the finish instruction
-        if (surveyProvider.shouldShowFinishInstruction) {
-          return _buildInstructionScreen(
-            context,
-            "When you are finished the CogHealth Test, select: 'I am done.'",
-            () => surveyProvider.seeFinishInstruction(),
-          );
-        }
-        // Check if we need to show instructions before question 4
-        if (surveyProvider.shouldShowInstructionForQuestion4) {
-          return _buildInstructionScreen(
-            context,
-            "Get your piece of blank paper.\n\nCopy a clock face with numbers and put the time at 5 minutes past 11. \n\nOnce you are done, click 'Continue'",
-            () => surveyProvider.seeInstructionForQuestion4(),
-          );
-        }
-        // Check if we need to show instructions before question 7
-        if (surveyProvider.shouldShowInstructionForQuestion7) {
-          final screenHeight = MediaQuery.of(context).size.height;
-
-          return Scaffold(
-            appBar: CustomAppBar(
-              title: 'CogHealth',
-              backgroundColor: AppTheme.primaryBackgroundColor,
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: screenHeight * 0.15),
-                    const Text(
-                      "Flip over your piece of paper.\n\nWhen you are ready, start the timer\n\nWrite down as many animals as you can think of in 15 seconds (don't worry about spelling)",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 20),
-                    CountdownTimer(
-                      onTimerComplete: () {
-                        surveyProvider.seeInstructionForQuestion7();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        }
-        // If no instructions need to be shown, show the current question
-        Question currentQuestion = surveyProvider.currentQuestion;
-        final screenHeight = MediaQuery.of(context).size.height;
-
-        return Scaffold(
-          appBar: CustomAppBar(
-            title: 'CogHealth',
-            backgroundColor: AppTheme.primaryBackgroundColor,
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: screenHeight * 0.15),
-                Text(
-                  currentQuestion.questionText,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-                _buildAnswerWidget(currentQuestion, surveyProvider, context),
-                // Add navigation buttons if needed
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildInstructionScreen(
-      BuildContext context, String instruction, VoidCallback onContinue) {
+    final surveyProvider = Provider.of<SurveyProvider>(context);
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -118,6 +43,61 @@ class SurveyScreen extends StatelessWidget {
         title: 'CogHealth',
         backgroundColor: AppTheme.primaryBackgroundColor,
       ),
+      body: _buildBody(surveyProvider, screenHeight, context),
+    );
+  }
+
+  Widget _buildBody(
+      SurveyProvider provider, double screenHeight, BuildContext context) {
+    if (provider.shouldShowFinishInstruction) {
+      return _buildInstructionScreen(
+          context,
+          "When you are finished the CogHealth Test, select: 'I am done.'",
+          () => provider.seeFinishInstruction());
+    }
+    if (provider.shouldShowInstructionForQuestion4) {
+      return _buildInstructionScreen(
+          context,
+          "Get your piece of blank paper.\n\nCopy a clock face with numbers and put the time at 5 minutes past 11. \n\nOnce you are done, click 'Continue'",
+          () => provider.seeInstructionForQuestion4());
+    }
+    if (provider.shouldShowInstructionForQuestion7) {
+      return _buildQuestion7Instruction(context, provider, screenHeight);
+    }
+    return _buildQuestionContent(
+        provider.currentQuestion, provider, context, screenHeight);
+  }
+
+  Widget _buildInstructionScreen(
+      BuildContext context, String instruction, VoidCallback onContinue) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 120),
+            Text(instruction,
+                style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+                textAlign: TextAlign.center),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: onContinue,
+              child: const Text('Continue'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildQuestion7Instruction(
+      BuildContext context, SurveyProvider provider, double screenHeight) {
+    return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -125,23 +105,23 @@ class SurveyScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                  height: screenHeight * 0.15), // Adjust this value as needed
-              Text(
-                instruction,
-                style: const TextStyle(
+              const SizedBox(
+                height: 40,
+              ),
+              const Text(
+                "Flip over your piece of paper and when you are ready, start the timer\n\nWrite down as many animals as you can think of in 15 seconds (don't worry about spelling)",
+                style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
                   color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                onPressed: onContinue,
-                child: const Text('Continue'),
+              const SizedBox(height: 30),
+              CountdownTimer(
+                onTimerComplete: () {
+                  provider.seeInstructionForQuestion7();
+                },
               ),
             ],
           ),
@@ -150,16 +130,39 @@ class SurveyScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildQuestionContent(Question question, SurveyProvider provider,
+      BuildContext context, double screenHeight) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: screenHeight * 0.15),
+            Text(
+              question.questionText,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            _buildAnswerWidget(question, provider, context),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildAnswerWidget(
       Question question, SurveyProvider surveyProvider, BuildContext context) {
-    TextEditingController controller = TextEditingController();
-    TextInputType keyboardType = TextInputType.text; // Default type
-    keyboardType = const TextInputType.numberWithOptions(
-        decimal: true); // Number pad with decimal for specific question
-    bool shouldShowDollarSign =
-        question.id == '3'; // Replace 2 with the index of your question
+    TextInputType keyboardType = question.keyboardType;
+    bool shouldShowDollarSign = question.shouldShowDollarSign;
+
     if (question.id == '2' || question.id == '7') {
-      // Replace with your question ID
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (_focusNode.canRequestFocus) {
           _focusNode.requestFocus();
@@ -174,7 +177,7 @@ class SurveyScreen extends StatelessWidget {
               width: 200,
               child: TextField(
                 focusNode: _focusNode,
-                controller: controller, // Use the controller
+                controller: _controller,
                 keyboardType: keyboardType,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
@@ -184,7 +187,7 @@ class SurveyScreen extends StatelessWidget {
                 ),
                 decoration: shouldShowDollarSign
                     ? const InputDecoration(prefixText: '\$')
-                    : const InputDecoration(), // Use the boolean here
+                    : const InputDecoration(),
               ),
             ),
             const SizedBox(
@@ -193,8 +196,8 @@ class SurveyScreen extends StatelessWidget {
             ElevatedButton(
               child: const Text('Next'),
               onPressed: () {
-                surveyProvider
-                    .addResponse(controller.text); // Add user response
+                surveyProvider.addResponse(_controller.text);
+                _controller.clear();
                 if (surveyProvider.isLastQuestion) {
                   Provider.of<AppNavigationProvider>(context, listen: false)
                       .changeIndex(1);
@@ -297,73 +300,6 @@ class SurveyScreen extends StatelessWidget {
             },
           );
         },
-      ),
-    );
-  }
-}
-
-class DatePickerBottomSheet extends StatefulWidget {
-  final Function(DateTime) onConfirm;
-
-  const DatePickerBottomSheet({super.key, required this.onConfirm});
-
-  @override
-  DatePickerBottomSheetState createState() => DatePickerBottomSheetState();
-}
-
-class DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
-  DateTime selectedDate = DateTime.now();
-  bool dateSelected = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 3,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Center(
-              child: CupertinoDatePicker(
-                mode: CupertinoDatePickerMode.date,
-                initialDateTime: DateTime(2020, 1, 1),
-                onDateTimeChanged: (DateTime newDate) {
-                  selectedDate = newDate;
-                  dateSelected = true;
-                },
-                minimumYear: 2000,
-                maximumYear: 2025,
-              ),
-            ),
-          ),
-          ElevatedButton(
-            child: const Text('Confirm'),
-            onPressed: () {
-              if (!dateSelected) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Date Selection'),
-                      content: const Text('Please select a date.'),
-                      actions: <Widget>[
-                        TextButton(
-                          child: const Text('OK'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              } else {
-                widget.onConfirm(selectedDate);
-              }
-            },
-          ),
-        ],
       ),
     );
   }

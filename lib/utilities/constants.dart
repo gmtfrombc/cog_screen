@@ -10,13 +10,13 @@ class AppConstants {
       "The CogHealth Test is a simple tool for assessing memory and cognitive health. It consists of 8 questions and has a maximum score of 10. You will need a two-sided piece of paper and a pen to complete the screen.\n\n When you are ready, select 'Begin'.";
 
   static const String understandingCognitiveHealth =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod";
+      "Our cognitive health is a reflection of our brain health. It is the ability to think clearly, remember, and learn new things. Cognitive health is important at every stage of life. It is important to understand that cognitive health is not static. It can change over time and can be improved with the right interventions.";
 
   static const String lifestyleStrategies =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod";
+      "Lifestyle plays a major role in cognitive health. Nutrition, exercise, sleep, stress, and our relationships can all contribute to our cognitive function";
 
   static const String essentialOils =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod";
+      "Essential oils have received a lot of attention for their potential to support cognitive health. Research has shown that essential oils can improve memory, attention, and focus. They can also help to reduce stress and anxiety.";
 
   static const String medAdvice =
       "In order to receive recommendations and a standing order for medical treatment, please complete the following questionnaire.";
