@@ -51,6 +51,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
           // Add other items here...
         ],
+        selectedItemColor: Theme.of(context).primaryColor,
       ),
     );
   }

@@ -64,10 +64,12 @@ class StartScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 surveyProvider.restartSurvey();
+                context.read<AppNavigationProvider>().changeIndex(
+                    1); // Update the index to match the 'Results' screen
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SurveyScreen(),
+                    builder: (context) => const SurveyScreen(),
                   ),
                 );
               },

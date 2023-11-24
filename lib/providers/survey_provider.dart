@@ -23,19 +23,16 @@ class SurveyProvider extends ChangeNotifier {
   int get totalScore => _totalScore;
 
   bool get shouldShowFinishInstruction {
-    // Assuming this instruction should appear before question 4's instructions
     return _currentQuestionIndex == 3 &&
         !_hasSeenFinishInstruction &&
         !_hasSeenInstructionForQuestion4;
   }
 
-  // Check whether to show instructions before question 4
   bool get shouldShowInstructionForQuestion4 {
     return _currentQuestionIndex == 3 &&
         !_hasSeenInstructionForQuestion4; // Index 3 is before question id='4'
   }
 
-  // Check whether to show instructions before question 7
   bool get shouldShowInstructionForQuestion7 {
     return _currentQuestionIndex == 6 &&
         !_hasSeenInstructionForQuestion7; // Index 6 is before question id='7'
@@ -71,7 +68,6 @@ class SurveyProvider extends ChangeNotifier {
         UserResponse(userAnswer: userAnswer, questionId: currentQuestionId);
     _userResponses.add(response);
 
-    // Update the score based on the current question and user's answer
     updateScore(currentQuestion, userAnswer);
     notifyListeners();
   }
@@ -88,7 +84,6 @@ class SurveyProvider extends ChangeNotifier {
           _totalScore += 1;
         }
       } catch (e) {
-        // Handle parse error if the user input is not a valid date
         debugPrint("Error parsing date: $e");
       }
     }
@@ -101,7 +96,7 @@ class SurveyProvider extends ChangeNotifier {
       _totalScore += 1;
     }
 
-    notifyListeners(); // Notify listeners of the score update
+    notifyListeners();
   }
 
   int calculateScoreForQuestion7(String userAnswer) {
@@ -119,7 +114,6 @@ class SurveyProvider extends ChangeNotifier {
 
   void nextQuestion(BuildContext context) {
     if (_currentQuestionIndex < _questions.length - 1) {
-      // Check for specific question IDs before incrementing the index
       if (_questions[_currentQuestionIndex].id == '4') {
         _hasSeenInstructionForQuestion4 = false;
       }
@@ -137,8 +131,7 @@ class SurveyProvider extends ChangeNotifier {
   void endSurvey(BuildContext context) {
     _surveyEnded = true;
     notifyListeners();
-    // Use Navigator to navigate to SurveyResultScreen
-    Navigator.pushNamed(context, '/surveyResultScreen');
+    Navigator.pushNamed(context, '/results');
   }
 
   // Method to reset the survey and start over

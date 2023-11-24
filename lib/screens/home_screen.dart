@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   final _screens = [
     const StartScreen(),
-    SurveyScreen(),
+    const SurveyScreen(),
     const SurveyResultScreen(),
     // Add other screens here...
   ];

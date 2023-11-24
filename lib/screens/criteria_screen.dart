@@ -36,6 +36,23 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
           return Column(
             children: [
               const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.medical_services,
+                    color: AppTheme.primaryColor,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    'Medical Questionnaire',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(fontSize: 18, fontWeight: FontWeight.w700),
+                  ),
+                ],
+              ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
@@ -43,7 +60,7 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
                   textAlign: TextAlign.left,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w300,
                       ),
                 ),
               ),
@@ -63,42 +80,50 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
                       child: Card(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 4.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 5.0),
-                                  child: Text(
-                                    criteria.statement,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                    ),
-                                  ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        elevation: 2,
+                        shadowColor: Colors.grey.withOpacity(0.5),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0,
+                              vertical: 4.0), // Reduced vertical padding
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 20),
+                              Text(
+                                criteria.statement,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
                                 ),
                               ),
-                            ),
-                            _responseButton(
-                                context,
-                                criteria.response == true,
-                                'Yes',
-                                index,
-                                () =>
-                                    criteriaProvider.setResponse(index, true)),
-                            const SizedBox(
-                                width: 4), // A small gap between buttons
-                            _responseButton(
-                                context,
-                                criteria.response == false,
-                                'No',
-                                index,
-                                () =>
-                                    criteriaProvider.setResponse(index, false)),
-                          ],
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  _responseButton(
+                                    context,
+                                    criteria.response == true,
+                                    'Yes',
+                                    index,
+                                    () => criteriaProvider.setResponse(
+                                        index, true),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  _responseButton(
+                                    context,
+                                    criteria.response == false,
+                                    'No',
+                                    index,
+                                    () => criteriaProvider.setResponse(
+                                        index, false),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -143,7 +168,6 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
     final criteriaProvider =
         Provider.of<CriteriaProvider>(context, listen: false);
 
-    // Check if all answers are 'No'
     bool allNo = criteriaProvider.criteriaList
         .every((criteria) => criteria.response == false);
 
@@ -185,13 +209,12 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
         minimumSize: const Size(
           44,
           36,
-        ), // Further reduced padding
+        ),
       ),
       onPressed: () {
         onPressed();
 
-        // Calculate the target scroll position
-        double itemHeight = 120.0; // The height of each list item
+        double itemHeight = 120.0;
         double position = itemHeight * index;
 
         // Check if the calculated position exceeds the maximum scroll extent
@@ -200,7 +223,6 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
           position = maxScrollExtent; // Set to max scroll extent if it exceeds
         }
 
-        // Perform the scroll
         _scrollController.animateTo(
           position,
           duration: const Duration(milliseconds: 500),

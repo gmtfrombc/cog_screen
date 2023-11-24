@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Question {
@@ -17,6 +18,18 @@ class Question {
     this.options,
   });
 
+  TextInputType get keyboardType {
+    if (type == QuestionType.numeric) {
+      if (id == '2' || id == '7') {
+        // Assuming '2' and '7' are the IDs where you need a different keyboard
+        return const TextInputType.numberWithOptions(decimal: true);
+      }
+      return TextInputType.number;
+    }
+    return TextInputType.text;
+  }
+
+  bool get shouldShowDollarSign => id == '3';
   bool validateAnswer(String userAnswer) {
     switch (type) {
       case QuestionType.numeric:
@@ -33,7 +46,8 @@ class Question {
             //parsing didn't work
             return false;
           }
-        } else {// this is for all the other numeric questions
+        } else {
+          // this is for all the other numeric questions
           return userAnswer.trim() == correctAnswer.toString().trim();
         }
       case QuestionType.yesNo:

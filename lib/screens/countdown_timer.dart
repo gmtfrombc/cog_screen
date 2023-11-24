@@ -47,7 +47,6 @@ class _CountdownTimerState extends State<CountdownTimer> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +81,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
             ),
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 40),
         ElevatedButton(
           onPressed: _startTimer,
           style: ElevatedButton.styleFrom(
