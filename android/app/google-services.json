@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "47804794032",
+    "project_id": "cogscreen-ec86f",
+    "storage_bucket": "cogscreen-ec86f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47804794032:android:701890953f3575c32a6775",
+        "android_client_info": {
+          "package_name": "com.example.cog_screen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdYOXej2w_MviTihviAwf3WY1vwm9Pjoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

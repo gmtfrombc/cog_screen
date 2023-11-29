@@ -1,3 +1,6 @@
+import 'package:cog_screen/firebase_options.dart';
+import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/screens/login.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
 import 'package:cog_screen/screens/research_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
@@ -14,35 +17,45 @@ import 'package:cog_screen/screens/shopping_cart_screen.dart';
 import 'package:cog_screen/screens/start_screen.dart';
 import 'package:cog_screen/screens/survey_result_screen.dart';
 import 'package:cog_screen/screens/survey_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:cog_screen/screens/splashscreen.dart'; // Import your SplashScreen widget
+import 'package:cog_screen/screens/splashscreen.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensure everything is initialized
-  SystemChrome.setPreferredOrientations([
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Set preferred orientations
+  await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((_) {
-    runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => AppNavigationProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => SurveyProvider(questions: hardcodedQuestions),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => CriteriaProvider(),
-          ),
-          // Add other global providers here if needed
-        ],
-        child: const MyApp(),
-      ),
-    );
-  });
+  ]);
+
+  // Run the app
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => AppNavigationProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SurveyProvider(questions: hardcodedQuestions),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CriteriaProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AuthProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -56,7 +69,9 @@ class MyApp extends StatelessWidget {
       initialRoute:
           '/splashscreen', // Set the initial route to the splash screen
       routes: {
-        '/': (context) => const StartScreen(),
+        '/': (context) => const LoginScreen(),
+        '/start': (context) =>
+            const StartScreen(), // Add your StartScreen route
         '/survey': (context) => const SurveyScreen(),
         '/results': (context) => const SurveyResultScreen(),
         '/surveyResultScreen': (context) => const SurveyResultScreen(),

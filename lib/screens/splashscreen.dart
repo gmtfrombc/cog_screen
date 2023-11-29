@@ -1,4 +1,4 @@
-import 'package:cog_screen/screens/start_screen.dart';
+import 'package:cog_screen/screens/login.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class SplashScreenState extends State<SplashScreen>
         Future.delayed(const Duration(milliseconds: 1500), () {
           Navigator.of(context).pushReplacement(PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const StartScreen(),
+                const LoginScreen(),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               return FadeTransition(
