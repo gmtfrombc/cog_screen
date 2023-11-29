@@ -21,7 +21,6 @@ class Question {
   TextInputType get keyboardType {
     if (type == QuestionType.numeric) {
       if (id == '2' || id == '7') {
-        // Assuming '2' and '7' are the IDs where you need a different keyboard
         return const TextInputType.numberWithOptions(decimal: true);
       }
       return TextInputType.number;
