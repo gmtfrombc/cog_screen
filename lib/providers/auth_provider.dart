@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AuthProvider with ChangeNotifier {
+class AuthProviderClass with ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   User? get currentUser => _firebaseAuth.currentUser;
 
@@ -25,6 +25,4 @@ class AuthProvider with ChangeNotifier {
   Future<void> resetPassword(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
-
-
 }

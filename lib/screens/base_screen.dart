@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
   final Widget child;
-  final AuthProvider authProvider;
+  final AuthProviderClass authProvider;
   final bool showAppBar;
   final CustomAppBar? customAppBar;
   final Widget? bottomNavigationBar;

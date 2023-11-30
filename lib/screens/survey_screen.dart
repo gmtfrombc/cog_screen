@@ -44,7 +44,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
     // );
     Widget content = _buildBody(surveyProvider, screenHeight, context);
     return BaseScreen(
-      authProvider: Provider.of<AuthProvider>(context, listen: false),
+      authProvider: Provider.of<AuthProviderClass>(context, listen: false),
       customAppBar: CustomAppBar(
         title: 'CogHealth',
         backgroundColor: AppTheme.primaryBackgroundColor,

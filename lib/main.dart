@@ -50,7 +50,7 @@ Future<void> main() async {
           create: (context) => CriteriaProvider(),
         ),
         ChangeNotifierProvider(
-          create: (_) => AuthProvider(),
+          create: (_) => AuthProviderClass(),
         ),
       ],
       child: const MyApp(),
@@ -67,8 +67,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Cognitive Screening Tool',
       theme: AppTheme.lightTheme,
-      initialRoute:
-          '/splashscreen', // Set the initial route to the splash screen
+      initialRoute: '/splashscreen',
       routes: {
         '/': (context) => const LoginScreen(),
         '/start': (context) =>
@@ -84,8 +83,7 @@ class MyApp extends StatelessWidget {
         '/essentialOils': (context) => const EssentialOilScreen(),
         '/protocol': (context) => const ProtocolScreen(),
         '/research': (context) => const ResearchScreen(),
-        '/splashscreen': (context) =>
-            const SplashScreen(), // Add your SplashScreen route
+        '/splashscreen': (context) => const SplashScreen(),
       },
     );
   }

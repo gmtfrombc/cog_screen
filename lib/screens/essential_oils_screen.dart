@@ -195,7 +195,7 @@ class EssentialOilScreen extends StatelessWidget {
       ],
     );
     return BaseScreen(
-      authProvider: Provider.of<AuthProvider>(context, listen: false),
+      authProvider: Provider.of<AuthProviderClass>(context, listen: false),
       customAppBar: CustomAppBar(
         title: 'Essential Oils',
         backgroundColor: AppTheme.primaryBackgroundColor,

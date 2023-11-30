@@ -8,7 +8,7 @@ class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key, this.onSignOut});
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider = Provider.of<AuthProviderClass>(context);
 
     return Drawer(
       child: ListView(
