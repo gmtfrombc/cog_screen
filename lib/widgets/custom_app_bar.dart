@@ -6,6 +6,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double elevation;
   final List<Widget>? actions;
   final bool showLeading;
+  final bool showEndDrawerIcon;
 
   const CustomAppBar({
     super.key,
@@ -13,7 +14,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor = Colors.white, // Default color
     this.elevation = 0.0, // Default elevation
     this.actions,
-    this.showLeading = false,
+    this.showLeading = true,
+    this.showEndDrawerIcon = true,
   });
 
   @override
@@ -31,7 +33,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor,
       elevation: elevation,
       automaticallyImplyLeading: showLeading,
-      actions: actions,
+      iconTheme: const IconThemeData(
+        color: Colors.black,
+      ),
+      actions: <Widget>[
+        if (showEndDrawerIcon)
+          IconButton(
+            icon: const Icon(Icons.menu),
+            color: Colors.black,
+            onPressed: () => Scaffold.of(context).openEndDrawer(),
+          ),
+      ],
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(1.0),
         child: Container(

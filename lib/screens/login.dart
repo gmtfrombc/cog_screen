@@ -72,12 +72,14 @@ class _SignInState extends State<SignIn> {
       child: Column(
         children: <Widget>[
           TextFormField(
+            initialValue: 'gmtfrombc@gmail.com',
             validator: (val) => val!.isEmpty ? 'Enter an email' : null,
             onChanged: (val) {
               setState(() => email = val);
             },
           ),
           TextFormField(
+            initialValue: 'password1',
             obscureText: true,
             validator: (val) =>
                 val!.length < 6 ? 'Enter a password 6+ chars long' : null,
@@ -87,6 +89,8 @@ class _SignInState extends State<SignIn> {
           ),
           ElevatedButton(
             onPressed: () async {
+              email = 'gmtfrombc@gmail.com';
+              password = 'password1';
               if (_formKey.currentState!.validate()) {
                 try {
                   await authProvider.signInWithEmailAndPassword(

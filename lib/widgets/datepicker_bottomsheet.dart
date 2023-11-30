@@ -44,6 +44,7 @@ class DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
               child: const Text('Confirm'),
               onPressed: () {
                 if (!dateSelected) {
+                  selectedDate = DateTime.now();
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {

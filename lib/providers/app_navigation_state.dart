@@ -14,7 +14,7 @@ class AppNavigationProvider with ChangeNotifier {
     // Logic to determine the index based on the route
     int newIndex;
     switch (route) {
-      case '/':
+      case '/start':
         newIndex = 0;
         break;
       case '/results':
@@ -36,4 +36,3 @@ class AppNavigationProvider with ChangeNotifier {
     Navigator.pushNamed(context, route);
   }
 }
-

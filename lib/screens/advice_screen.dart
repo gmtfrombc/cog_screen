@@ -1,4 +1,6 @@
 import 'package:cog_screen/providers/app_navigation_state.dart';
+import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/utilities/constants.dart';
@@ -14,60 +16,65 @@ class AdviceScreen extends StatelessWidget {
     final appNavigationProvider = Provider.of<AppNavigationProvider>(
       context,
     );
-    return Scaffold(
-      appBar: CustomAppBar(
+    Widget content = Column(
+      children: [
+        const SizedBox(height: 20), // Add some space above the title (20px
+        const Padding(
+          padding: EdgeInsets.all(12.0),
+          child: Text(
+            'Strategies for Supporting Your Cognitive Health',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.all(8.0),
+            children: [
+              _buildCard(
+                  context,
+                  'Understanding Cognitive Health',
+                  AppConstants.understandingCognitiveHealth,
+                  '/basics',
+                  'lib/assets/images/brain_food.jpeg'),
+              _buildCard(
+                  context,
+                  'Lifestyle Strategies for a Health Brain',
+                  AppConstants.lifestyleStrategies,
+                  '/lifestyle',
+                  'lib/assets/images/brain_outdoor_dog.jpeg'),
+              _buildCard(
+                  context,
+                  'Essential Oils, Memory, and Cognitive Health',
+                  AppConstants.essentialOils,
+                  '/essentialOils',
+                  'lib/assets/images/dT_EO2.jpeg'),
+            ],
+          ),
+        ),
+      ],
+    );
+    return BaseScreen(
+      authProvider: Provider.of<AuthProvider>(context, listen: false),
+      customAppBar: CustomAppBar(
         title: 'CogHealth',
         backgroundColor: AppTheme.primaryBackgroundColor,
+        showEndDrawerIcon: true,
         showLeading: true,
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 20), // Add some space above the title (20px
-          const Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Text(
-              'Strategies for Supporting Your Cognitive Health',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(8.0),
-              children: [
-                _buildCard(
-                    context,
-                    'Understanding Cognitive Health',
-                    AppConstants.understandingCognitiveHealth,
-                    '/basics',
-                    'lib/assets/images/brain_food.jpeg'),
-                _buildCard(
-                    context,
-                    'Lifestyle Strategies for a Health Brain',
-                    AppConstants.lifestyleStrategies,
-                    '/lifestyle',
-                    'lib/assets/images/brain_outdoor_dog.jpeg'),
-                _buildCard(
-                    context,
-                    'Essential Oils, Memory, and Cognitive Health',
-                    AppConstants.essentialOils,
-                    '/essentialOils',
-                    'lib/assets/images/dT_EO2.jpeg'),
-              ],
-            ),
-          ),
-        ],
-      ),
+      showDrawer: true,
+      showAppBar: true,
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: appNavigationProvider.currentIndex,
         context: context,
         appNavigationProvider: appNavigationProvider,
       ),
+      child: content, // If you want to show the AppBar
     );
   }
 
