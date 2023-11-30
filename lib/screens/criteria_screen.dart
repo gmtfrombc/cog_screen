@@ -33,22 +33,19 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
       ),
       showDrawer: true,
       showAppBar: true,
-      child: _buildCriteriaContent(context),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppTheme.secondaryColor,
-        onPressed: () {
-          // Your floating action button logic
-        },
+        onPressed: handleFloatingActionButtonPress,
         child: const Icon(Icons.navigate_next),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      child: _buildCriteriaContent(context),
     );
   }
 
   Widget _buildCriteriaContent(BuildContext context) {
     final criteriaProvider =
         Provider.of<CriteriaProvider>(context, listen: false);
-
     return Column(
       children: [
         const SizedBox(height: 20),
@@ -111,9 +108,10 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
                   color: AppTheme.primaryBackgroundColor,
                   elevation: 6,
                   margin: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 4.0,
-                  ),
+                      horizontal: 8.0, vertical: 4.0),
+                  // shape: RoundedRectangleBorder(
+                  //   borderRadius: BorderRadius.circular(12.0),
+                  // ),
                   child: Container(
                     decoration: BoxDecoration(
                       color: AppTheme.primaryBackgroundColor,
@@ -122,12 +120,37 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
                           color: Colors.grey.withOpacity(0.1),
                           spreadRadius: 2,
                           blurRadius: 4,
-                          offset: const Offset(0, 2),
+                          offset:
+                              const Offset(0, -2), // Changes position of shadow
                         ),
                       ],
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(
+                          12.0), // Adjust radius to your preference
                     ),
-                    // ... Container child properties ...
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 4.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 20),
+                        Text(
+                          criteria.statement,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            _responseButton(context, index, true),
+                            const SizedBox(width: 8),
+                            // Call the new _responseButton method for the 'No' button
+                            _responseButton(context, index, false),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -138,6 +161,20 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
     );
   }
 
+  void handleFloatingActionButtonPress() {
+    final criteriaProvider =
+        Provider.of<CriteriaProvider>(context, listen: false);
+    if (criteriaProvider.allAnswered()) {
+      _showProgressIndicator();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please answer all questions."),
+        ),
+      );
+    }
+  }
+
   void _showProgressIndicator() {
     showDialog(
       context: context,
@@ -145,25 +182,13 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
-    void _handleFloatingActionButtonPress() {
-      final criteriaProvider =
-          Provider.of<CriteriaProvider>(context, listen: false);
-      if (criteriaProvider.allAnswered()) {
-        // Your logic when all questions are answered
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Please answer all questions.")),
-        );
-      }
-    }
-
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pop(); // Close the progress indicator dialog
-      _showCompletionDialog();
+      showCompletionDialog();
     });
   }
 
-  void _showCompletionDialog() {
+  void showCompletionDialog() {
     final criteriaProvider =
         Provider.of<CriteriaProvider>(context, listen: false);
 
@@ -197,44 +222,46 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
     );
   }
 
-  Widget _responseButton(BuildContext context, bool isSelected, String label,
-      int index, VoidCallback onPressed) {
+  Widget _responseButton(BuildContext context, int index, bool isYesResponse) {
+    // Fetch the latest state directly inside the button builder
+    final criteriaProvider =
+        Provider.of<CriteriaProvider>(context, listen: true);
+    bool isSelected = (isYesResponse &&
+            criteriaProvider.criteriaList[index].response == true) ||
+        (!isYesResponse &&
+            criteriaProvider.criteriaList[index].response == false);
+
     return TextButton(
       style: TextButton.styleFrom(
         foregroundColor: isSelected ? Colors.white : null,
         backgroundColor:
             isSelected ? Theme.of(context).colorScheme.primary : null,
         padding: const EdgeInsets.symmetric(horizontal: 2.0),
-        minimumSize: const Size(
-          44,
-          36,
-        ),
+        minimumSize: const Size(44, 36),
       ),
       onPressed: () {
-        onPressed();
-
-        double itemHeight = 120.0;
-        double position = itemHeight * index;
-
-        // Check if the calculated position exceeds the maximum scroll extent
-        double maxScrollExtent = _scrollController.position.maxScrollExtent;
-        if (position > maxScrollExtent) {
-          position = maxScrollExtent; // Set to max scroll extent if it exceeds
-        }
-
-        _scrollController.animateTo(
-          position,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        );
+        final criteriaProvider =
+            Provider.of<CriteriaProvider>(context, listen: false);
+        criteriaProvider.setResponse(index, isYesResponse);
+        _scrollToIndex(index);
       },
       child: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-        ),
+        isYesResponse == true ? 'Yes' : 'No',
+        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
       ),
+    );
+  }
+
+  void _scrollToIndex(int index) {
+    double itemHeight = 120.0;
+    double position = itemHeight * index;
+    double maxScrollExtent = _scrollController.position.maxScrollExtent;
+    if (position > maxScrollExtent) position = maxScrollExtent;
+
+    _scrollController.animateTo(
+      position,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
     );
   }
 }

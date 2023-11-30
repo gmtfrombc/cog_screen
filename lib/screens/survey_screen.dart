@@ -5,7 +5,6 @@ import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/screens/countdown_timer.dart';
 import 'package:cog_screen/themes/app_theme.dart';
-import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/datepicker_bottomsheet.dart';
 import 'package:flutter/material.dart';
@@ -40,9 +39,9 @@ class _SurveyScreenState extends State<SurveyScreen> {
   Widget build(BuildContext context) {
     final surveyProvider = Provider.of<SurveyProvider>(context);
     final screenHeight = MediaQuery.of(context).size.height;
-    final appNavigationProvider = Provider.of<AppNavigationProvider>(
-      context,
-    );
+    // final appNavigationProvider = Provider.of<AppNavigationProvider>(
+    //   context,
+    // );
     Widget content = _buildBody(surveyProvider, screenHeight, context);
     return BaseScreen(
       authProvider: Provider.of<AuthProvider>(context, listen: false),
@@ -54,11 +53,11 @@ class _SurveyScreenState extends State<SurveyScreen> {
       ),
       showDrawer: false,
       showAppBar: true,
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: appNavigationProvider.currentIndex,
-        context: context,
-        appNavigationProvider: appNavigationProvider,
-      ),
+      // bottomNavigationBar: CustomBottomNavigationBar(
+      //   currentIndex: appNavigationProvider.currentIndex,
+      //   context: context,
+      //   appNavigationProvider: appNavigationProvider,
+      // ),
       child: content, // If you want to show the AppBar
     );
   }
