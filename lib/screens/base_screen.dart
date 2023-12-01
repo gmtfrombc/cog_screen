@@ -2,8 +2,9 @@ import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class BaseScreen extends StatelessWidget {
+class BaseScreen extends StatefulWidget {
   final Widget child;
   final AuthProviderClass authProvider;
   final bool showAppBar;
@@ -25,14 +26,29 @@ class BaseScreen extends StatelessWidget {
       this.showDrawer = true});
 
   @override
+  State<BaseScreen> createState() => _BaseScreenState();
+}
+
+class _BaseScreenState extends State<BaseScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: showAppBar ? (customAppBar ?? AppBar()) : null,
-      endDrawer: showDrawer ? const CustomDrawer() : null,
-      body: child,
-      bottomNavigationBar: bottomNavigationBar,
-      floatingActionButton: floatingActionButton,
-      floatingActionButtonLocation: floatingActionButtonLocation,
+      appBar: widget.showAppBar ? (widget.customAppBar ?? AppBar()) : null,
+      endDrawer: widget.showDrawer
+          ? CustomDrawer(
+              onSignOut: () async {
+                await Provider.of<AuthProviderClass>(context, listen: false)
+                    .signOut();
+                if (mounted) {
+                  Navigator.of(context).pushReplacementNamed('/');
+                } // Assuming '/login' is your login route
+              },
+            )
+          : null,
+      body: widget.child,
+      bottomNavigationBar: widget.bottomNavigationBar,
+      floatingActionButton: widget.floatingActionButton,
+      floatingActionButtonLocation: widget.floatingActionButtonLocation,
     );
   }
 }
