@@ -7,7 +7,7 @@ class SignUp extends StatefulWidget {
   const SignUp({super.key});
 
   @override
- State <SignUp> createState() => _SignUpState();
+  State<SignUp> createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
@@ -125,7 +125,10 @@ class _SignUpState extends State<SignUp> {
                   }
                 }
               },
-              child: const Text('Sign Up'),
+              child: const Text(
+                'Sign Up',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
             if (error.isNotEmpty)
               Padding(
