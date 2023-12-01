@@ -33,6 +33,7 @@ class _SignInState extends State<SignIn> {
             ),
             const SizedBox(height: 24),
             TextFormField(
+              initialValue: 'gmtfrombc@gmail.com',
               decoration: const InputDecoration(
                 labelText: 'Email',
                 prefixIcon: Icon(Icons.email_outlined),
@@ -48,6 +49,7 @@ class _SignInState extends State<SignIn> {
             ),
             const SizedBox(height: 15.0),
             TextFormField(
+              initialValue: 'password1',
               decoration: const InputDecoration(
                 labelText: 'Password',
                 prefixIcon: Icon(Icons.password_outlined),
