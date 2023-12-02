@@ -18,6 +18,7 @@ class AuthProviderClass with ChangeNotifier {
   }
 
   Future<void> signOut() async {
+    debugPrint('Signing out user ${_firebaseAuth.currentUser?.uid}');
     await _firebaseAuth.signOut();
     notifyListeners();
   }

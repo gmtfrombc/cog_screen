@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
-  final VoidCallback? onSignOut;
+  final VoidCallback? signOut;
 
-
-  const CustomDrawer({super.key, this.onSignOut});
-
+  const CustomDrawer({super.key, this.signOut});
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +85,8 @@ class CustomDrawer extends StatelessWidget {
               Icons.exit_to_app,
               'Sign Out',
               () {
-                if (onSignOut != null) {
-                  onSignOut!();
+                if (signOut != null) {
+                  signOut!();
                 }
               },
             ),

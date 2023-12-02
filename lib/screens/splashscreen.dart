@@ -93,9 +93,10 @@ class SplashScreenState extends State<SplashScreen>
                 child: const Text(
                   "LABS",
                   style: TextStyle(
-                      fontSize: 38,
-                      fontWeight: FontWeight.w100, // Thinner font weight
-                      color: Colors.black45),
+                    fontSize: 38,
+                    fontWeight: FontWeight.w400, // Thinner font weight
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
