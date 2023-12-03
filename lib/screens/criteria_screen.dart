@@ -2,6 +2,7 @@ import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/utilities/constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
+import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cog_screen/providers/criteria_provider.dart';
@@ -27,7 +28,7 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
     return BaseScreen(
       authProvider: Provider.of<AuthProviderClass>(context, listen: false),
       customAppBar: CustomAppBar(
-        title: 'CogHealth',
+        title: const CustomTextForTitle(),
         backgroundColor: AppTheme.primaryBackgroundColor,
         showLeading: true,
       ),

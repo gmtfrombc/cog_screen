@@ -190,7 +190,7 @@ class _SignUpState extends State<SignUp> {
       }
 
       if (mounted) {
-        Navigator.pushNamed(context, '/start');
+        Navigator.pushNamed(context, '/home');
       }
     } catch (e) {
       if (mounted) {

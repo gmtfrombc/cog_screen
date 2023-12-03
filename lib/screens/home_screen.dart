@@ -1,54 +1,97 @@
-import 'package:cog_screen/providers/app_navigation_state.dart';
-import 'package:cog_screen/screens/start_screen.dart';
-import 'package:cog_screen/screens/survey_result_screen.dart';
-import 'package:cog_screen/screens/survey_screen.dart';
+import 'package:cog_screen/models/health_element.dart';
+import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/screens/base_screen.dart';
+import 'package:cog_screen/themes/app_theme.dart';
+import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  HomeScreenState createState() => HomeScreenState();
-}
-
-class HomeScreenState extends State<HomeScreen> {
-  final _screens = [
-    const StartScreen(),
-    const SurveyScreen(),
-    const SurveyResultScreen(),
-    // Add other screens here...
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    final appNavigationProvider = Provider.of<AppNavigationProvider>(context);
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cognitive Screening Tool'),
+      backgroundColor: Theme.of(context).primaryColor,
+      body: BaseScreen(
+        authProvider: Provider.of<AuthProviderClass>(context, listen: false),
+        customAppBar: CustomAppBar(
+          title: Image.asset(
+            'lib/assets/images/pm_icon_full.png',
+            fit: BoxFit.cover,
+            height: 40,
+          ),
+          backgroundColor: AppTheme.primaryBackgroundColor,
+          showEndDrawerIcon: true,
+          showLeading: false,
+        ),
+        showDrawer: true,
+        showAppBar: true,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 4,
+              mainAxisSpacing: 4,
+              childAspectRatio: 0.8,
+            ),
+            itemCount: elements.length,
+            itemBuilder: (context, index) {
+              final element = elements[index];
+              return _buildElementCard(context, element);
+            },
+          ),
+        ),
       ),
-      body: _screens[appNavigationProvider.currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: appNavigationProvider.currentIndex,
-        onTap: (index) {
-          appNavigationProvider.changeIndex(index);
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Start',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assessment),
-            label: 'Results',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.poll),
-            label: 'Survey',
-          ),
-          // Add other items here...
-        ],
+    );
+  }
+
+  Widget _buildElementCard(BuildContext context, HealthElement element) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, element.route);
+      },
+      child: Card(
+        clipBehavior: Clip
+            .antiAlias, // Ensure the image is clipped to the card's border radius
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0), // Set card border radius
+        ),
+        child: Stack(
+          alignment: Alignment.center, // Center alignment for the text
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(element.imagePath),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.5), // Black overlay with opacity
+                    BlendMode.darken,
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              element.title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w300,
+                fontSize: 26,
+                letterSpacing: 1.2,
+                shadows: [
+                  Shadow(
+                    offset: const Offset(1.0, 1.0),
+                    blurRadius: 3.0,
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -23,7 +23,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
           String route;
           switch (index) {
             case 0:
-              route = '/start';
+              route = '/home';
               break;
             case 1:
               route = '/results';
@@ -47,8 +47,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
             label: 'Results',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
+            icon: Icon(
+              Icons.store,
+            ),
+            label: 'Store',
           ),
           // Add other items here...
         ],

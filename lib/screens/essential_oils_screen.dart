@@ -29,7 +29,14 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     return BaseScreen(
       authProvider: Provider.of<AuthProviderClass>(context, listen: false),
       customAppBar: CustomAppBar(
-        title: 'Essential Oils',
+        title: const Text(
+          'Essential Oils',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
         backgroundColor: AppTheme.primaryBackgroundColor,
         showEndDrawerIcon: false,
         showLeading: false,
@@ -142,7 +149,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, '/criteria'),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -182,49 +189,58 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
               ),
               Align(
                 alignment: Alignment.bottomRight, // Align to bottom-right
-                child: Row(
-                  mainAxisSize: MainAxisSize.min, // Take minimum space
-                  children: [
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            AppTheme.secondaryColor),
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 20.0)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: const BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        // Add other style properties if needed
-                      ),
-                      onPressed: () {
-                        _handleButtonClick();
-                      },
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.check, color: Colors.white),
-                          SizedBox(width: 8),
-                          Text(
-                            "I'm interested",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 15),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                child: _buildTextButton(context, "I'm interested", () {
+                  _handleButtonClick();
+                }),
               ), // Your memory enhancement card content here
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextButton(
+      BuildContext context, String text, VoidCallback onPressed) {
+    return TextButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+          AppTheme.secondaryColor.withOpacity(0.8),
+        ),
+        padding: MaterialStateProperty.all<EdgeInsets>(
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0)),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            side: const BorderSide(color: Colors.white),
+          ),
+        ),
+        overlayColor: MaterialStateProperty.all<Color>(
+          Colors.white.withOpacity(
+            0.9,
+          ),
+        ), // Splash color
+      ),
+      onPressed: () {
+        _handleButtonClick();
+      },
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.check,
+            color: Colors.white,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+            ),
+          ),
+        ],
       ),
     );
   }

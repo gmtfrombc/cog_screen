@@ -30,14 +30,14 @@ List<Question> hardcodedQuestions = [
   ),
   Question(
     id: "5",
-    questionText: "Question 5: Are the hands pointing at 5 and 11?",
+    questionText: "Question 5: Are the hands pointing at 1 and 11?",
     type: QuestionType.yesNo,
     correctAnswer: "Yes",
   ),
   Question(
     id: "6",
     questionText:
-        "Question 6; Is the long hand pointing at 5 and the short hand pointing at 11?",
+        "Question 6; Is the long hand pointing at 1 and the short hand pointing at 11?",
     type: QuestionType.yesNo,
     correctAnswer: "Yes",
   ),

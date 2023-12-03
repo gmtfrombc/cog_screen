@@ -7,12 +7,13 @@ import 'package:cog_screen/screens/survey_screen.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/utilities/constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
+import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:cog_screen/widgets/gradient_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class StartScreen extends StatelessWidget {
-  const StartScreen({
+class CognitiveScreen extends StatelessWidget {
+  const CognitiveScreen({
     super.key,
   });
 
@@ -34,7 +35,7 @@ class StartScreen extends StatelessWidget {
           ),
           const SizedBox(height: 40),
           const Text(
-            'Take the CogHealth Test',
+            'The CogHealth Test',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -84,7 +85,7 @@ class StartScreen extends StatelessWidget {
     return BaseScreen(
       authProvider: Provider.of<AuthProviderClass>(context, listen: false),
       customAppBar: CustomAppBar(
-        title: 'CogHealth',
+        title: const CustomTextForTitle(),
         backgroundColor: AppTheme.primaryBackgroundColor,
         showEndDrawerIcon: true,
         showLeading: false,

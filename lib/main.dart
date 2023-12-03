@@ -1,8 +1,13 @@
 import 'package:cog_screen/firebase_options.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/providers/cart_provider.dart';
+import 'package:cog_screen/screens/cog_health_onboarding_screen.dart';
+import 'package:cog_screen/screens/coming_soon_screen.dart';
+import 'package:cog_screen/screens/home_screen.dart';
 import 'package:cog_screen/screens/login.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
 import 'package:cog_screen/screens/research_screen.dart';
+import 'package:cog_screen/screens/shopping_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/data/survey_data.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
@@ -13,8 +18,7 @@ import 'package:cog_screen/screens/cognitive_basics_screen.dart';
 import 'package:cog_screen/screens/criteria_screen.dart';
 import 'package:cog_screen/screens/essential_oils_screen.dart';
 import 'package:cog_screen/screens/lifestyle_screen.dart';
-import 'package:cog_screen/screens/shopping_cart_screen.dart';
-import 'package:cog_screen/screens/start_screen.dart';
+import 'package:cog_screen/screens/cogntive.dart';
 import 'package:cog_screen/screens/survey_result_screen.dart';
 import 'package:cog_screen/screens/survey_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -52,6 +56,9 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (_) => AuthProviderClass(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -70,13 +77,14 @@ class MyApp extends StatelessWidget {
       initialRoute: '/splashscreen',
       routes: {
         '/': (context) => const LoginScreen(),
-        '/start': (context) =>
-            const StartScreen(), // Add your StartScreen route
+        '/home': (context) => const HomeScreen(), // Add your StartScreen route
+        '/cognitive': (context) =>
+            const CognitiveScreen(), // Add your StartScreen route
         '/survey': (context) => const SurveyScreen(),
         '/results': (context) => const SurveyResultScreen(),
         '/surveyResultScreen': (context) => const SurveyResultScreen(),
         '/basics': (context) => const CognitiveBasicsScreen(),
-        '/shoppingCart': (context) => const ShoppingCartScreen(),
+        '/shoppingCart': (context) => const ShoppingScreen(),
         '/criteria': (context) => const CriteriaScreen(),
         '/advice': (context) => const AdviceScreen(),
         '/lifestyle': (context) => const LifestyleScreen(),
@@ -84,6 +92,8 @@ class MyApp extends StatelessWidget {
         '/protocol': (context) => const ProtocolScreen(),
         '/research': (context) => const ResearchScreen(),
         '/splashscreen': (context) => const SplashScreen(),
+        '/comingsoon': (context) => const ComingSoonScreen(),
+        '/coghealthonboarding': (context) => const CogHealthOnboardingScreen(),
       },
     );
   }

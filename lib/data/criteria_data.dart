@@ -15,7 +15,7 @@ List<Criteria> criteriaDataList = [
   ),
   Criteria(
     statement:
-        'Any major health problems: uncontrolled T2DM, hypertension, nutritional deficiency, or thyroid disease,',
+        'Any major health problems: uncontrolled diabetes, hypertension, nutritional deficiency, or thyroid disease,',
   ),
   Criteria(
     statement:
@@ -26,6 +26,7 @@ List<Criteria> criteriaDataList = [
         'Do you have any cognitive impairment from Alzheimers disease , traumatic brain injury, stroke',
   ),
   Criteria(
-    statement: 'Have you had any issues with alcohol or substance abuse within the last 2 years',
+    statement:
+        'Have you had any issues with alcohol or substance abuse within the last 2 years',
   ),
 ];

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:provider/provider.dart';
+import 'package:cog_screen/utilities/constants.dart';
 
 class ProtocolScreen extends StatelessWidget {
   const ProtocolScreen({super.key});
@@ -24,8 +25,9 @@ class ProtocolScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(height: 20),
                       const Text(
-                        'For this protocol use a diffuser with the essential oils listed. Feel free to substitute for your favorite essential oils. Follow these steps to ensure proper usage:',
+                        AppConstants.protocol,
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 20),
@@ -40,8 +42,10 @@ class ProtocolScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        'Continue this regimen, changing the diffuser water daily before going to bed.',
-                        style: TextStyle(fontSize: 16),
+                        AppConstants.frequesncyDuration,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
                       ),
                     ],
                   ),
@@ -108,7 +112,7 @@ class ProtocolScreen extends StatelessWidget {
           '2. Fill the diffuser with the essential oil of the night.\n'
           '3. Turn on the diffuser when going to bed.\n'
           '4. Diffuse the essential oil for at least 2 hours.\n'
-          '5. Rotate through different essential oils each night.',
+          '5. Rotate through a different essential oil each night.',
           style: TextStyle(fontSize: 16),
         ),
       ],

@@ -6,6 +6,7 @@ import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/screens/countdown_timer.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
+import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:cog_screen/widgets/datepicker_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -39,25 +40,22 @@ class _SurveyScreenState extends State<SurveyScreen> {
   Widget build(BuildContext context) {
     final surveyProvider = Provider.of<SurveyProvider>(context);
     final screenHeight = MediaQuery.of(context).size.height;
-    // final appNavigationProvider = Provider.of<AppNavigationProvider>(
-    //   context,
-    // );
-    Widget content = _buildBody(surveyProvider, screenHeight, context);
+
+    Widget content = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: _buildBody(surveyProvider, screenHeight, context),
+    );
+
     return BaseScreen(
       authProvider: Provider.of<AuthProviderClass>(context, listen: false),
       customAppBar: CustomAppBar(
-        title: 'CogHealth',
+        title: const CustomTextForTitle(),
         backgroundColor: AppTheme.primaryBackgroundColor,
         showEndDrawerIcon: false,
         showLeading: false,
       ),
       showDrawer: false,
       showAppBar: true,
-      // bottomNavigationBar: CustomBottomNavigationBar(
-      //   currentIndex: appNavigationProvider.currentIndex,
-      //   context: context,
-      //   appNavigationProvider: appNavigationProvider,
-      // ),
       child: content, // If you want to show the AppBar
     );
   }
@@ -66,39 +64,50 @@ class _SurveyScreenState extends State<SurveyScreen> {
       SurveyProvider provider, double screenHeight, BuildContext context) {
     if (provider.shouldShowFinishInstruction) {
       return _buildInstructionScreen(
-          context,
-          "When you are finished the CogHealth Test, select: 'I am done.'",
-          () => provider.seeFinishInstruction());
+        context,
+        "When you are finished the CogHealth Test, you will see five options.\n\nRemember to select: 'I am done.'",
+        () => provider.seeFinishInstruction(),
+      );
     }
     if (provider.shouldShowInstructionForQuestion4) {
       return _buildInstructionScreen(
-          context,
-          "Get your piece of blank paper.\n\nCopy a clock face with numbers and put the time at 5 minutes past 11. \n\nOnce you are done, click 'Continue'",
-          () => provider.seeInstructionForQuestion4());
+        context,
+        "Get your piece of blank paper.\n\nCopy a clock face with numbers and put the time at 5 minutes past 11. \n\nWhen you are done, click 'Continue'",
+        () => provider.seeInstructionForQuestion4(),
+      );
     }
     if (provider.shouldShowInstructionForQuestion7) {
       return _buildQuestion7Instruction(context, provider, screenHeight);
     }
     return _buildQuestionContent(
-        provider.currentQuestion, provider, context, screenHeight);
+      provider.currentQuestion,
+      provider,
+      context,
+      screenHeight,
+    );
+  }
+
+  TextStyle _standardTextStyle() {
+    return const TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    );
   }
 
   Widget _buildInstructionScreen(
       BuildContext context, String instruction, VoidCallback onContinue) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Center(
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: 16.0), // Consistent horizontal padding
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 120),
             Text(instruction,
-                style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-                textAlign: TextAlign.center),
+                style: _standardTextStyle(), textAlign: TextAlign.center),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: onContinue,
@@ -114,22 +123,20 @@ class _SurveyScreenState extends State<SurveyScreen> {
       BuildContext context, SurveyProvider provider, double screenHeight) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+        ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 40,
+                height: 120,
               ),
-              const Text(
-                "Flip over your piece of paper and when you are ready, start the timer\n\nWrite down as many animals as you can think of in 15 seconds (don't worry about spelling)",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+              Text(
+                "Flip over your piece of paper. When you are ready, start the timer below.\n\nWrite down as many animals as you can think of in 15 seconds (don't worry about spelling)",
+                style: _standardTextStyle(),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30),
@@ -149,7 +156,9 @@ class _SurveyScreenState extends State<SurveyScreen> {
       BuildContext context, double screenHeight) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -157,11 +166,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
             SizedBox(height: screenHeight * 0.15),
             Text(
               question.questionText,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+              style: _standardTextStyle(),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -257,38 +262,44 @@ class _SurveyScreenState extends State<SurveyScreen> {
 
   Widget _buildMultipleChoice(
       Question question, SurveyProvider surveyProvider, BuildContext context) {
-    return Column(
-      children: [
-        ...question.options!.map((option) {
-          return RadioListTile<String>(
-            title: Text(
-              option,
-              style: const TextStyle(
-                  fontWeight: FontWeight.w600, color: Colors.black),
-            ),
-            value: option,
-            groupValue: surveyProvider.selectedOption,
-            onChanged: (value) {
-              if (value != null) {
-                surveyProvider.selectOption(value);
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+      ),
+      child: Column(
+        children: [
+          ...question.options!.map((option) {
+            return RadioListTile<String>(
+              title: Text(
+                option,
+                style: const TextStyle(
+                    fontWeight: FontWeight.w600, color: Colors.black),
+              ),
+              value: option,
+              groupValue: surveyProvider.selectedOption,
+              onChanged: (value) {
+                if (value != null) {
+                  surveyProvider.selectOption(value);
+                }
+              },
+            );
+          }),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            child: const Text('Submit'),
+            onPressed: () {
+              // Make sure an option is selected before allowing the user to submit
+              if (surveyProvider.selectedOption != null) {
+                surveyProvider.addResponse(surveyProvider.selectedOption!);
+                // Delay the call to nextQuestion by 1 frame
+                Future.delayed(Duration.zero, () {
+                  surveyProvider.nextQuestion(context);
+                });
               }
             },
-          );
-        }),
-        ElevatedButton(
-          child: const Text('Submit'),
-          onPressed: () {
-            // Make sure an option is selected before allowing the user to submit
-            if (surveyProvider.selectedOption != null) {
-              surveyProvider.addResponse(surveyProvider.selectedOption!);
-              // Delay the call to nextQuestion by 1 frame
-              Future.delayed(Duration.zero, () {
-                surveyProvider.nextQuestion(context);
-              });
-            }
-          },
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 

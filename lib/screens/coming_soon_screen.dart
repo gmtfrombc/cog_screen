@@ -3,8 +3,8 @@ import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
 
-class ResearchScreen extends StatelessWidget {
-  const ResearchScreen({super.key});
+class ComingSoonScreen extends StatelessWidget {
+  const ComingSoonScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,10 @@ class ResearchScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Research Studies '),
+            Text(
+              'Coming Soon...',
+              style: TextStyle(fontSize: 22),
+            ),
           ],
         ),
       ),

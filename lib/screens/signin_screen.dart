@@ -17,11 +17,42 @@ class _SignInState extends State<SignIn> {
   String error = '';
   bool _passwordVisible = false;
   bool isLoading = false;
+  final TextEditingController _controller1 = TextEditingController();
+  final FocusNode _focusNode1 = FocusNode();
+  final TextEditingController _controller2 = TextEditingController();
+  final FocusNode _focusNode2 = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _passwordVisible = false; // Initially password is obscure
+    _passwordVisible = false;
+    _controller1.text = 'gmtfrombc@gmail.com';
+    _controller2.text = 'password1';
+    _focusNode1.addListener(() {
+      if (_focusNode1.hasFocus) {
+        _controller1.selection = TextSelection(
+          baseOffset: 0,
+          extentOffset: _controller1.text.length,
+        );
+      }
+    });
+    _focusNode2.addListener(() {
+      if (_focusNode2.hasFocus) {
+        _controller2.selection = TextSelection(
+          baseOffset: 0,
+          extentOffset: _controller2.text.length,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller1.dispose();
+    _focusNode1.dispose();
+    _controller2.dispose();
+    _focusNode2.dispose();
+    super.dispose();
   }
 
   @override
@@ -45,12 +76,14 @@ class _SignInState extends State<SignIn> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Icon(
-            Icons.person_sharp, // Outlined person icon
-            size: 100, // Large icon size
-            color: Theme.of(context).primaryColor, // Icon color
+            Icons.person_sharp,
+            size: 100,
+            color: Theme.of(context).primaryColor,
           ),
           const SizedBox(height: 24),
           TextFormField(
+            controller: _controller1,
+            focusNode: _focusNode1,
             decoration: const InputDecoration(
               labelText: 'Email',
               prefixIcon: Icon(Icons.email_outlined),
@@ -65,6 +98,8 @@ class _SignInState extends State<SignIn> {
           ),
           const SizedBox(height: 15.0),
           TextFormField(
+            controller: _controller2,
+            focusNode: _focusNode2,
             decoration: InputDecoration(
               labelText: 'Password',
               suffixIcon: IconButton(
@@ -137,12 +172,14 @@ class _SignInState extends State<SignIn> {
       isLoading = true;
     });
     try {
+      email = "gmtfrombc@gmail.com";
+      password = "password1";
       await authProvider.signInWithEmailAndPassword(
         email,
         password,
       );
       if (mounted) {
-        Navigator.pushNamed(context, '/start');
+        Navigator.pushNamed(context, '/home');
       }
     } catch (e) {
       if (mounted) {

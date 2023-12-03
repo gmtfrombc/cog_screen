@@ -1,12 +1,13 @@
 // main_screen.dart
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:cog_screen/screens/shopping_cart_screen.dart';
+import 'package:cog_screen/screens/store.dart';
 import 'package:cog_screen/screens/survey_result_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
+import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
-import 'package:cog_screen/screens/start_screen.dart';
+import 'package:cog_screen/screens/cogntive.dart';
 import 'package:provider/provider.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 
@@ -20,15 +21,15 @@ class MainScreen extends StatelessWidget {
         builder: (context, navigationState, child) {
       return Scaffold(
         appBar: CustomAppBar(
-          title: 'Cognitive Screening Tool',
+          title: const CustomTextForTitle(),
           backgroundColor: AppTheme.primaryBackgroundColor,
         ),
         body: IndexedStack(
           index: navigationState.currentIndex,
           children: <Widget>[
-            const StartScreen(),
+            const CognitiveScreen(),
             SurveyResultScreen(),
-            const ShoppingCartScreen(),
+            const StoreScreen(),
             // Add other screens as needed
           ],
         ),

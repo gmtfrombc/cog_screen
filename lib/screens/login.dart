@@ -4,6 +4,7 @@ import 'package:cog_screen/screens/signin_screen.dart';
 import 'package:cog_screen/screens/signup_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
+import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // Assuming you have separate files for SignIn and _SignUp widgets
@@ -18,7 +19,7 @@ class LoginScreen extends StatelessWidget {
       showAppBar: false,
       customAppBar: CustomAppBar(
         backgroundColor: AppTheme.primaryBackgroundColor,
-        title: 'CogHealth',
+        title: const CustomTextForTitle(),
         showEndDrawerIcon: false,
         showLeading: false,
       ),

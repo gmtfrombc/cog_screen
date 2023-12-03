@@ -1,12 +1,14 @@
+import 'package:cog_screen/widgets/shopping_cart_icon.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
+  final Widget title;
   final Color backgroundColor;
   final double elevation;
   final List<Widget>? actions;
   final bool showLeading;
   final bool showEndDrawerIcon;
+  final bool showShoppingCartIcon; // New parameter
 
   const CustomAppBar({
     super.key,
@@ -16,19 +18,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.showLeading = true,
     this.showEndDrawerIcon = true,
+    this.showShoppingCartIcon = false, // Default value
   });
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Text(
-        title,
-        style: const TextStyle(
+    List<Widget> appBarActions = [
+      if (showEndDrawerIcon)
+        IconButton(
+          icon: const Icon(Icons.menu),
           color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.w400,
+          onPressed: () => Scaffold.of(context).openEndDrawer(),
         ),
-      ),
+    ];
+    if (showShoppingCartIcon) {
+      appBarActions
+          .add(const ShoppingCartIcon()); // Add ShoppingCartIcon conditionally
+    }
+    return AppBar(
+      title: title,
       centerTitle: false,
       backgroundColor: backgroundColor,
       elevation: elevation,
@@ -36,14 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: const IconThemeData(
         color: Colors.black,
       ),
-      actions: <Widget>[
-        if (showEndDrawerIcon)
-          IconButton(
-            icon: const Icon(Icons.menu),
-            color: Colors.black,
-            onPressed: () => Scaffold.of(context).openEndDrawer(),
-          ),
-      ],
+      actions: appBarActions,
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(1.0),
         child: Container(

@@ -21,7 +21,7 @@ class AppConstants {
   static const String medAdvice =
       "In order to receive recommendations and a standing order for medical treatment, please complete the following questionnaire.";
   static const String memoryEnhancement =
-      "Are you interested in receiving a health provider's standing order for essential oils and our memory enhancment protocol?";
+      "Are you interested in receiving a health provider's standing order to receive essential oils, along with our memory enhancment protocols?";
   static const String overnightOlfactory =
       "This study demonstrated that overnight olfactory enrichment using an odorant diffuser improved memory and modified the uncinate fasciculus in older adults. The results suggest that olfactory stimulation may be a promising non-pharmacological intervention for improving memory and cognitive health.";
   static const String lavenderAromatherapy =
@@ -30,4 +30,8 @@ class AppConstants {
       "This paper reviewed the potential benefits of essential oils in Alzheimer's disease. The results suggest that essential oils may be a potential neuroprotective remedy for Alzheimer's disease.";
   static const String shortTermMemory =
       "This study investigated the effect of the essential oils of lavender and rosemary on the human short-term memory. The results suggest that lavender essential oil may be used as a natural remedy for the treatment of memory disorders.";
+  static const String protocol =
+      "For this protocol use a diffuser with the essential oils listed. Feel free to substitute for your favorite essential oils. Follow these steps to ensure proper usage:";
+  static const String frequesncyDuration =
+      'Continue this protocol each night, changing the diffuser water daily before going to bed and rotating the essential oil mix. Continue for at least 3 months before rechecking the CogHealth Test.';
 }
