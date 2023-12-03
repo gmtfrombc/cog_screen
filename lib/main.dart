@@ -5,6 +5,7 @@ import 'package:cog_screen/screens/cog_health_onboarding_screen.dart';
 import 'package:cog_screen/screens/coming_soon_screen.dart';
 import 'package:cog_screen/screens/home_screen.dart';
 import 'package:cog_screen/screens/login.dart';
+import 'package:cog_screen/screens/onboarding_screen.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
 import 'package:cog_screen/screens/research_screen.dart';
 import 'package:cog_screen/screens/shopping_screen.dart';
@@ -93,6 +94,7 @@ class MyApp extends StatelessWidget {
         '/research': (context) => const ResearchScreen(),
         '/splashscreen': (context) => const SplashScreen(),
         '/comingsoon': (context) => const ComingSoonScreen(),
+        '/onboarding': (context) => const OnboardingScreen(),
         '/coghealthonboarding': (context) => const CogHealthOnboardingScreen(),
       },
     );

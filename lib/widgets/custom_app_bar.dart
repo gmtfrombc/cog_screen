@@ -23,17 +23,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> appBarActions = [
-      if (showEndDrawerIcon)
+    List<Widget> appBarActions = [];
+    if (showShoppingCartIcon) {
+      appBarActions.add(const ShoppingCartIcon());
+    }
+    if (showEndDrawerIcon) {
+      appBarActions.add(
         IconButton(
           icon: const Icon(Icons.menu),
           color: Colors.black,
           onPressed: () => Scaffold.of(context).openEndDrawer(),
         ),
-    ];
-    if (showShoppingCartIcon) {
-      appBarActions
-          .add(const ShoppingCartIcon()); // Add ShoppingCartIcon conditionally
+      );
     }
     return AppBar(
       title: title,

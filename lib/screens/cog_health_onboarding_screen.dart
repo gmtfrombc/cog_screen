@@ -18,30 +18,36 @@ class CogHealthOnboardingScreen extends StatelessWidget {
         backgroundColor:
             AppTheme.primaryBackgroundColor, // Replace with your theme color
         showEndDrawerIcon: true,
-        showLeading: false,
+        showLeading: true,
       ),
       showDrawer: false,
       showAppBar: false,
-      child: Column(
+      child: Stack(
         children: [
-          Expanded(
-            flex: 1,
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
             child: ClipPath(
               clipper: WaveClipper(),
               child: Image.asset(
-                'lib/assets/images/cog_health_onboarding.jpeg', // Replace with your image path
+                'lib/assets/images/cog_health_onboarding.jpeg',
                 fit: BoxFit.cover,
+                height: MediaQuery.of(context).size.height / 2,
               ),
             ),
           ),
-          Expanded(
-            flex: 1,
+          Positioned(
+            //top: 400,
+            top: 2 * MediaQuery.of(context).size.height / 4,
+            left: 0,
+            right: 0,
+            //bottom: 100,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 20),
                   const Text(
                     'Welcome to Cognitive Health',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -72,6 +78,14 @@ class CogHealthOnboardingScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+          Positioned(
+            top: 50, // Adjust the position as needed
+            left: 10, // Adjust the position as needed
+            child: IconButton(
+              icon: const Icon(Icons.chevron_left, size: 30),
+              onPressed: () => Navigator.of(context).pop(),
             ),
           ),
         ],

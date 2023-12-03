@@ -1,7 +1,7 @@
 import 'package:cog_screen/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// Import your CartProvider
+import 'package:cog_screen/screens/cart_screen.dart'; // Import your CartScreen
 
 class ShoppingCartIcon extends StatelessWidget {
   const ShoppingCartIcon({super.key});
@@ -15,7 +15,9 @@ class ShoppingCartIcon extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.shopping_cart),
             onPressed: () {
-              // Navigate to cart screen or display cart details
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const CartScreen()),
+              );
             },
           ),
           if (cart.itemCount > 0)

@@ -31,7 +31,9 @@ class AppConstants {
   static const String shortTermMemory =
       "This study investigated the effect of the essential oils of lavender and rosemary on the human short-term memory. The results suggest that lavender essential oil may be used as a natural remedy for the treatment of memory disorders.";
   static const String protocol =
-      "For this protocol use a diffuser with the essential oils listed. Feel free to substitute for your favorite essential oils. Follow these steps to ensure proper usage:";
+      "For this protocol use a diffuser with the essential oils listed. Feel free to substitute for your favorite essential oils. Follow these steps to ensure proper usage.";
   static const String frequesncyDuration =
-      'Continue this protocol each night, changing the diffuser water daily before going to bed and rotating the essential oil mix. Continue for at least 3 months before rechecking the CogHealth Test.';
+      "Continue this protocol each night, changing the diffuser water daily before going to bed and rotating the essential oil mix. \n\nCheck out our store to purchase essential oils and related products.";
+  static const String welcome =
+      "Thank you for helping test out the PowerME app.\n\nPlease rest assured we are not collecting any personal or health information.\n\nWhile not everything is wired up yet, we would love your feedback on what you see so far.\n\nThanks again for your help!\n\nYour PowerME Team";
 }

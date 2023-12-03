@@ -66,6 +66,10 @@ flutter:
     - lib/assets/images/dT_EO8.jpeg
     - lib/assets/images/dT_EO9.jpeg
     - lib/assets/images/dT_EO10.jpeg
+    - lib/assets/images/dT_EO11.jpeg
+    - lib/assets/images/dT_EO12.jpeg
+    - lib/assets/images/dT_EO13.jpeg
+    - lib/assets/images/dT_EO14.jpeg
     - lib/assets/images/brain_food.jpeg
     - lib/assets/images/brain_health_about.jpeg
     - lib/assets/images/brain_health_about2.jpeg
@@ -89,6 +93,8 @@ flutter:
     - lib/assets/images/movement.jpeg
     - lib/assets/images/cog_health.jpeg
     - lib/assets/images/cog_health_onboarding.jpeg
+    - lib/assets/images/welcome.jpeg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
