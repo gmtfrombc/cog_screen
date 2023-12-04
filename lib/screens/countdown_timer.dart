@@ -1,8 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:async';
+import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 
 class CountdownTimer extends StatefulWidget {
@@ -47,6 +49,8 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
+    final surveyProvider = Provider.of<SurveyProvider>(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -82,7 +86,12 @@ class _CountdownTimerState extends State<CountdownTimer> {
         ),
         const SizedBox(height: 40),
         ElevatedButton(
-          onPressed: _startTimer,
+          onPressed: surveyProvider.isTimerButtonEnabled
+              ? () {
+                  surveyProvider.startTimer();
+                  _startTimer();
+                }
+              : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppTheme.primaryColor, // Deep green
             foregroundColor: Colors.white, // Text color

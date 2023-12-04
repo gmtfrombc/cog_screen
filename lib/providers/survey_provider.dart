@@ -8,12 +8,14 @@ class SurveyProvider extends ChangeNotifier {
   int _currentQuestionIndex = 0;
   String? _selectOption;
   int _totalScore = 0;
+  bool _isTimerButtonEnabled = true; // New property
 
   bool _hasSeenInstructionForQuestion4 = false;
   bool _hasSeenInstructionForQuestion7 = false;
   bool _surveyEnded = false;
   bool _hasSeenFinishInstruction = false;
   bool get isLastQuestion => _currentQuestionIndex == _questions.length - 1;
+  bool get isTimerButtonEnabled => _isTimerButtonEnabled;
 
   List<Question> get questions => _questions;
   List<UserResponse> get userResponses => _userResponses;
@@ -116,6 +118,10 @@ class SurveyProvider extends ChangeNotifier {
       return 3;
     }
   }
+  void startTimer() {
+    _isTimerButtonEnabled = false;
+    notifyListeners();
+  }
 
   void nextQuestion(BuildContext context) {
     if (_currentQuestionIndex < _questions.length - 1) {
@@ -150,7 +156,8 @@ class SurveyProvider extends ChangeNotifier {
     _hasSeenInstructionForQuestion7 = false;
     _surveyEnded = false;
     _hasSeenFinishInstruction = false;
-    _totalScore = 0; // Reset the score
+    _totalScore = 0; 
+    _isTimerButtonEnabled  = true; 
     notifyListeners();
   }
 }

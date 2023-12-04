@@ -1,4 +1,5 @@
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProviderClass>(context);
+    final surveyProvider = Provider.of<SurveyProvider>(context, listen: false);
 
     return Drawer(
       child: Container(
@@ -87,6 +89,7 @@ class CustomDrawer extends StatelessWidget {
               () {
                 if (signOut != null) {
                   signOut!();
+                  surveyProvider.restartSurvey();
                 }
               },
             ),

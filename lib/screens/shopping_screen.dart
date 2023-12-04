@@ -119,11 +119,7 @@ class ShoppingScreen extends StatelessWidget {
                   '\$${product.price.toStringAsFixed(2)}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.add_shopping_cart),
-                  color: Theme.of(context).primaryColor,
-                  iconSize: 22,
-                  splashRadius: 20,
+                TextButton(
                   onPressed: () {
                     Provider.of<CartProvider>(context, listen: false).addItem(
                       product.id,
@@ -131,6 +127,15 @@ class ShoppingScreen extends StatelessWidget {
                       product.name,
                     );
                   },
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppTheme.primaryColor,
+                    padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                    minimumSize: const Size(54, 30),
+                  ),
+                  child: const Text(
+                    'Add',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),

@@ -1,5 +1,5 @@
 import 'package:cog_screen/providers/app_navigation_state.dart';
-import 'package:cog_screen/screens/cogntive.dart';
+import 'package:cog_screen/screens/cogntive_screen.dart';
 import 'package:cog_screen/screens/survey_result_screen.dart';
 import 'package:cog_screen/screens/survey_screen.dart';
 import 'package:flutter/material.dart';

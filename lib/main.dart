@@ -19,7 +19,7 @@ import 'package:cog_screen/screens/cognitive_basics_screen.dart';
 import 'package:cog_screen/screens/criteria_screen.dart';
 import 'package:cog_screen/screens/essential_oils_screen.dart';
 import 'package:cog_screen/screens/lifestyle_screen.dart';
-import 'package:cog_screen/screens/cogntive.dart';
+import 'package:cog_screen/screens/cogntive_screen.dart';
 import 'package:cog_screen/screens/survey_result_screen.dart';
 import 'package:cog_screen/screens/survey_screen.dart';
 import 'package:firebase_core/firebase_core.dart';

@@ -7,7 +7,7 @@ import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
-import 'package:cog_screen/screens/cogntive.dart';
+import 'package:cog_screen/screens/cogntive_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 
