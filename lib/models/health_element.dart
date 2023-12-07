@@ -12,7 +12,7 @@ class HealthElement {
 
 final List<HealthElement> elements = [
   HealthElement(
-    "Cognitive Health",
+    "Brain Health",
     "lib/assets/images/cog_health.jpeg",
     "/coghealthonboarding",
   ),
