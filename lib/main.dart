@@ -15,11 +15,9 @@ import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/providers/criteria_provider.dart';
 import 'package:cog_screen/screens/advice_screen.dart';
-import 'package:cog_screen/screens/cognitive_basics_screen.dart';
 import 'package:cog_screen/screens/criteria_screen.dart';
 import 'package:cog_screen/screens/essential_oils_screen.dart';
-import 'package:cog_screen/screens/lifestyle_screen.dart';
-import 'package:cog_screen/screens/cogntive_screen.dart';
+import 'package:cog_screen/screens/coghealth_test.dart';
 import 'package:cog_screen/screens/survey_result_screen.dart';
 import 'package:cog_screen/screens/survey_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -84,11 +82,9 @@ class MyApp extends StatelessWidget {
         '/survey': (context) => const SurveyScreen(),
         '/results': (context) => const SurveyResultScreen(),
         '/surveyResultScreen': (context) => const SurveyResultScreen(),
-        '/basics': (context) => const CognitiveBasicsScreen(),
         '/shoppingCart': (context) => const ShoppingScreen(),
         '/criteria': (context) => const CriteriaScreen(),
         '/advice': (context) => const AdviceScreen(),
-        '/lifestyle': (context) => const LifestyleScreen(),
         '/essentialOils': (context) => const EssentialOilScreen(),
         '/protocol': (context) => const ProtocolScreen(),
         '/research': (context) => const ResearchScreen(),

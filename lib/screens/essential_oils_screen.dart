@@ -122,10 +122,8 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
       isLoading = true;
     });
     try {
-      debugPrint('userId: $userId');
       await FirebaseService().recordUserAction(userId, 'InterestedButton');
       if (mounted) {
-        debugPrint('Navigating to criteria screen');
         Navigator.pushNamed(context, '/criteria');
       }
     } catch (e) {

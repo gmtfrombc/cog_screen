@@ -73,7 +73,7 @@ class CogHealthOnboardingScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   ElevatedButton(
-                    onPressed: () => Navigator.pushNamed(context, '/cognitive'),
+                    onPressed: () => Navigator.pushNamed(context, '/advice'),
                     child: const Text('Get Started'),
                   ),
                 ],

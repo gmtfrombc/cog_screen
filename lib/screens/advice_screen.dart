@@ -33,10 +33,17 @@ class AdviceScreen extends StatelessWidget {
           ),
         ),
 
-        Expanded(
+        SizedBox(
+          height: 250,
           child: ListView(
-            padding: const EdgeInsets.all(8.0),
+            scrollDirection: Axis.horizontal,
             children: [
+              _buildCard(
+                  context,
+                  'Essential Oils, Memory, and Cognitive Health',
+                  AppConstants.essentialOils,
+                  '/essentialOils',
+                  'lib/assets/images/dT_EO2.jpeg'),
               _buildCard(
                   context,
                   'Understanding Cognitive Health',
@@ -49,12 +56,6 @@ class AdviceScreen extends StatelessWidget {
                   AppConstants.lifestyleStrategies,
                   '/comingsoon',
                   'lib/assets/images/brain_outdoor_dog.jpeg'),
-              _buildCard(
-                  context,
-                  'Essential Oils, Memory, and Cognitive Health',
-                  AppConstants.essentialOils,
-                  '/essentialOils',
-                  'lib/assets/images/dT_EO2.jpeg'),
             ],
           ),
         ),
@@ -82,34 +83,51 @@ class AdviceScreen extends StatelessWidget {
   Widget _buildCard(BuildContext context, String title, String description,
       String route, String imagePath) {
     return Card(
-      elevation: 4.0,
-      color: AppTheme.primaryBackgroundColor,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, route),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            crossAxisAlignment:
-                CrossAxisAlignment.center, // Center items vertically
-            children: [
-              Expanded(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center, // Center text vertically
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+        child: Row(
+          crossAxisAlignment:
+              CrossAxisAlignment.center, // Center items vertically
+          children: [
+            SizedBox(
+              width: 160,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Opacity(
+                    opacity: 0.7,
+                    child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(10), // Rounded corners
+                      child: Image.asset(
+                        imagePath,
+                        fit: BoxFit.cover,
+                        width: 80, // Set a fixed width for the image
+                        height: 90, // Set a fixed height for the image
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+                    child: Text(
                       title,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 8),
-                    Text(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
                       description,
                       style: const TextStyle(
                         fontSize: 12,
@@ -118,28 +136,11 @@ class AdviceScreen extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3,
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 10),
-              Opacity(
-                opacity: 0.7, // Adjust opacity as needed
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10), // Rounded corners
-                  child: Image.asset(
-                    imagePath,
-                    fit: BoxFit.cover,
-                    width: 80, // Set a fixed width for the image
-                    height: 90, // Set a fixed height for the image
                   ),
-                ),
+                ],
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Icon(Icons.chevron_right, color: Colors.black),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
