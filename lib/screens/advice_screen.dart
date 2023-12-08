@@ -25,7 +25,7 @@ class AdviceScreen extends StatelessWidget {
           child: Text(
             'Strategies for Supporting Your Cognitive Health',
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
@@ -34,22 +34,22 @@ class AdviceScreen extends StatelessWidget {
         ),
 
         SizedBox(
-          height: 250,
+          height: 220,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
+              _buildCard(
+                  context,
+                  'Understanding Cognitive Health',
+                  AppConstants.understandingCognitiveHealth,
+                  '/comingsoon',
+                  'lib/assets/images/brain_health_2.jpeg'),
               _buildCard(
                   context,
                   'Essential Oils, Memory, and Cognitive Health',
                   AppConstants.essentialOils,
                   '/essentialOils',
                   'lib/assets/images/dT_EO2.jpeg'),
-              _buildCard(
-                  context,
-                  'Understanding Cognitive Health',
-                  AppConstants.understandingCognitiveHealth,
-                  '/comingsoon',
-                  'lib/assets/images/brain_food.jpeg'),
               _buildCard(
                   context,
                   'Lifestyle Strategies for a Health Brain',
@@ -83,7 +83,7 @@ class AdviceScreen extends StatelessWidget {
   Widget _buildCard(BuildContext context, String title, String description,
       String route, String imagePath) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
       elevation: 4.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
@@ -100,15 +100,19 @@ class AdviceScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Opacity(
-                    opacity: 0.7,
+                    opacity: 0.9,
                     child: ClipRRect(
                       borderRadius:
                           BorderRadius.circular(10), // Rounded corners
-                      child: Image.asset(
-                        imagePath,
-                        fit: BoxFit.cover,
-                        width: 80, // Set a fixed width for the image
-                        height: 90, // Set a fixed height for the image
+                      child: SizedBox(
+                        width:
+                            double.infinity, // Takes the full width of the card
+                        height: 100, // Fixed height for all images
+                        child: Image.asset(
+                          imagePath,
+                          fit: BoxFit
+                              .cover, // Covers the area while maintaining aspect ratio
+                        ),
                       ),
                     ),
                   ),
@@ -117,7 +121,7 @@ class AdviceScreen extends StatelessWidget {
                     child: Text(
                       title,
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
@@ -130,11 +134,11 @@ class AdviceScreen extends StatelessWidget {
                     child: Text(
                       description,
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Colors.black,
                       ),
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
+                      maxLines: 2,
                     ),
                   ),
                 ],

@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
         '/splashscreen': (context) => const SplashScreen(),
         '/comingsoon': (context) => const ComingSoonScreen(),
         '/onboarding': (context) => const OnboardingScreen(),
-        '/cogtestonboarding': (context) => const CogTestOnboardingScreen(),
+        '/brainCareOboarding': (context) => const BrainCareOnboardingScreen(),
       },
     );
   }

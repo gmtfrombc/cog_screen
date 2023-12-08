@@ -6,8 +6,8 @@ import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CogTestOnboardingScreen extends StatelessWidget {
-  const CogTestOnboardingScreen({super.key});
+class BrainCareOnboardingScreen extends StatelessWidget {
+  const BrainCareOnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class CogTestOnboardingScreen extends StatelessWidget {
             child: ClipPath(
               clipper: WaveClipper(),
               child: Image.asset(
-                'lib/assets/images/cog_health_start2.jpeg',
+                'lib/assets/images/brain_health_onboarding.jpeg',
                 fit: BoxFit.cover,
                 height: MediaQuery.of(context).size.height / 2,
               ),
@@ -49,20 +49,26 @@ class CogTestOnboardingScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Welcome to the CogHealth Test',
+                    'Welcome to the Brain Health',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'In this module you will be able to:',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      _buildBulletItem(
+                          'Perform a brief cognitive screen called the CogHealth Test.'),
+                      _buildBulletItem(
+                          'Explore strategies to improve memory and cognitive health.'),
+                      _buildBulletItem(
+                          'Learn about the exciting research on essential oils and cognitive health.'),
                     ],
                   ),
                   const SizedBox(height: 32),
@@ -76,9 +82,11 @@ class CogTestOnboardingScreen extends StatelessWidget {
           ),
           Positioned(
             top: 50, // Adjust the position as needed
-            left: 10, // Adjust the position as needed
             child: IconButton(
-              icon: const Icon(Icons.chevron_left, size: 30),
+              icon: const Icon(
+                Icons.chevron_left,
+                size: 40,
+              ),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),
@@ -86,6 +94,32 @@ class CogTestOnboardingScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildBulletItem(String text) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 8.0, left: 16.0),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          '• ',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 class WaveClipper extends CustomClipper<Path> {

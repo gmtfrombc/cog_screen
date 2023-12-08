@@ -14,7 +14,7 @@ final List<HealthElement> elements = [
   HealthElement(
     "Brain Health",
     "lib/assets/images/cog_health.jpeg",
-    "/coghealthonboarding",
+    "/brainCareOboarding",
   ),
   HealthElement(
     "Sleep",

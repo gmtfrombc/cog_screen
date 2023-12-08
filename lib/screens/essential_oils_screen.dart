@@ -100,11 +100,11 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         ),
         Positioned(
           top: MediaQuery.of(context).padding.top,
-          left: 10,
+          //left: 10,
           child: IconButton(
             icon: const Icon(
               Icons.chevron_left,
-              size: 30,
+              size: 40,
               color: Colors.black45,
             ),
             onPressed: () {
@@ -117,7 +117,6 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
   }
 
   void _handleButtonClick() async {
-    debugPrint('Button clicked');
     setState(() {
       isLoading = true;
     });
@@ -159,13 +158,13 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                     size: 30.0,
                   ),
                   const SizedBox(width: 10),
-                  const Expanded(
+                  Expanded(
                     child: Text(
                       'Memory Enhancement Protocol',
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.secondaryColor),
                     ),
                   ),
                 ],
@@ -308,7 +307,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
           child: Text(
-            'Essential Oil Research',
+            'Latest Essential Oil Research',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),

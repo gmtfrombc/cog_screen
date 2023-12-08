@@ -6,8 +6,8 @@ import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CogTestOnboardingScreen extends StatelessWidget {
-  const CogTestOnboardingScreen({super.key});
+class CogOnboardingScreen extends StatelessWidget {
+  const CogOnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +31,16 @@ class CogTestOnboardingScreen extends StatelessWidget {
             child: ClipPath(
               clipper: WaveClipper(),
               child: Image.asset(
-                'lib/assets/images/cog_health_start2.jpeg',
+                'lib/assets/images/brain_health_2.jpeg',
                 fit: BoxFit.cover,
-                height: MediaQuery.of(context).size.height / 2,
+                height: MediaQuery.of(context).size.height / 2.3,
+                width: MediaQuery.of(context).size.width,
               ),
             ),
           ),
           Positioned(
             //top: 400,
-            top: 2 * MediaQuery.of(context).size.height / 4,
+            top: MediaQuery.of(context).size.height / 2,
             left: 0,
             right: 0,
             //bottom: 100,
@@ -49,7 +50,7 @@ class CogTestOnboardingScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Welcome to the CogHealth Test',
+                    'The CogHealth Test',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
@@ -57,7 +58,7 @@ class CogTestOnboardingScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'In this module you will be able to:',
+                        'In this module you will be able to do stuff:',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -67,7 +68,10 @@ class CogTestOnboardingScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   ElevatedButton(
-                    onPressed: () => Navigator.pushNamed(context, '/advice'),
+                    onPressed: () => Navigator.pushNamed(
+                      context,
+                      '/cognitive',
+                    ),
                     child: const Text('Get Started'),
                   ),
                 ],
@@ -78,7 +82,7 @@ class CogTestOnboardingScreen extends StatelessWidget {
             top: 50, // Adjust the position as needed
             left: 10, // Adjust the position as needed
             child: IconButton(
-              icon: const Icon(Icons.chevron_left, size: 30),
+              icon: const Icon(Icons.chevron_left, size: 40),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),
