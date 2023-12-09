@@ -242,8 +242,8 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     );
   }
 
-  Widget _buildCard(BuildContext context, String title, String description,
-      String route, String imagePath) {
+  Widget _buildSupportCard(BuildContext context, String title,
+      String description, String route, String imagePath) {
     return Card(
       margin: const EdgeInsets.all(8.0),
       elevation: 4.0,
@@ -316,28 +316,28 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
-              _buildCard(
+              _buildSupportCard(
                 context,
                 'Overnight olfactory enrichment using an odorant diffuser improves memory and modifies the uncinate fasciculus in older adults',
                 AppConstants.overnightOlfactory,
                 '/research',
                 'lib/assets/images/research1.jpeg',
               ),
-              _buildCard(
+              _buildSupportCard(
                 context,
                 'Lavender aromatherapy: A systematic review from essential oil quality and administration methods to cognitive enhancing effects',
                 AppConstants.lavenderAromatherapy,
                 '/research',
                 'lib/assets/images/research2.jpeg',
               ),
-              _buildCard(
+              _buildSupportCard(
                 context,
                 "Essential Oils as A Potential Neuroprotective Remedy for Alzheimer's Disease",
                 AppConstants.alheimersDisease,
                 '/research',
                 'lib/assets/images/research4.jpeg',
               ),
-              _buildCard(
+              _buildSupportCard(
                 context,
                 'The effect of the essential oils of lavender and rosemary on the human short-term memory',
                 AppConstants.shortTermMemory,

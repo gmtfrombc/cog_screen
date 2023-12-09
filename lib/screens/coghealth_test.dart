@@ -88,7 +88,7 @@ class CognitiveScreen extends StatelessWidget {
         title: const CustomTextForTitle(),
         backgroundColor: AppTheme.primaryBackgroundColor,
         showEndDrawerIcon: true,
-        showLeading: false,
+        showLeading: true,
       ),
       showDrawer: true,
       showAppBar: true,

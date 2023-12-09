@@ -21,7 +21,7 @@ class AppConstants {
   static const String medAdvice =
       "In order to receive recommendations and a standing order for medical treatment, please complete the following questionnaire.";
   static const String memoryEnhancement =
-      "Are you interested in receiving a health provider's standing order to receive essential oils, along with our memory enhancment protocols?";
+      "Are you interested in receiving a medical recommendation for our essential oil memory enhancment protocols?";
   static const String overnightOlfactory =
       "This study demonstrated that overnight olfactory enrichment using an odorant diffuser improved memory and modified the uncinate fasciculus in older adults. The results suggest that olfactory stimulation may be a promising non-pharmacological intervention for improving memory and cognitive health.";
   static const String lavenderAromatherapy =
