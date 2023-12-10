@@ -19,7 +19,7 @@ class AppConstants {
       "Essential oils have received a lot of attention for their potential to support cognitive health. Research has shown that essential oils can improve memory, attention, and focus. They can also help to reduce stress and anxiety.";
 
   static const String medAdvice =
-      "In order to receive recommendations and a standing order for medical treatment, please complete the following questionnaire.";
+      "In order to ensure that there you have no medical contraindications for Olfactory Enrichment, please complete the following questionnaire.";
   static const String memoryEnhancement =
       "Are you interested in receiving a medical recommendation for our essential oil memory enhancment protocols?";
   static const String overnightOlfactory =
@@ -32,8 +32,10 @@ class AppConstants {
       "This study investigated the effect of the essential oils of lavender and rosemary on the human short-term memory. The results suggest that lavender essential oil may be used as a natural remedy for the treatment of memory disorders.";
   static const String protocol =
       "For this protocol use a diffuser with the essential oils listed. Feel free to substitute for your favorite essential oils. Follow these steps to ensure proper usage.";
-  static const String frequesncyDuration =
-      "Continue this protocol each night, changing the diffuser water daily before going to bed and rotating the essential oil mix. \n\nCheck out our store to purchase essential oils and related products.";
+  static const String frequencyDuration =
+      "Continue this protocol each night, changing the diffuser water daily before going to bed and rotating the essential oil mix.";
+  static const String olfactoryEnrichment =
+      'The following protocol is based on a study by Chen et al. (2020) that had adult subjects diffuse essential oils at night for six months.\n\n The results demonstrated improvement on memory tests by 300%, as well as positive changes in the brain memory regions.\n\nIf you would like to consider this treatment to support your cognitive health, then select "Get Started" below.\n\nYou will be asked to take a short questionnaire to ensure no medical contraindications.';
   static const String welcome =
       "Thank you for helping test out the PowerME app.\n\nPlease rest assured we are not collecting any personal or health information.\n\nWhile not everything is wired up yet, we would love your feedback on what you see so far.\n\nThanks again for your help!\n\nYour PowerME Team";
 }

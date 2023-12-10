@@ -5,6 +5,7 @@ import 'package:cog_screen/screens/coming_soon_screen.dart';
 import 'package:cog_screen/screens/home_screen.dart';
 import 'package:cog_screen/screens/login.dart';
 import 'package:cog_screen/screens/onboarding/brain_care_onboarding.dart';
+import 'package:cog_screen/screens/onboarding/eo_onboarding.dart';
 import 'package:cog_screen/screens/onboarding/onboarding_screen.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
 import 'package:cog_screen/screens/research_screen.dart';
@@ -91,6 +92,7 @@ class MyApp extends StatelessWidget {
         '/splashscreen': (context) => const SplashScreen(),
         '/comingsoon': (context) => const ComingSoonScreen(),
         '/onboarding': (context) => const OnboardingScreen(),
+        '/eoOnboarding': (context) => const EOOnboardingScreen(),
         '/brainCareOboarding': (context) => const BrainCareOnboardingScreen(),
       },
     );

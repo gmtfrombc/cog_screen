@@ -126,6 +126,7 @@ class _SignInState extends State<SignIn> {
           ),
           const SizedBox(height: 40.0),
           ElevatedButton(
+            style: ElevatedButtonTheme.of(context).style,
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 signUserIn();

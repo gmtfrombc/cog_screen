@@ -2,14 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color _primaryColor = Color(0xFF405f53); // Deep green
-  static const Color _secondaryColor = Color(0xFF555b89); // Muted blue
-  static const Color _primaryBackgroundColor =
-      Color(0xFFfaf4ed); // Off white background
+  static const Color _primaryColor =
+      Color.fromARGB(255, 71, 135, 112); // Deep green
+  static const Color _secondaryColor = Color(0xFF5974A4); // Muted blue
+  static const Color _primaryBackgroundColor = Color(0xFFfaf4ed);
+  static const Color _secondaryBackgroundColor =
+      Color.fromARGB(255, 249, 245, 239); // Off-white
 
   static Color get primaryColor => _primaryColor;
   static Color get secondaryColor => _secondaryColor;
   static Color get primaryBackgroundColor => _primaryBackgroundColor;
+  static Color get secondaryBackgroundColor => _secondaryBackgroundColor;
+  static LinearGradient get cardGradient => LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          primaryBackgroundColor.withOpacity(0.9), // Lighter shade
+          secondaryBackgroundColor.withOpacity(0.7), // Slightly darker shade
+        ],
+      );
 
   static ThemeData get lightTheme {
     return ThemeData(
@@ -47,37 +58,39 @@ class AppTheme {
           fontWeight: FontWeight.w400,
         ),
       ),
+
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor:
               _primaryColor, // Primary color for the button background
           foregroundColor: Colors.white,
-          disabledForegroundColor:
-              _primaryColor.withOpacity(0.5).withOpacity(0.38),
+          disabledForegroundColor: _primaryColor.withOpacity(0.38),
           disabledBackgroundColor: _primaryColor
-              .withOpacity(0.5)
               .withOpacity(0.12), // White text/icon color on the button
           shape: RoundedRectangleBorder(
             borderRadius:
                 BorderRadius.circular(12.0), // Slightly more rounded corners
           ),
           padding: const EdgeInsets.symmetric(
-              horizontal: 20.0, vertical: 15.0), // Slightly more padding
-          elevation: 4, // Subtle elevation
+              horizontal: 20.0, vertical: 10.0), // Slightly more padding
+          elevation: 3, // Subtle elevation
           textStyle: TextStyle(
-            fontSize: 18.0, // Slightly larger font size for button text
+            color: Colors.white,
+            fontSize: 16.0, // Slightly larger font size for button text
             fontFamily:
                 GoogleFonts.outfit().fontFamily, // Consistent font family
             fontWeight: FontWeight.w600, // Medium weight for the text
           ), // Color when button is disabled
-          shadowColor: _primaryColor.withOpacity(0.4), // Shadow color
+          shadowColor: _primaryColor.withOpacity(0.3), // Shadow color
         ),
       ),
 
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: _secondaryColor, // Text color for TextButton
-        ),
+            foregroundColor: _secondaryColor,
+            padding: const EdgeInsets.symmetric(
+                horizontal: 16.0, vertical: 8.0) // Text color for TextButton
+            ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(

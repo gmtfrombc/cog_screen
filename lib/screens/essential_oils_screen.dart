@@ -8,6 +8,7 @@ import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:cog_screen/utilities/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart'; // Import constants
 
 class EssentialOilScreen extends StatefulWidget {
@@ -86,7 +87,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
             ),
           ),
         ),
-        const Positioned(
+        Positioned(
           bottom: 90,
           left: 30,
           child: Text(
@@ -95,6 +96,8 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
+                letterSpacing: 0.5,
+                fontFamily: GoogleFonts.robotoSlab().fontFamily,
                 height: 1.1),
           ),
         ),
@@ -143,55 +146,54 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         borderRadius: BorderRadius.circular(12.0),
       ),
       color: AppTheme.primaryBackgroundColor,
-      child: InkWell(
-        onTap: () => Navigator.pushNamed(context, '/criteria'),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.memory,
-                    color: AppTheme.primaryColor.withOpacity(0.8),
-                    size: 30.0,
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      'Memory Enhancement Protocol',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.secondaryColor),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              const Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 2,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(
+                  Icons.memory,
+                  color: Colors.black54,
+                  size: 35.0,
                 ),
-                child: Text(
-                  AppConstants.memoryEnhancement,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w100,
-                    color: Colors.black,
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Memory Enhancement Protocol',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        letterSpacing: 0.5),
                   ),
                 ),
+              ],
+            ),
+            const SizedBox(height: 2.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 2,
               ),
-              Align(
-                alignment: Alignment.bottomRight, // Align to bottom-right
-                child: _buildTextButton(context, "I'm interested", () {
-                  _handleButtonClick();
-                }),
-              ), // Your memory enhancement card content here
-            ],
-          ),
+              child: Text(
+                AppConstants.memoryEnhancement,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w100,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            const SizedBox(height: 4.0),
+            Align(
+              alignment: Alignment.bottomRight, // Align to bottom-right
+              child: _buildTextButton(context, "I'm interested", () {
+                _handleButtonClick();
+              }),
+            ), // Your memory enhancement card content here
+          ],
         ),
       ),
     );
@@ -202,7 +204,9 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     return TextButton(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(
-          AppTheme.secondaryColor.withOpacity(0.8),
+          AppTheme.secondaryColor.withOpacity(
+            0.9,
+          ),
         ),
         padding: MaterialStateProperty.all<EdgeInsets>(
             const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0)),
@@ -244,16 +248,19 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
 
   Widget _buildSupportCard(BuildContext context, String title,
       String description, String route, String imagePath) {
-    return Card(
-      margin: const EdgeInsets.all(8.0),
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        gradient: AppTheme.cardGradient,
       ),
-      child: InkWell(
-        onTap: () => Navigator.pushNamed(context, route),
-        child: Container(
-          color: AppTheme.primaryBackgroundColor,
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
+        elevation: 4.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: InkWell(
+          onTap: () => Navigator.pushNamed(context, route),
           child: SizedBox(
             width: 160,
             child: Column(
@@ -304,11 +311,15 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
           child: Text(
             'Latest Essential Oil Research',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              fontFamily: GoogleFonts.robotoSlab().fontFamily,
+            ),
           ),
         ),
         SizedBox(

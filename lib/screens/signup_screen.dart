@@ -120,6 +120,7 @@ class _SignUpState extends State<SignUp> {
           ),
           const SizedBox(height: 40.0),
           ElevatedButton(
+            style: ElevatedButtonTheme.of(context).style,
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 signUserUp();
@@ -127,7 +128,6 @@ class _SignUpState extends State<SignUp> {
             },
             child: const Text(
               'Sign Up',
-              style: TextStyle(color: Colors.black),
             ),
           ),
           if (error.isNotEmpty)

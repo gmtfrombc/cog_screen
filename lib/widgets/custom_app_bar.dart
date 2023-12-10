@@ -1,3 +1,4 @@
+import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/shopping_cart_icon.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
     required this.title,
-    this.backgroundColor = Colors.white, // Default color
+    required this.backgroundColor, // Default color
     this.elevation = 0.0, // Default elevation
     this.actions,
     this.showLeading = true,
@@ -37,9 +38,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       );
     }
     return AppBar(
-      title: title,
-      centerTitle: false,
-      backgroundColor: backgroundColor,
+      title: Image.asset(
+        'lib/assets/images/pm_icon_full.png',
+        fit: BoxFit.cover,
+        height: 35,
+      ),
+      centerTitle: true,
+      backgroundColor: AppTheme.primaryBackgroundColor,
       elevation: elevation,
       automaticallyImplyLeading: showLeading,
       iconTheme: const IconThemeData(

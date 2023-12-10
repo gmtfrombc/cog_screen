@@ -35,9 +35,12 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
       showDrawer: true,
       showAppBar: true,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppTheme.secondaryColor,
+        backgroundColor: AppTheme.primaryColor,
         onPressed: handleFloatingActionButtonPress,
-        child: const Icon(Icons.navigate_next),
+        child: const Icon(
+          Icons.navigate_next,
+          size: 40,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       child: _buildCriteriaContent(context),
@@ -55,15 +58,15 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Icon(
+              const Icon(
                 Icons.medical_services,
-                color: AppTheme.primaryColor,
+                color: Colors.black54,
               ),
               const SizedBox(width: 10),
               Text(
                 'Medical Questionnaire',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.w700,
                     ),
               ),
@@ -106,13 +109,14 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
                   minHeight: 140,
                 ),
                 child: Card(
+                  shadowColor: AppTheme.secondaryColor.withOpacity(0.7),
                   color: AppTheme.primaryBackgroundColor,
-                  elevation: 6,
+                  elevation: 2,
                   margin: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
-                  // shape: RoundedRectangleBorder(
-                  //   borderRadius: BorderRadius.circular(12.0),
-                  // ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
                   child: Container(
                     decoration: BoxDecoration(
                       color: AppTheme.primaryBackgroundColor,
@@ -170,7 +174,17 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Please answer all questions."),
+          duration: Duration(
+            seconds: 1,
+          ),
+          content: Text(
+            "Please answer all questions.",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
       );
     }

@@ -70,7 +70,6 @@ flutter:
     - lib/assets/images/brain_food.jpeg
     - lib/assets/images/brain_health_2.jpeg
     - lib/assets/images/brain_health_onboarding.jpeg
-
     - lib/assets/images/brain_outdoor_dog.jpeg
     - lib/assets/images/brain_outdoor_hike.jpeg
     - lib/assets/images/pm_icon_small.png

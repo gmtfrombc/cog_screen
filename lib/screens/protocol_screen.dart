@@ -42,7 +42,7 @@ class ProtocolScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        AppConstants.frequesncyDuration,
+                        AppConstants.frequencyDuration,
                         style: TextStyle(
                           fontSize: 16,
                         ),
@@ -59,7 +59,7 @@ class ProtocolScreen extends StatelessWidget {
             child: IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white60,
+                color: Colors.black,
               ),
               onPressed: () => Navigator.of(context).pop(),
             ),
