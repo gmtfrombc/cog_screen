@@ -41,10 +41,10 @@ class HomeScreen extends StatelessWidget {
                   'Choose a module',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 26,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: AppTheme.secondaryColor,
-                    fontFamily: GoogleFonts.robotoSlab().fontFamily,
+                    fontFamily: GoogleFonts.roboto().fontFamily,
                   ),
                 ),
               ),
