@@ -25,6 +25,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
   final Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
   bool isLoading = false;
   String userId = '';
+  double defaultImageSize = 250.0;
   @override
   Widget build(BuildContext context) {
     final appNavigationProvider = Provider.of<AppNavigationProvider>(
@@ -76,12 +77,37 @@ class _AdviceScreenState extends State<AdviceScreen> {
               title: 'Tools to Support Brain Health',
               descrption: 'Assessment and support options.',
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildMemoryEnhancementCard(context),
-                _buildCogHealthCard(context),
-              ],
+            SizedBox(
+              height: defaultImageSize,
+              width: double.infinity,
+              //width: 200, // Adjust the height as needed
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  _buildTopCard(
+                    context,
+                    'Memory Enhancement Protocol',
+                    AppConstants.memoryEnhancement,
+                    '/eoOnboarding',
+                    'lib/assets/images/memory_enhancement.jpeg',
+                    'lib/assets/images/dT_EO10.jpeg',
+                    () {
+                      _handleButtonClick();
+                      Navigator.pushNamed(context, '/eoOnboarding');
+                    },
+                  ),
+                  _buildTopCard(
+                    context,
+                    'The CogHealth Test',
+                    'A simple tool for assessing memory and cognitive function.',
+                    '/cognitive',
+                    'lib/assets/images/cog_health_test.jpeg',
+                    'lib/assets/images/cog_health_test2.jpeg',
+                    () => Navigator.pushNamed(context, '/cognitive'),
+                  ),
+                  // Add more cards if needed
+                ],
+              ),
             ),
             const SectionTitle(
               title: 'Maintaining Brain Health',
@@ -119,181 +145,72 @@ class _AdviceScreenState extends State<AdviceScreen> {
     );
   }
 
-  Widget _buildCogHealthCard(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minHeight: 130,
-      ),
+  Widget _buildTopCard(
+      BuildContext context,
+      String title,
+      String description,
+      String route,
+      String imagePath,
+      String image2Path,
+      void Function()? onTap) {
+    return InkWell(
+      onTap: onTap,
       child: Container(
+        width: defaultImageSize,
+        height: defaultImageSize,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           gradient: AppTheme.cardGradient,
         ),
         child: Card(
-          shadowColor: AppTheme.primaryColor.withOpacity(0.1),
+          clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(8.0),
           ),
-          color: AppTheme.tertiaryBackgroundColor.withOpacity(0.8),
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8.0,
-              vertical: 6.0,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.menu_book,
-                      color: Colors.white.withOpacity(
-                        0.4,
-                      ),
-                      size: 30.0,
-                    ),
-                    const SizedBox(width: 10),
-                    const Expanded(
-                      child: Text(
-                        'The CogHealth Test',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ),
-                  ],
+          child: Stack(
+            children: [
+              Opacity(
+                opacity: 0.4,
+                child: Image.asset(
+                  imagePath,
+                  width: defaultImageSize,
+                  height: defaultImageSize,
+                  fit: BoxFit.cover,
                 ),
-                //const SizedBox(height: 2.0),
-                const Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 0,
-                  ),
-                  child: Text(
-                    'A simple tool for assessing memory and congitive function.',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w100,
-                      color: Colors.white,
-                    ),
+              ),
+              Positioned(
+                top: 30,
+                left: 30,
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight, // Align to bottom-right
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.3),
-                      side: BorderSide(
-                          color: AppTheme.secondaryColor.withOpacity(0.2),
-                          width: 1.0), // Border color and width
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/cognitive');
-                    },
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.join_right_outlined,
-                          color: Colors.white54,
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          'Take the Test',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ), // Your memory enhancement card content here
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMemoryEnhancementCard(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minHeight: 130,
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          gradient: AppTheme.cardGradient,
-        ),
-        child: Card(
-          shadowColor: AppTheme.secondaryColor.withOpacity(0.3),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          color: AppTheme.tertiaryBackgroundColor.withOpacity(
-            0.8,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.memory,
-                      color: Colors.white.withOpacity(
-                        0.4,
-                      ),
-                      size: 30.0,
-                    ),
-                    const SizedBox(width: 10),
-                    const Expanded(
-                      child: Text(
-                        'Memory Enhancement Protocol',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                            letterSpacing: 0.5),
-                      ),
-                    ),
-                  ],
-                ),
-                //const SizedBox(height: 2.0),
-                const Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 0,
-                  ),
-                  child: Text(
-                    AppConstants.memoryEnhancement,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  description,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w100,
+                    color: Colors.black,
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight, // Align to bottom-right
-                  child: _buildTextButton(context, "I'm interested", () {
-                    _handleButtonClick();
-                  }),
-                ), // Your memory enhancement card content here
-              ],
-            ),
+              ),
+              Positioned(
+                right: 8.0,
+                bottom: 8.0,
+                child: Image.asset(
+                  image2Path,
+                  width: 80,
+                  height: 80,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -378,51 +295,13 @@ class _AdviceScreenState extends State<AdviceScreen> {
     );
   }
 
-  Widget _buildTextButton(
-      BuildContext context, String text, VoidCallback onPressed) {
-    return TextButton(
-      style: TextButton.styleFrom(
-        backgroundColor: Colors.white.withOpacity(0.3),
-        side: BorderSide(
-            color: AppTheme.secondaryColor.withOpacity(0.2),
-            width: 1.0), // Border color and width
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-      ),
-      onPressed: () {
-        _handleButtonClick();
-      },
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.check,
-            color: Colors.white,
-          ),
-          const SizedBox(width: 8),
-          Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   void _handleButtonClick() async {
     setState(() {
       isLoading = true;
     });
     try {
       await FirebaseService().recordUserAction(userId, 'InterestedButton');
-      if (mounted) {
-        Navigator.pushNamed(context, '/eoOnboarding');
-      }
+      // Removed the navigation call from here
     } catch (e) {
       debugPrint('Error recording user action: $e');
     } finally {

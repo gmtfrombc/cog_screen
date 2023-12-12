@@ -25,6 +25,8 @@ class CognitiveScreen extends StatelessWidget {
       context,
     );
     final surveyProvider = Provider.of<SurveyProvider>(context);
+
+    
     Widget content = Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -100,4 +102,5 @@ class CognitiveScreen extends StatelessWidget {
       child: content, // If you want to show the AppBar
     );
   }
+  
 }

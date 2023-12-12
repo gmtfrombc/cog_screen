@@ -4,8 +4,6 @@ import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
-import 'package:cog_screen/widgets/custom_app_bar.dart';
-import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart'; // Import constants
@@ -28,23 +26,10 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
   Widget build(BuildContext context) {
     final appNavigationProvider = Provider.of<AppNavigationProvider>(context);
     final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
-    userId = authProvider.currentUser?.uid ?? ''; // Set userId here
+    userId = authProvider.currentUser?.uid ?? '';
 
     return BaseScreen(
       authProvider: Provider.of<AuthProviderClass>(context, listen: false),
-      customAppBar: CustomAppBar(
-        title: const Text(
-          'Essential Oils',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        backgroundColor: AppTheme.primaryBackgroundColor,
-        showEndDrawerIcon: false,
-        showLeading: false,
-      ),
       showDrawer: false,
       showAppBar: false,
       bottomNavigationBar: CustomBottomNavigationBar(
@@ -52,22 +37,33 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         context: context,
         appNavigationProvider: appNavigationProvider,
       ),
-      child: isLoading
-          ? const Center(
-              child: CustomProgressIndicator(),
-            )
-          : _buildContent(context), // Extracted content builder
-    );
-  }
-
-  Widget _buildContent(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        _buildHeader(context),
-        _buildResearchHeader(context),
-        _buildResearchGrid(context)
-      ],
+      child: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildHeader(context),
+                _buildResearchHeader(context),
+                _buildResearchGrid(context)
+              ],
+            ),
+          ),
+          Positioned(
+            top: 20,
+            child: IconButton(
+              icon: const Icon(
+                Icons.chevron_left,
+                size: 40,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -105,20 +101,6 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                 height: 1.2),
           ),
         ),
-        Positioned(
-          top: 40,
-          //left: 10,
-          child: IconButton(
-            icon: const Icon(
-              Icons.chevron_left,
-              size: 40,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
       ],
     );
   }
@@ -152,21 +134,22 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
   }
 
   Widget _buildResearchGrid(BuildContext context) {
-    return Flexible(
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 2,
-          mainAxisSpacing: 2,
-          childAspectRatio: 0.8,
-        ),
-        itemCount: elements.length,
-        itemBuilder: (context, index) {
-          final element = elements[index];
-          return _buildSupportCard(context, element.title, element.description,
-              element.link, element.image);
-        },
+    return GridView.builder(
+      shrinkWrap: true, // This will make GridView take the minimum space
+      physics:
+          const NeverScrollableScrollPhysics(), // Disables scrolling within the GridView
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 2,
+        mainAxisSpacing: 2,
+        childAspectRatio: 0.8,
       ),
+      itemCount: elements.length,
+      itemBuilder: (context, index) {
+        final element = elements[index];
+        return _buildSupportCard(context, element.title, element.description,
+            element.link, element.image);
+      },
     );
   }
 

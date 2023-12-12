@@ -69,12 +69,16 @@ flutter:
     - lib/assets/images/dT_EO13.jpeg
     - lib/assets/images/dT_EO14.jpeg
     - lib/assets/images/brain_food.jpeg
+    - lib/assets/images/memory_enhancement.jpeg
+    - lib/assets/images/memory_health2.jpeg
     - lib/assets/images/brain_health_2.jpeg
     - lib/assets/images/brain_health_onboarding.jpeg
     - lib/assets/images/brain_outdoor_dog.jpeg
     - lib/assets/images/brain_outdoor_hike.jpeg
     - lib/assets/images/pm_icon_small.png
     - lib/assets/images/pm_icon_full.png
+    - lib/assets/images/cog_health_test.jpeg
+    - lib/assets/images/cog_health_test2.jpeg
     - lib/assets/images/cog_health_start2.png
     - lib/assets/images/cog_health_start2.jpeg
     - lib/assets/images/memory_health.png

@@ -21,7 +21,7 @@ class SectionTitle extends StatelessWidget {
           Text(
             title,
             style: GoogleFonts.robotoSlab(
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
                 letterSpacing: 0.5),

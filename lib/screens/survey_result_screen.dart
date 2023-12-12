@@ -27,66 +27,68 @@ class SurveyResultScreen extends StatelessWidget {
             ? 'Complete the CogHealth Screen'
             : 'Your CogHealth Screening Score: ${surveyProvider.totalScore}/10';
 
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment:
-              CrossAxisAlignment.stretch, // Stretch to fill width
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                resultText,
-                style: theme.textTheme.titleLarge?.copyWith(fontSize: 28),
-                textAlign: TextAlign.center,
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment:
+                CrossAxisAlignment.stretch, // Stretch to fill width
+            children: [
+              const SizedBox(
+                height: 30,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Text(
-                AppConstants.cogHealthExplanation,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  resultText,
+                  style: theme.textTheme.titleLarge?.copyWith(fontSize: 28),
+                  textAlign: TextAlign.center,
                 ),
               ),
-            ),
-            Center(
-              child: GradientImage(
-                imagePath: imagePath,
-              ),
-            ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Text(
-                AppConstants.cogHealthMore,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Text(
+                  AppConstants.cogHealthExplanation,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 5.0,
-                bottom: 5.0,
-                left: 20.0,
-                right: 20.0,
+              Center(
+                child: GradientImage(
+                  imagePath: imagePath,
+                ),
               ),
-              child: ElevatedButton(
-                onPressed: () => _showLearnMoreSheet(context),
-                child: const Text('Learn More'),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Text(
+                  AppConstants.cogHealthMore,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 5.0,
+                  bottom: 5.0,
+                  left: 20.0,
+                  right: 20.0,
+                ),
+                child: ElevatedButton(
+                  onPressed: () => _showLearnMoreSheet(context),
+                  child: const Text('Learn More'),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
