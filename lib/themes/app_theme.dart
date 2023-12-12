@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color _primaryColor =
+  static const Color _secondaryColor =
       Color.fromARGB(255, 71, 135, 112); // Deep green
-  static const Color _secondaryColor = Color(0xFF5974A4); // Muted blue
+  static const Color _primaryColor =
+      Color.fromARGB(255, 83, 111, 160); // Muted blue
   static const Color _primaryBackgroundColor = Color(0xFFfaf4ed);
   static const Color _secondaryBackgroundColor =
-      Color.fromARGB(255, 249, 245, 239); // Off-white
+      Color.fromARGB(255, 249, 245, 239);
+  static const Color _tertiaryBackgroundColor =
+      Color.fromARGB(255, 5, 32, 169); // Off-white
 
   static Color get primaryColor => _primaryColor;
   static Color get secondaryColor => _secondaryColor;
   static Color get primaryBackgroundColor => _primaryBackgroundColor;
   static Color get secondaryBackgroundColor => _secondaryBackgroundColor;
+  static Color get tertiaryBackgroundColor => _tertiaryBackgroundColor;
   static LinearGradient get cardGradient => LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,

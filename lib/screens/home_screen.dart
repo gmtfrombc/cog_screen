@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: AppTheme.secondaryColor,
+                    color: Colors.black,
                     fontFamily: GoogleFonts.roboto().fontFamily,
                   ),
                 ),
@@ -74,49 +74,89 @@ class HomeScreen extends StatelessWidget {
   Widget _buildElementCard(BuildContext context, HealthElement element) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, element.route);
+        if (element.isActive) {
+          Navigator.pushNamed(context, element.route);
+        }
       },
-      child: Card(
-        clipBehavior: Clip
-            .antiAlias, // Ensure the image is clipped to the card's border radius
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0), // Set card border radius
-        ),
-        child: Stack(
-          alignment: Alignment.center, // Center alignment for the text
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(element.imagePath),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.5), // Black overlay with opacity
-                    BlendMode.darken,
+      child: Opacity(
+        opacity:
+            element.isActive ? 1.0 : 0.5, // Adjust opacity based on isActive
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0),
+            gradient: AppTheme.cardGradient,
+          ),
+          child: Card(
+            shadowColor: AppTheme.primaryColor,
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(element.imagePath),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.5),
+                        BlendMode.darken,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Text(
-              element.title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w300,
-                fontSize: 26,
-                letterSpacing: 1.2,
-                shadows: [
-                  Shadow(
-                    offset: const Offset(1.0, 1.0),
-                    blurRadius: 3.0,
-                    color: Colors.black.withOpacity(0.5),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        element.title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 26,
+                          letterSpacing: 1.2,
+                          shadows: _textShadow(),
+                        ),
+                      ),
+                      if (!element
+                          .isActive) // Conditional display of "Coming Soon"
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            'Coming soon',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 14,
+                              letterSpacing: 1.2,
+                              shadows: _textShadow(),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
+  }
+
+  List<Shadow> _textShadow() {
+    return [
+      Shadow(
+        offset: const Offset(1.0, 1.0),
+        blurRadius: 3.0,
+        color: Colors.black.withOpacity(0.8),
+      ),
+    ];
   }
 }

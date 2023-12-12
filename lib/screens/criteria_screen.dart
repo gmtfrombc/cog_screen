@@ -150,7 +150,6 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
                           children: [
                             _responseButton(context, index, true),
                             const SizedBox(width: 8),
-                            // Call the new _responseButton method for the 'No' button
                             _responseButton(context, index, false),
                           ],
                         ),
@@ -194,7 +193,11 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
+      builder: (context) => Center(
+        child: CircularProgressIndicator(
+          color: AppTheme.primaryColor,
+        ),
+      ),
     );
 
     Future.delayed(const Duration(seconds: 3), () {
@@ -248,7 +251,7 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
 
     return TextButton(
       style: TextButton.styleFrom(
-        foregroundColor: isSelected ? Colors.white : null,
+        foregroundColor: isSelected ? Colors.white : AppTheme.primaryColor,
         backgroundColor:
             isSelected ? Theme.of(context).colorScheme.primary : null,
         padding: const EdgeInsets.symmetric(horizontal: 2.0),
@@ -262,7 +265,10 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
       },
       child: Text(
         isYesResponse == true ? 'Yes' : 'No',
-        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

@@ -10,6 +10,7 @@ import 'package:cog_screen/screens/onboarding/onboarding_screen.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
 import 'package:cog_screen/screens/research_screen.dart';
 import 'package:cog_screen/screens/shopping_screen.dart';
+import 'package:cog_screen/screens/view_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/data/survey_data.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
@@ -94,6 +95,7 @@ class MyApp extends StatelessWidget {
         '/onboarding': (context) => const OnboardingScreen(),
         '/eoOnboarding': (context) => const EOOnboardingScreen(),
         '/brainCareOboarding': (context) => const BrainCareOnboardingScreen(),
+        '/viewScreen': (context) => const ViewScreen(),
       },
     );
   }

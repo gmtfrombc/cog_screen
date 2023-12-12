@@ -134,7 +134,7 @@ class _EOOnboardingScreenState extends State<EOOnboardingScreen> {
     try {
       await FirebaseService().recordUserAction(userId, "Let's go button");
       if (mounted) {
-        Navigator.pushNamed(context, '/protocol');
+        Navigator.pushNamed(context, '/criteria');
       }
     } catch (e) {
       debugPrint('Error recording user action: $e');

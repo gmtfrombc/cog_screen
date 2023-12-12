@@ -39,6 +39,7 @@ dependencies:
   intl: ^0.18.1
   provider: ^6.1.1
   vibration: ^1.8.3
+  webview_flutter: ^4.4.2
 
 dev_dependencies:
   flutter_lints: ^3.0.1
@@ -90,8 +91,6 @@ flutter:
     - lib/assets/images/movement.jpeg
     - lib/assets/images/cog_health.jpeg
     - lib/assets/images/welcome.jpeg
-
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

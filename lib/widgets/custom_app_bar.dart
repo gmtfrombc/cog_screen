@@ -9,7 +9,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final bool showLeading;
   final bool showEndDrawerIcon;
-  final bool showShoppingCartIcon; // New parameter
+  final bool showShoppingCartIcon;
+  final PreferredSizeWidget? bottom; // Add this line
+  // New parameter
 
   const CustomAppBar({
     super.key,
@@ -19,7 +21,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.showLeading = true,
     this.showEndDrawerIcon = true,
-    this.showShoppingCartIcon = false, // Default value
+    this.showShoppingCartIcon = false,
+    this.bottom, // Add this line
+    // Default value
   });
 
   @override
@@ -51,18 +55,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         color: Colors.black,
       ),
       actions: appBarActions,
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(1.0),
-        child: Container(
-          color: Colors.grey.shade300,
-          height: 1.0,
-        ),
-      ),
+      bottom: bottom,
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(
-        kToolbarHeight + 5,
+  Size get preferredSize => Size.fromHeight(
+        kToolbarHeight +
+            (bottom?.preferredSize.height ?? 0), // Modify this line
       );
 }

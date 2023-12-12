@@ -18,6 +18,10 @@ class EssentialOilScreen extends StatefulWidget {
 }
 
 class _EssentialOilScreenState extends State<EssentialOilScreen> {
+  final double horizontalMargin = 8.0;
+  final double verticalMargin = 4.0;
+  final EdgeInsets cardPadding = const EdgeInsets.all(8.0);
+  final Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
   bool isLoading = false;
   String userId = '';
   @override
@@ -59,11 +63,10 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
   Widget _buildContent(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         _buildHeader(context),
-        const SizedBox(height: 10),
-        _buildResearchSection(context),
-        const SizedBox(height: 20),
+        _buildResearchHeader(context),
+        _buildResearchGrid(context)
       ],
     );
   }
@@ -71,41 +74,45 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
   Widget _buildHeader(BuildContext context) {
     return Stack(
       children: [
-        ClipPath(
-          clipper: ConvexBottomClipper(),
-          child: ColorFiltered(
-            colorFilter: ColorFilter.mode(
-              Theme.of(context).secondaryHeaderColor.withOpacity(0.5),
-              BlendMode.colorBurn,
-            ),
-            child: Image.asset(
-              'lib/assets/images/dT_EO9.jpeg',
-              fit: BoxFit.cover,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: ClipPath(
+            clipper: ConvexBottomClipper(),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).primaryColor.withOpacity(0.5),
+                BlendMode.colorBurn,
+              ),
+              child: Image.asset(
+                'lib/assets/images/dT_EO9.jpeg',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
         Positioned(
-          bottom: 100,
-          left: 30,
+          top: 100,
+          //bottom: 100,
+          left: 10,
           child: Text(
-            'Essential Oils \nand Cognitive Health',
+            'Essential Oils and \nBrain Health',
             style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
                 letterSpacing: 0.5,
                 fontFamily: GoogleFonts.robotoSlab().fontFamily,
-                height: 1.1),
+                height: 1.2),
           ),
         ),
         Positioned(
-          top: MediaQuery.of(context).padding.top,
+          top: 40,
           //left: 10,
           child: IconButton(
             icon: const Icon(
               Icons.chevron_left,
               size: 40,
-              color: Colors.black45,
+              color: Colors.black,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -116,103 +123,121 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     );
   }
 
-  Widget _buildSupportCard(BuildContext context, String title,
-      String description, String route, String imagePath) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, route);
-      },
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
-        elevation: 4.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: SizedBox(
-          width: 160,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 90,
-                width: 160,
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12, // Increased font size
-                    color: Colors.black, // Consistent text color
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  description,
-                  style: const TextStyle(
-                    fontSize: 10, // Increased font size
-                    fontWeight: FontWeight.w100,
-                    color: Colors.black, // Consistent text color
-                  ),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
+  Widget _buildResearchHeader(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 10,
+          ),
+          child: Text(
+            'Latest Essential Oil Research',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              fontFamily: GoogleFonts.robotoSlab().fontFamily,
+              color: Colors.black,
+            ),
           ),
         ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+          child: Text(
+              'Here is the latest research on essential oils and cognitive health, including memory, and brain function, and more.'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildResearchGrid(BuildContext context) {
+    return Flexible(
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 2,
+          mainAxisSpacing: 2,
+          childAspectRatio: 0.8,
+        ),
+        itemCount: elements.length,
+        itemBuilder: (context, index) {
+          final element = elements[index];
+          return _buildSupportCard(context, element.title, element.description,
+              element.link, element.image);
+        },
       ),
     );
   }
 
-  Widget _buildResearchSection(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 20),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-            child: Text(
-              'Latest Essential Oil Research',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: GoogleFonts.robotoSlab().fontFamily,
-              ),
+  Widget _buildSupportCard(BuildContext context, String title,
+      String description, String route, String imagePath) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        gradient: AppTheme.cardGradient,
+      ),
+      child: Card(
+        margin: EdgeInsets.symmetric(
+            horizontal: horizontalMargin, vertical: verticalMargin),
+        elevation: 4.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        shadowColor: cardShadowColor,
+        child: InkWell(
+          onTap: () => Navigator.pushNamed(context, route),
+          child: SizedBox(
+            width: 160,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Opacity(
+                  opacity: 0.9,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10), // Rounded corners
+                    child: SizedBox(
+                      width:
+                          double.infinity, // Takes the full width of the card
+                      height: 100, // Fixed height for all images
+                      child: Image.asset(
+                        imagePath,
+                        fit: BoxFit
+                            .cover, // Covers the area while maintaining aspect ratio
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 6.0),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14, // Increased font size
+                      color: Colors.black, // Consistent text color
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    description,
+                    style: const TextStyle(
+                      fontSize: 12, // Increased font size
+                      fontWeight: FontWeight.w100,
+                      color: Colors.black, // Consistent text color
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-            child: Text(
-                'Here is the latest research on essential oils and cognitive health'),
-          ),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 4,
-                childAspectRatio: 0.8,
-              ),
-              itemCount: elements.length,
-              itemBuilder: (context, index) {
-                final element = elements[index];
-                return _buildSupportCard(context, element.title,
-                    element.description, element.link, element.image);
-              },
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
