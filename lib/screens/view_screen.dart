@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ViewScreen extends StatefulWidget {
-  const ViewScreen({super.key});
+  final String url;
+  const ViewScreen({super.key, required this.url});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -48,7 +49,7 @@ class _ViewScreenState extends State<ViewScreen> {
       )
       ..loadRequest(
         Uri.parse(
-          'https://powermeacademy.com/lessons/focus-on-fitness/',
+          widget.url,
         ),
       );
   }

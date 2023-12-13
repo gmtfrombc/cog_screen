@@ -20,6 +20,8 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
   final double verticalMargin = 4.0;
   final EdgeInsets cardPadding = const EdgeInsets.all(8.0);
   final Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
+  final String articlePath =
+      'https://powermeacademy.com/lessons/how-essential-oils-benefit-memory-and-cognitive-health/';
   bool isLoading = false;
   String userId = '';
   @override
@@ -44,13 +46,14 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 _buildHeader(context),
+                _buildTextURL(context),
                 _buildResearchHeader(context),
                 _buildResearchGrid(context)
               ],
             ),
           ),
           Positioned(
-            top: 20,
+            top: 60,
             child: IconButton(
               icon: const Icon(
                 Icons.chevron_left,
@@ -87,11 +90,11 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
           ),
         ),
         Positioned(
-          top: 100,
+          top: 120,
           //bottom: 100,
           left: 10,
           child: Text(
-            'Essential Oils and \nBrain Health',
+            'Essential Oils and Brain\nHealth',
             style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
@@ -99,6 +102,57 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                 letterSpacing: 0.5,
                 fontFamily: GoogleFonts.robotoSlab().fontFamily,
                 height: 1.2),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTextURL(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 10,
+          ),
+          child: Text(
+            'Recent Articles',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              fontFamily: GoogleFonts.robotoSlab().fontFamily,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+          child: Text(
+              'Our latest article: How Essential Oils Benefit Memory and Cognitive Health'),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+          child: TextButton(
+            onPressed: () async {
+              setState(() {
+                isLoading = true;
+              });
+              await Navigator.pushNamed(context, '/viewScreen',
+                  arguments: articlePath);
+              setState(() {
+                isLoading = false;
+              });
+            },
+            child: const Text(
+              'Read the full article',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
           ),
         ),
       ],
@@ -127,7 +181,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
           child: Text(
-              'Here is the latest research on essential oils and cognitive health, including memory, and brain function, and more.'),
+              'The latest research on essential oils and cognitive health, memory, and more.'),
         ),
       ],
     );

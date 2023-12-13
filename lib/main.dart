@@ -95,7 +95,21 @@ class MyApp extends StatelessWidget {
         '/onboarding': (context) => const OnboardingScreen(),
         '/eoOnboarding': (context) => const EOOnboardingScreen(),
         '/brainCareOboarding': (context) => const BrainCareOnboardingScreen(),
-        '/viewScreen': (context) => const ViewScreen(),
+      },
+      onGenerateRoute: (RouteSettings settings) {
+        if (settings.name == '/viewScreen') {
+          final String? url = settings.arguments as String?;
+          if (url != null) {
+            return MaterialPageRoute(
+              builder: (context) => ViewScreen(url: url),
+            );
+          } else {
+            return MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            );
+          }
+        }
+        return null;
       },
     );
   }

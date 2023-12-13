@@ -21,7 +21,7 @@ class AppConstants {
   static const String medAdvice =
       "In order to ensure that there you have no medical contraindications for Olfactory Enrichment, please complete the following questionnaire.";
   static const String memoryEnhancement =
-      "Check out our essential oil memory enhancment protocol.";
+      "Olfactory enrichment using essential oils.";
   static const String overnightOlfactory =
       "This study demonstrated that overnight olfactory enrichment using an odorant diffuser improved memory and modified the uncinate fasciculus in older adults. The results suggest that olfactory stimulation may be a promising non-pharmacological intervention for improving memory and cognitive health.";
   static const String lavenderAromatherapy =
@@ -35,7 +35,7 @@ class AppConstants {
   static const String frequencyDuration =
       "Continue this protocol each night, changing the diffuser water daily before going to bed and rotating the essential oil mix.";
   static const String olfactoryEnrichment =
-      'The following protocol is based on a study by Chen et al. (2020) that had adult subjects diffuse essential oils at night for six months.\n\n The results demonstrated improvement on memory tests by 300%, as well as positive changes in the brain memory regions.\n\nIf you would like to consider this treatment to support your cognitive health, then select "Get Started" below.\n\nYou will be asked to take a short questionnaire to ensure no medical contraindications.';
+      'The Olfactory Enrichment Protocol is based on a study by Chen et al. (2020) that had adult subjects diffuse essential oils at night for six months.\n\n The results demonstrated improvement on memory tests by 300%, as well as positive changes in the brain memory regions.\n\nIf you would like to consider this treatment to support your cognitive health, then select "Get Started" below.\n\nYou will be asked to take a short questionnaire to ensure no medical contraindications.';
   static const String welcome =
       "Thank you for helping test out the PowerME app.\n\nPlease rest assured we are not collecting any personal or health information.\n\nWhile not everything is wired up yet, we would love your feedback on what you see so far.\n\nThanks again for your help!\n\nYour PowerME Team";
 }

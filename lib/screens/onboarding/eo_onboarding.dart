@@ -42,7 +42,7 @@ class _EOOnboardingScreenState extends State<EOOnboardingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Olfactory Enrichment',
+                        'Memory Enhancement',
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),

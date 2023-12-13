@@ -79,6 +79,7 @@ flutter:
     - lib/assets/images/pm_icon_full.png
     - lib/assets/images/cog_health_test.jpeg
     - lib/assets/images/cog_health_test2.jpeg
+    - lib/assets/images/cog_health_test2.png
     - lib/assets/images/cog_health_start2.png
     - lib/assets/images/cog_health_start2.jpeg
     - lib/assets/images/memory_health.png

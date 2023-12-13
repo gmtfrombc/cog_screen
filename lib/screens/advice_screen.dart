@@ -89,8 +89,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
                     'Memory Enhancement Protocol',
                     AppConstants.memoryEnhancement,
                     '/eoOnboarding',
-                    'lib/assets/images/memory_enhancement.jpeg',
-                    'lib/assets/images/dT_EO10.jpeg',
+                    'lib/assets/images/memory_health.png',
+                    Colors.amber,
                     () {
                       _handleButtonClick();
                       Navigator.pushNamed(context, '/eoOnboarding');
@@ -98,11 +98,11 @@ class _AdviceScreenState extends State<AdviceScreen> {
                   ),
                   _buildTopCard(
                     context,
-                    'The CogHealth Test',
+                    'The CogHealth \nScreen',
                     'A simple tool for assessing memory and cognitive function.',
                     '/cognitive',
-                    'lib/assets/images/cog_health_test.jpeg',
-                    'lib/assets/images/cog_health_test2.jpeg',
+                    'lib/assets/images/cog_health_test2.png',
+                    AppTheme.tertiaryColor,
                     () => Navigator.pushNamed(context, '/cognitive'),
                   ),
                   // Add more cards if needed
@@ -145,14 +145,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
     );
   }
 
-  Widget _buildTopCard(
-      BuildContext context,
-      String title,
-      String description,
-      String route,
-      String imagePath,
-      String image2Path,
-      void Function()? onTap) {
+  Widget _buildTopCard(BuildContext context, String title, String description,
+      String route, String imagePath, Color cardColor, void Function()? onTap) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -163,6 +157,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
           gradient: AppTheme.cardGradient,
         ),
         child: Card(
+          color: cardColor,
           clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
@@ -170,7 +165,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
           child: Stack(
             children: [
               Opacity(
-                opacity: 0.4,
+                opacity: 0.0,
                 child: Image.asset(
                   imagePath,
                   width: defaultImageSize,
@@ -179,25 +174,37 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 ),
               ),
               Positioned(
-                top: 30,
-                left: 30,
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                top: 25,
+                left: 20,
+                child: SizedBox(
+                  height: 80,
+                  width: 220,
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      //letterSpacing: 1.0,
+                    ),
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  description,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w100,
-                    color: Colors.black,
+              Positioned(
+                left: 20,
+                bottom: 60,
+                right: 10,
+                child: SizedBox(
+                  height: 80,
+                  width: 200,
+                  child: Text(
+                    description,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                      letterSpacing: 0.9,
+                    ),
                   ),
                 ),
               ),
@@ -205,7 +212,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 right: 8.0,
                 bottom: 8.0,
                 child: Image.asset(
-                  image2Path,
+                  imagePath,
                   width: 80,
                   height: 80,
                 ),
@@ -239,7 +246,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 CrossAxisAlignment.center, // Center items vertically
             children: [
               SizedBox(
-                width: 180,
+                width: 200,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

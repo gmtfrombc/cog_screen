@@ -31,7 +31,7 @@ class SurveyResultScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment:
-                CrossAxisAlignment.stretch, // Stretch to fill width
+                CrossAxisAlignment.center, // Stretch to fill width
             children: [
               const SizedBox(
                 height: 30,
@@ -75,17 +75,9 @@ class SurveyResultScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 5.0,
-                  bottom: 5.0,
-                  left: 20.0,
-                  right: 20.0,
-                ),
-                child: ElevatedButton(
-                  onPressed: () => _showLearnMoreSheet(context),
-                  child: const Text('Learn More'),
-                ),
+              ElevatedButton(
+                onPressed: () => _showLearnMoreSheet(context),
+                child: const Text('Learn More'),
               ),
             ],
           ),
