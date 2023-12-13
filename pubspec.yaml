@@ -40,6 +40,7 @@ dependencies:
   provider: ^6.1.1
   vibration: ^1.8.3
   webview_flutter: ^4.4.2
+  universal_html: ^2.2.4
 
 dev_dependencies:
   flutter_lints: ^3.0.1
