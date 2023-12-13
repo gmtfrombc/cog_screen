@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showLeading = true,
     this.showEndDrawerIcon = true,
     this.showShoppingCartIcon = false,
-    this.bottom, // Add this line
+    this.bottom,// Add this line
     // Default value
   });
 

@@ -23,6 +23,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
   final double verticalMargin = 4.0;
   final EdgeInsets cardPadding = const EdgeInsets.all(8.0);
   final Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
+  final cogPath = 'https://powermeacademy.com/lessons/understanding-cognitive-health/';
   bool isLoading = false;
   String userId = '';
   double defaultImageSize = 250.0;

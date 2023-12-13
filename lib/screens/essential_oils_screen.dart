@@ -52,19 +52,6 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
               ],
             ),
           ),
-          Positioned(
-            top: 60,
-            child: IconButton(
-              icon: const Icon(
-                Icons.chevron_left,
-                size: 40,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
         ],
       ),
     );
@@ -74,7 +61,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
+          padding: const EdgeInsets.only(bottom: 10.0),
           child: ClipPath(
             clipper: ConvexBottomClipper(),
             child: ColorFiltered(
@@ -104,6 +91,19 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                 height: 1.2),
           ),
         ),
+        Positioned(
+          top: 60,
+          child: IconButton(
+            icon: const Icon(
+              Icons.chevron_left,
+              size: 40,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
       ],
     );
   }
@@ -120,20 +120,41 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
           child: Text(
             'Recent Articles',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
               fontFamily: GoogleFonts.robotoSlab().fontFamily,
               color: Colors.black,
             ),
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
-          child: Text(
-              'Our latest article: How Essential Oils Benefit Memory and Cognitive Health'),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: RichText(
+            text: const TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                  text: '- Our latest article: ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+                TextSpan(
+                  text:
+                      'How Essential Oils Benefit \n   Memory and Cognitive Health',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.black87,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
           child: TextButton(
             onPressed: () async {
               setState(() {
@@ -141,16 +162,24 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
               });
               await Navigator.pushNamed(context, '/viewScreen',
                   arguments: articlePath);
-              setState(() {
-                isLoading = false;
-              });
+              setState(
+                () {
+                  isLoading = false;
+                },
+              );
             },
+            style: TextButton.styleFrom(
+              backgroundColor: AppTheme.tertiaryColor,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+              minimumSize: const Size(50, 30),
+            ),
             child: const Text(
               'Read the full article',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
           ),
@@ -171,7 +200,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
           child: Text(
             'Latest Essential Oil Research',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
               fontFamily: GoogleFonts.robotoSlab().fontFamily,
               color: Colors.black,
@@ -179,9 +208,9 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
           ),
         ),
         const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 1.0),
           child: Text(
-              'The latest research on essential oils and cognitive health, memory, and more.'),
+              '- Recent research on essential oils and cognitive \n   health, memory, and more.'),
         ),
       ],
     );
@@ -195,7 +224,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 2,
-        mainAxisSpacing: 2,
+        mainAxisSpacing: 4,
         childAspectRatio: 0.8,
       ),
       itemCount: elements.length,

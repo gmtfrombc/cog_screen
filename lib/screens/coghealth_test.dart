@@ -10,6 +10,7 @@ import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:cog_screen/widgets/gradient_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CognitiveScreen extends StatelessWidget {
@@ -26,22 +27,22 @@ class CognitiveScreen extends StatelessWidget {
     );
     final surveyProvider = Provider.of<SurveyProvider>(context);
 
-    
     Widget content = Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const SizedBox(height: 40), // Add some space above the title (20px
+          const SizedBox(height: 10), // Add some space above the title (20px
           GradientImage(
             imagePath: imagePath,
           ),
           const SizedBox(height: 40),
-          const Text(
+          Text(
             'The CogHealth Test',
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 28,
               fontWeight: FontWeight.bold,
               color: Colors.black,
+              fontFamily: GoogleFonts.roboto().fontFamily,
             ),
           ),
           const SizedBox(
@@ -54,31 +55,36 @@ class CognitiveScreen extends StatelessWidget {
               AppConstants.cogHealthStart,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w300,
               ),
             ),
           ),
           const SizedBox(height: 10),
-          const Text(
-            "When you are ready, select 'Begin'",
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () {
-              surveyProvider.restartSurvey();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SurveyScreen(),
+          Column(
+            children: [
+              Text(
+                "When you are ready, select 'Begin'",
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
-              );
-            },
-            child: const Text('Begin'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButtonTheme.of(context).style,
+                onPressed: () {
+                  surveyProvider.restartSurvey();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SurveyScreen(),
+                    ),
+                  );
+                },
+                child: const Text('Begin'),
+              ),
+            ],
           ),
         ],
       ),
@@ -102,5 +108,4 @@ class CognitiveScreen extends StatelessWidget {
       child: content, // If you want to show the AppBar
     );
   }
-  
 }

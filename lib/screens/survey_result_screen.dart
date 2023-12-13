@@ -27,60 +27,59 @@ class SurveyResultScreen extends StatelessWidget {
             ? 'Complete the CogHealth Screen'
             : 'Your CogHealth Screening Score: ${surveyProvider.totalScore}/10';
 
-        return SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment:
-                CrossAxisAlignment.center, // Stretch to fill width
-            children: [
-              const SizedBox(
-                height: 30,
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment:
+              CrossAxisAlignment.center, // Stretch to fill width
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                resultText,
+                style: theme.textTheme.titleLarge?.copyWith(fontSize: 28),
+                textAlign: TextAlign.center,
               ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  resultText,
-                  style: theme.textTheme.titleLarge?.copyWith(fontSize: 28),
-                  textAlign: TextAlign.center,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Text(
+                AppConstants.cogHealthExplanation,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Text(
-                  AppConstants.cogHealthExplanation,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                  ),
+            ),
+            Center(
+              child: GradientImage(
+                imagePath: imagePath,
+              ),
+            ),
+            const SizedBox(height: 40),
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Text(
+                AppConstants.cogHealthMore,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-              Center(
-                child: GradientImage(
-                  imagePath: imagePath,
-                ),
-              ),
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Text(
-                  AppConstants.cogHealthMore,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                onPressed: () => _showLearnMoreSheet(context),
-                child: const Text('Learn More'),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              style: ElevatedButtonTheme.of(context).style,
+              onPressed: () => Navigator.pushNamed(context, '/advice'),
+              child: const Text('Learn More'),
+            ),
+          ],
         );
       },
     );
@@ -100,52 +99,6 @@ class SurveyResultScreen extends StatelessWidget {
         appNavigationProvider: appNavigationProvider,
       ),
       child: content, // If you want to show the AppBar
-    );
-  }
-  //other code belwo ...
-
-  void _showLearnMoreSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) => _learnMoreBottomSheet(context),
-    );
-  }
-
-  Widget _learnMoreBottomSheet(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            AppConstants.loremIpsum,
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                child: const Text('I Agree'),
-                onPressed: () {
-                  Navigator.pop(context); // Close the bottom sheet
-                  Navigator.pushNamed(
-                      context, '/advice'); // Navigate to CriteriaScreen
-                },
-              ),
-              ElevatedButton(
-                onPressed: () =>
-                    Navigator.pop(context), // Close the bottom sheet
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      Colors.grey, // Optional: style for the cancel button
-                ),
-                child: const Text('Cancel'),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }

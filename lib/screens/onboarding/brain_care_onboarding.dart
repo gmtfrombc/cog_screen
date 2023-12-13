@@ -1,6 +1,7 @@
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
+import 'package:cog_screen/utilities/constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,7 @@ class BrainCareOnboardingScreen extends StatelessWidget {
                   const SizedBox(height: 32),
                   ElevatedButton(
                     style: ElevatedButtonTheme.of(context).style,
-                    onPressed: () => Navigator.pushNamed(context, '/advice'),
+                    onPressed: () => _showLearnMoreSheet(context),
                     child: const Text('Get Started'),
                   ),
                 ],
@@ -95,6 +96,51 @@ class BrainCareOnboardingScreen extends StatelessWidget {
               ),
               onPressed: () => Navigator.of(context).pop(),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showLearnMoreSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) => _learnMoreBottomSheet(context),
+    );
+  }
+
+  Widget _learnMoreBottomSheet(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            AppConstants.loremIpsum,
+            textAlign: TextAlign.justify,
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                child: const Text('I Agree'),
+                onPressed: () {
+                  Navigator.pop(context); // Close the bottom sheet
+                  Navigator.pushNamed(
+                      context, '/advice'); // Navigate to CriteriaScreen
+                },
+              ),
+              ElevatedButton(
+                onPressed: () =>
+                    Navigator.pop(context), // Close the bottom sheet
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Colors.grey, // Optional: style for the cancel button
+                ),
+                child: const Text('Cancel'),
+              ),
+            ],
           ),
         ],
       ),
