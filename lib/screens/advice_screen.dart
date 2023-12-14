@@ -1,6 +1,7 @@
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
+import 'package:cog_screen/screens/view_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
@@ -23,7 +24,10 @@ class _AdviceScreenState extends State<AdviceScreen> {
   final double verticalMargin = 4.0;
   final EdgeInsets cardPadding = const EdgeInsets.all(8.0);
   final Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
-  final cogPath = 'https://powermeacademy.com/lessons/understanding-cognitive-health/';
+  final lifestylePath =
+      'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/';
+  final cogPath =
+      'https://powermeacademy.com/lessons/understanding-cognitive-health/';
   bool isLoading = false;
   String userId = '';
   double defaultImageSize = 250.0;
@@ -130,13 +134,16 @@ class _AdviceScreenState extends State<AdviceScreen> {
                       'Understanding Cognitive Health',
                       AppConstants.understandingCognitiveHealth,
                       '/viewScreen',
-                      'lib/assets/images/brain_health_2.jpeg'),
+                      'lib/assets/images/brain_health_2.jpeg',
+                      url: cogPath),
                   _buildMainCard(
-                      context,
-                      'Lifestyle Strategies for a Health Brain',
-                      AppConstants.lifestyleStrategies,
-                      '/comingsoon',
-                      'lib/assets/images/brain_outdoor_dog.jpeg'),
+                    context,
+                    'Lifestyle Strategies for a Health Brain',
+                    AppConstants.lifestyleStrategies,
+                    '/viewScreen',
+                    'lib/assets/images/brain_outdoor_dog.jpeg',
+                    url: lifestylePath,
+                  ),
                 ],
               ),
             ),
@@ -226,7 +233,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
   }
 
   Widget _buildMainCard(BuildContext context, String title, String description,
-      String route, String imagePath) {
+      String route, String imagePath,
+      {String? url}) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
@@ -241,7 +249,20 @@ class _AdviceScreenState extends State<AdviceScreen> {
         ),
         shadowColor: cardShadowColor,
         child: InkWell(
-          onTap: () => Navigator.pushNamed(context, route),
+          onTap: () {
+            if (url != null) {
+              // Navigate to the ViewScreen with a URL
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ViewScreen(url: url),
+                ),
+              );
+            } else {
+              // Navigate to the given route
+              Navigator.pushNamed(context, route);
+            }
+          },
           child: Row(
             crossAxisAlignment:
                 CrossAxisAlignment.center, // Center items vertically

@@ -1,7 +1,5 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
-import 'package:cog_screen/screens/webview.dart'; // Assuming this is your custom WebView for web
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -24,26 +22,42 @@ class _ViewScreenState extends State<ViewScreen> {
   @override
   void initState() {
     super.initState();
-    if (!kIsWeb) {
-      _controller = WebViewController()
-        ..setJavaScriptMode(JavaScriptMode.unrestricted)
-        ..setBackgroundColor(const Color(0x00000000))
-        ..setNavigationDelegate(NavigationDelegate(
-          onProgress: (int progress) =>
-              setState(() => _loadingProgress = progress / 100),
-          onPageFinished: (String url) => setState(() => _loadingProgress = 0),
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            setState(() {
+              _loadingProgress = progress / 100;
+            });
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {
+            setState(() {
+              _loadingProgress = 0; // Hide progress indicator once page loads
+            });
+          },
           onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) =>
-              request.url.startsWith('https://www.youtube.com/')
-                  ? NavigationDecision.prevent
-                  : NavigationDecision.navigate,
-        ))
-        ..loadRequest(Uri.parse(widget.url));
-    }
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://www.youtube.com/')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(
+        Uri.parse(
+          widget.url,
+        ),
+      );
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
+    // Instantiate CustomAppBar inside the build method
     CustomAppBar customAppBar = CustomAppBar(
       title: const Text('Web View Example'),
       backgroundColor: AppTheme.primaryBackgroundColor,
@@ -60,9 +74,7 @@ class _ViewScreenState extends State<ViewScreen> {
       customAppBar: customAppBar,
       showAppBar: true,
       showDrawer: true,
-      child: kIsWeb
-          ? WebView(url: widget.url)
-          : WebViewWidget(controller: _controller),
+      child: WebViewWidget(controller: _controller),
     );
   }
 }

@@ -231,13 +231,13 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
       itemBuilder: (context, index) {
         final element = elements[index];
         return _buildSupportCard(context, element.title, element.description,
-            element.link, element.image);
+            element.link, element.image, element.url);
       },
     );
   }
 
   Widget _buildSupportCard(BuildContext context, String title,
-      String description, String route, String imagePath) {
+      String description, String route, String imagePath, String url) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
@@ -252,7 +252,17 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         ),
         shadowColor: cardShadowColor,
         child: InkWell(
-          onTap: () => Navigator.pushNamed(context, route),
+          onTap: () async {
+            setState(() {
+              isLoading = true;
+            });
+            await Navigator.pushNamed(context, '/viewScreen', arguments: url);
+            setState(
+              () {
+                isLoading = false;
+              },
+            );
+          },
           child: SizedBox(
             width: 160,
             child: Column(
