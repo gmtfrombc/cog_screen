@@ -40,7 +40,7 @@ class _BaseScreenState extends State<BaseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.showAppBar ? (widget.customAppBar ?? AppBar()) : null,
+      appBar: widget.showAppBar ? widget.customAppBar : null,
       endDrawer: widget.showDrawer
           ? CustomDrawer(
               signOut: _signOutUser, // Pass the sign-out method

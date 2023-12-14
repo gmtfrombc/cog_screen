@@ -67,8 +67,34 @@ class FirebaseService {
     });
   }
 
+  Future<void> recordOnboardingStatus(
+      String userId, String moduleName, bool completed) async {
+    debugPrint('Recording onboarding status for $moduleName: $completed');
+    var action = {
+      'actionDetails': '$moduleName onboarding',
+      'completed': completed,
+      'timestamp': Timestamp.now(),
+    };
+
+    var userDoc = _firebaseFirestore.collection('users').doc(userId);
+    await userDoc.update({
+      'user_actions': FieldValue.arrayUnion([action]),
+    });
+  }
+
+  Future<bool> checkOnboardingCompleted(
+      String userId, String moduleName) async {
+    var userDoc =
+        await _firebaseFirestore.collection('users').doc(userId).get();
+    var userActions = List.from(userDoc.data()?['user_actions'] ?? []);
+    return userActions.any((action) =>
+        action['actionDetails'] == '$moduleName onboarding' &&
+        action['completed'] == true);
+  }
   // Getters for accessing the Firebase services
+
   FirebaseAuth get firebaseAuth => _firebaseAuth;
   FirebaseFirestore get firebaseFirestore => _firebaseFirestore;
   FirebaseStorage get firebaseStorage => _firebaseStorage;
+  // ... [rest of the class] ...
 }

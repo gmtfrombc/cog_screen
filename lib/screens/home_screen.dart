@@ -1,17 +1,40 @@
 import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
+import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
+import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isLoading = false;
+  String userId = '';
+  @override
+  void initState() {
+    super.initState();
+    isLoading = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    return isLoading
+        ? const Center(
+            child: CustomProgressIndicator(),
+          )
+        : _buildTop(context);
+  }
+
+  Widget _buildTop(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: BaseScreen(
@@ -49,8 +72,9 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10.0),
-              Expanded(
+              Flexible(
                 child: GridView.builder(
+                  shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 4,
@@ -75,7 +99,7 @@ class HomeScreen extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (element.isActive) {
-          Navigator.pushNamed(context, element.route);
+          _handleButtonClick(element);
         }
       },
       child: Opacity(
@@ -148,6 +172,49 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _handleButtonClick(HealthElement element) async {
+    final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
+    userId = authProvider.currentUser?.uid ?? '';
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      bool onboardingCompleted =
+          await FirebaseService().checkOnboardingCompleted(
+        userId,
+        element.title,
+      );
+
+      if (!mounted) return;
+
+      if (onboardingCompleted) {
+        Navigator.pushNamed(context, element.route);
+        debugPrint('Onboarding already completed for ${element.title}');
+      } else {
+        await FirebaseService()
+            .recordOnboardingStatus(userId, element.title, true);
+
+        if (!mounted) return;
+
+        Navigator.pushNamed(
+          context,
+          element.onboardingRoute,
+          arguments: element,
+        );
+        debugPrint('Routing to /advice');
+      }
+    } catch (e) {
+      debugPrint('Error handling button click: $e');
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   List<Shadow> _textShadow() {
