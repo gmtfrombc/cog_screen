@@ -64,6 +64,7 @@ flutter:
     - lib/assets/images/dT_EO6.jpeg
     - lib/assets/images/dT_EO8.jpeg
     - lib/assets/images/dT_EO9.jpeg
+    - lib/assets/images/dT_EO9-cropped.jpeg
     - lib/assets/images/dT_EO10.jpeg
     - lib/assets/images/dT_EO11.jpeg
     - lib/assets/images/dT_EO12.jpeg
@@ -74,6 +75,7 @@ flutter:
     - lib/assets/images/memory_health2.jpeg
     - lib/assets/images/brain_health_2.jpeg
     - lib/assets/images/brain_health_onboarding.jpeg
+    - lib/assets/images/brain_health_onboarding.png
     - lib/assets/images/brain_outdoor_dog.jpeg
     - lib/assets/images/brain_outdoor_hike.jpeg
     - lib/assets/images/pm_icon_small.png

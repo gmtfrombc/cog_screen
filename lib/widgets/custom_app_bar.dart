@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showLeading = true,
     this.showEndDrawerIcon = true,
     this.showShoppingCartIcon = false,
-    this.bottom,// Add this line
+    this.bottom, // Add this line
     // Default value
   });
 
@@ -34,10 +34,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
     if (showEndDrawerIcon) {
       appBarActions.add(
-        IconButton(
-          icon: const Icon(Icons.menu),
-          color: Colors.black,
-          onPressed: () => Scaffold.of(context).openEndDrawer(),
+        Padding(
+          padding: const EdgeInsets.only(right: 4.0),
+          child: IconButton(
+            iconSize: 25,
+            icon: const Icon(Icons.menu),
+            color: Colors.black,
+            onPressed: () => Scaffold.of(context).openEndDrawer(),
+          ),
         ),
       );
     }

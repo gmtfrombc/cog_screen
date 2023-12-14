@@ -4,6 +4,8 @@ import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
+import 'package:cog_screen/widgets/custom_app_bar.dart';
+import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart'; // Import constants
@@ -32,27 +34,29 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
 
     return BaseScreen(
       authProvider: Provider.of<AuthProviderClass>(context, listen: false),
+      customAppBar: CustomAppBar(
+        title: const CustomTextForTitle(),
+        backgroundColor: AppTheme.primaryBackgroundColor,
+        showEndDrawerIcon: true,
+        showLeading: true,
+      ),
       showDrawer: false,
-      showAppBar: false,
+      showAppBar: true,
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: appNavigationProvider.currentIndex,
         context: context,
         appNavigationProvider: appNavigationProvider,
       ),
-      child: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildHeader(context),
-                _buildTextURL(context),
-                _buildResearchHeader(context),
-                _buildResearchGrid(context)
-              ],
-            ),
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildHeader(context),
+            _buildTextURL(context),
+            _buildResearchHeader(context),
+            _buildResearchGrid(context)
+          ],
+        ),
       ),
     );
   }
@@ -70,38 +74,25 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                 BlendMode.colorBurn,
               ),
               child: Image.asset(
-                'lib/assets/images/dT_EO9.jpeg',
+                'lib/assets/images/dT_EO9-cropped.jpeg',
                 fit: BoxFit.cover,
               ),
             ),
           ),
         ),
         Positioned(
-          top: 120,
+          top: 20,
           //bottom: 100,
           left: 10,
           child: Text(
             'Essential Oils and Brain\nHealth',
             style: TextStyle(
-                fontSize: 26,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
                 letterSpacing: 0.5,
                 fontFamily: GoogleFonts.robotoSlab().fontFamily,
                 height: 1.2),
-          ),
-        ),
-        Positioned(
-          top: 60,
-          child: IconButton(
-            icon: const Icon(
-              Icons.chevron_left,
-              size: 40,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
           ),
         ),
       ],
@@ -115,20 +106,29 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 10,
-            vertical: 10,
+            vertical: 8,
           ),
-          child: Text(
-            'Recent Articles',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              fontFamily: GoogleFonts.robotoSlab().fontFamily,
-              color: Colors.black,
+          child: Container(
+            padding: const EdgeInsets.all(6.0),
+            color: Colors.greenAccent.withOpacity(
+              0.2,
+            ),
+            child: Text(
+              'Recent Articles',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                fontFamily: GoogleFonts.robotoSlab().fontFamily,
+                color: Colors.black,
+              ),
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 12.0,
+            vertical: 2,
+          ),
           child: RichText(
             text: const TextSpan(
               children: <TextSpan>[
@@ -195,22 +195,36 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 10,
-            vertical: 10,
+            vertical: 8,
           ),
-          child: Text(
-            'Latest Essential Oil Research',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              fontFamily: GoogleFonts.robotoSlab().fontFamily,
-              color: Colors.black,
+          child: Container(
+            padding: const EdgeInsets.all(6.0),
+            color: Colors.yellowAccent.withOpacity(
+              0.2,
+            ),
+            child: Text(
+              'Latest Essential Oil Research',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                fontFamily: GoogleFonts.robotoSlab().fontFamily,
+                color: Colors.black,
+              ),
             ),
           ),
         ),
         const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 1.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 12.0,
+            vertical: 2.0,
+          ),
           child: Text(
-              '- Recent research on essential oils and cognitive \n   health, memory, and more.'),
+            '- Recent research on essential oils and cognitive \n   health, memory, and more.',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
         ),
       ],
     );
@@ -238,79 +252,83 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
 
   Widget _buildSupportCard(BuildContext context, String title,
       String description, String route, String imagePath, String url) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        gradient: AppTheme.cardGradient,
-      ),
-      child: Card(
-        margin: EdgeInsets.symmetric(
-            horizontal: horizontalMargin, vertical: verticalMargin),
-        elevation: 4.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          gradient: AppTheme.cardGradient,
         ),
-        shadowColor: cardShadowColor,
-        child: InkWell(
-          onTap: () async {
-            setState(() {
-              isLoading = true;
-            });
-            await Navigator.pushNamed(context, '/viewScreen', arguments: url);
-            setState(
-              () {
-                isLoading = false;
-              },
-            );
-          },
-          child: SizedBox(
-            width: 160,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Opacity(
-                  opacity: 0.9,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10), // Rounded corners
-                    child: SizedBox(
-                      width:
-                          double.infinity, // Takes the full width of the card
-                      height: 100, // Fixed height for all images
-                      child: Image.asset(
-                        imagePath,
-                        fit: BoxFit
-                            .cover, // Covers the area while maintaining aspect ratio
+        child: Card(
+          margin: EdgeInsets.symmetric(
+              horizontal: horizontalMargin, vertical: verticalMargin),
+          elevation: 4.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          shadowColor: cardShadowColor,
+          child: InkWell(
+            onTap: () async {
+              setState(() {
+                isLoading = true;
+              });
+              await Navigator.pushNamed(context, '/viewScreen', arguments: url);
+              setState(
+                () {
+                  isLoading = false;
+                },
+              );
+            },
+            child: SizedBox(
+              width: 160,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Opacity(
+                    opacity: 0.9,
+                    child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(10), // Rounded corners
+                      child: SizedBox(
+                        width:
+                            double.infinity, // Takes the full width of the card
+                        height: 100, // Fixed height for all images
+                        child: Image.asset(
+                          imagePath,
+                          fit: BoxFit
+                              .cover, // Covers the area while maintaining aspect ratio
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 6.0),
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14, // Increased font size
-                      color: Colors.black, // Consistent text color
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 6.0),
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14, // Increased font size
+                        color: Colors.black, // Consistent text color
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    description,
-                    style: const TextStyle(
-                      fontSize: 12, // Increased font size
-                      fontWeight: FontWeight.w100,
-                      color: Colors.black, // Consistent text color
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      description,
+                      style: const TextStyle(
+                        fontSize: 12, // Increased font size
+                        fontWeight: FontWeight.w100,
+                        color: Colors.black, // Consistent text color
+                      ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
