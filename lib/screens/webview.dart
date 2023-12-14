@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 class WebView extends StatefulWidget {
   final String url;
 
-  const WebView({Key? key, required this.url}) : super(key: key);
+  const WebView({super.key, required this.url});
 
   @override
   // ignore: library_private_types_in_public_api
