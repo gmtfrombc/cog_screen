@@ -203,7 +203,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
               0.2,
             ),
             child: Text(
-              'Latest Essential Oil Research',
+              'Essential Oil Research',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,

@@ -105,7 +105,7 @@ class MyApp extends StatelessWidget {
             );
           } else {
             return MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const HomeScreen()
             );
           }
         }
