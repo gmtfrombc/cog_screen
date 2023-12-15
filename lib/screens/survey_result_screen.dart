@@ -77,7 +77,7 @@ class SurveyResultScreen extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButtonTheme.of(context).style,
               onPressed: () => Navigator.pushNamed(context, '/advice'),
-              child: const Text('Learn More'),
+              child: const Text('Done'),
             ),
           ],
         );

@@ -70,26 +70,51 @@ class FirebaseService {
   Future<void> recordOnboardingStatus(
       String userId, String moduleName, bool completed) async {
     debugPrint('Recording onboarding status for $moduleName: $completed');
-    var action = {
-      'actionDetails': '$moduleName onboarding',
-      'completed': completed,
-      'timestamp': Timestamp.now(),
-    };
-
     var userDoc = _firebaseFirestore.collection('users').doc(userId);
-    await userDoc.update({
-      'user_actions': FieldValue.arrayUnion([action]),
-    });
+
+    // Check if the document for this user already exists
+    var doc = await userDoc.get();
+    if (!doc.exists) {
+      // If the document does not exist, create it with the initial onboarding status
+      debugPrint(
+          'Creating new user document for $userId with onboarding status');
+      await userDoc.set({
+        'user_actions': [
+          {
+            'actionDetails': '$moduleName onboarding',
+            'completed': completed,
+            'timestamp': Timestamp.now(),
+          }
+        ]
+      });
+    } else {
+      // If the document exists, update it with the new onboarding status
+      var action = {
+        'actionDetails': '$moduleName onboarding',
+        'completed': completed,
+        'timestamp': Timestamp.now(),
+      };
+      await userDoc.update({
+        'user_actions': FieldValue.arrayUnion([action]),
+      });
+    }
   }
 
   Future<bool> checkOnboardingCompleted(
       String userId, String moduleName) async {
     var userDoc =
         await _firebaseFirestore.collection('users').doc(userId).get();
+    // Check if the document for the user exists
+    if (!userDoc.exists) {
+      // If not, this means the user is new and hasn't completed any onboarding
+      return false;
+    }
     var userActions = List.from(userDoc.data()?['user_actions'] ?? []);
-    return userActions.any((action) =>
+    bool onboardingCompleted = userActions.any((action) =>
         action['actionDetails'] == '$moduleName onboarding' &&
         action['completed'] == true);
+
+    return onboardingCompleted;
   }
   // Getters for accessing the Firebase services
 

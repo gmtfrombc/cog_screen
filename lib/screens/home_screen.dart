@@ -27,11 +27,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const Center(
-            child: CustomProgressIndicator(),
-          )
-        : _buildTop(context);
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      body: Stack(
+        children: [
+          _buildTop(context),
+          if (isLoading) ...[
+            Positioned.fill(
+              child: Container(
+                color: Colors.black
+                    .withOpacity(0.5), // Semi-transparent background
+                child: Center(
+                  child: CustomProgressIndicator(
+                    color: AppTheme.primaryColor,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
   }
 
   Widget _buildTop(BuildContext context) {

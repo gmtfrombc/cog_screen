@@ -91,6 +91,15 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 children: <Widget>[
                   _buildTopCard(
                     context,
+                    'The CogHealth \nScreen',
+                    'A simple tool for assessing memory and cognitive function.',
+                    '/cognitive',
+                    'lib/assets/images/cog_health_test2.png',
+                    AppTheme.tertiaryColor,
+                    () => Navigator.pushNamed(context, '/cognitive'),
+                  ),
+                  _buildTopCard(
+                    context,
                     'Memory Enhancement Protocol',
                     AppConstants.memoryEnhancement,
                     '/eoOnboarding',
@@ -100,17 +109,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                       _handleButtonClick();
                       Navigator.pushNamed(context, '/eoOnboarding');
                     },
-                  ),
-                  _buildTopCard(
-                    context,
-                    'The CogHealth \nScreen',
-                    'A simple tool for assessing memory and cognitive function.',
-                    '/cognitive',
-                    'lib/assets/images/cog_health_test2.png',
-                    AppTheme.tertiaryColor,
-                    () => Navigator.pushNamed(context, '/cognitive'),
-                  ),
-                  // Add more cards if needed
+                  ), // Add more cards if needed
                 ],
               ),
             ),

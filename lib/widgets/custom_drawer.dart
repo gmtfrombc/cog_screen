@@ -1,4 +1,5 @@
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/providers/criteria_provider.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -87,6 +88,8 @@ class CustomDrawer extends StatelessWidget {
               Icons.exit_to_app,
               'Sign Out',
               () {
+                Provider.of<CriteriaProvider>(context, listen: false)
+                    .resetCriteria();
                 if (signOut != null) {
                   signOut!();
                   surveyProvider.restartSurvey();

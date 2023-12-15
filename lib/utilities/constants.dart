@@ -5,7 +5,7 @@ class AppConstants {
       "The CogHealth Test is for screening purposes. Scores can vary between people with otherwise normal cognitive health. Please consult with a healthcare professional if you have any concerns.";
 
   static const String cogHealthMore =
-      "To learn more about integrative treatment options that support cognitive health, select 'Learn More' below.";
+      "To learn more about integrative treatment options for supporting and maintaning cognitive health, return to our 'Tools to Support Brain Health' section.";
   static const String cogHealthStart =
       "The CogHealth Test is a simple tool for assessing memory and cognitive health. It consists of 8 questions and has a maximum score of 10. You will need a two-sided piece of paper and a pen to complete the screen.";
 
