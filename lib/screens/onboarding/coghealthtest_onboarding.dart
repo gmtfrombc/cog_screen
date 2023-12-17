@@ -3,7 +3,7 @@ import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
-import 'package:cog_screen/screens/survey_screen.dart';
+import 'package:cog_screen/screens/questionnaires/coghealth_survey_screen.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/utilities/constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
@@ -78,7 +78,7 @@ class CognitiveScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SurveyScreen(),
+                      builder: (context) => const CogHealthSureveyScreen(),
                     ),
                   );
                 },

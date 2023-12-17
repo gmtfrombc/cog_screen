@@ -1,7 +1,7 @@
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
-import 'package:cog_screen/screens/signin_screen.dart';
-import 'package:cog_screen/screens/signup_screen.dart';
+import 'package:cog_screen/screens/logins/signin_screen.dart';
+import 'package:cog_screen/screens/logins/signup_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';

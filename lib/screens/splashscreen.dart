@@ -1,4 +1,4 @@
-import 'package:cog_screen/screens/login.dart';
+import 'package:cog_screen/screens/logins/login.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

@@ -36,6 +36,12 @@ class AppConstants {
       "Continue this protocol each night, changing the diffuser water daily before going to bed and rotating the essential oil mix.";
   static const String olfactoryEnrichment =
       'The Olfactory Enrichment Protocol is based on a study by Chen et al. (2020) that had adult subjects diffuse essential oils at night for six months.\n\n The results demonstrated improvement on memory tests by 226%, as well as positive changes in the brain memory regions.\n\nIf you would like to consider this treatment to support your cognitive health, then select "Get Started" below.\n\nYou will be asked to take a short questionnaire to ensure no medical contraindications.';
+  static const String braincareStart =
+      "The McCANCE Brain Care Score was developed by the McCance Center for Brain Health at Massachusetts General Hospital. \n\nThe Brain Care Score is a 5-minute questionnaire intended to help you understand your brain health and identify areas for improvement.";
+  static const String brainHealthExplanation =
+      "The McCANCE Brain Care Score is a comprehensive tool developed by the McCance Center for Brain Health at Massachusetts General Hospital, aimed at assessing and improving brain health.";
+  static const String brainHealthMore =
+      "To learn more about integrative treatment options for supporting and maintaning cognitive health, return to our 'Tools to Support Brain Health' section.";
   static const String welcome =
-      "Thank you for helping test out the PowerME app.\n\nPlease rest assured we are not collecting any personal or health information.\n\nWhile not everything is wired up yet, we would love your feedback on what you see so far.\n\nThanks again for your help!\n\nYour PowerME Team";
+      "Welcome to the PowerME Integrative Health App from PowerME Labs! \n\nHere you can dive into a wealth of medical insights and practical strategies, designed to enhance vital aspects of your health such as brain function, sleep quality, metabolic balance, and more.\n\nWhile we offer a range of integrative treatment options, we encourage consulting your healthcare provider before starting any new treatments.\n\nCurrently, we don't collect health information, but stay tuned for more features as our program evolves.\n\nWelcome aboard!\n\nYour PowerME Team ";
 }

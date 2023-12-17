@@ -3,18 +3,21 @@ import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/utilities/constants.dart';
+import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EOOnboardingScreen extends StatefulWidget {
-  const EOOnboardingScreen({super.key});
+class EOProtocolOnboardingScreen extends StatefulWidget {
+  const EOProtocolOnboardingScreen({super.key});
 
   @override
-  State<EOOnboardingScreen> createState() => _EOOnboardingScreenState();
+  State<EOProtocolOnboardingScreen> createState() =>
+      _EOProtocolOnboardingScreenState();
 }
 
-class _EOOnboardingScreenState extends State<EOOnboardingScreen> {
-  bool isLoading = false;
+class _EOProtocolOnboardingScreenState
+    extends State<EOProtocolOnboardingScreen> {
+  bool _isLoading = false;
   String userId = '';
 
   @override
@@ -97,33 +100,39 @@ class _EOOnboardingScreenState extends State<EOOnboardingScreen> {
         Expanded(
           child: ElevatedButton(
             style: ElevatedButtonTheme.of(context).style,
-            onPressed: () => _handleButtonClick(),
-            child: const Text("Let's go"),
+            onPressed: _isLoading
+                ? null
+                : () async {
+                    setState(
+                      () => _isLoading = true,
+                    );
+                    bool saveSuccessful = await _handleButtonClick();
+                    if (saveSuccessful && mounted) {
+                      Navigator.pushNamed(context, '/criteria');
+                    }
+                    if (mounted) {
+                      setState(() => _isLoading = false);
+                    }
+                  },
+            child: _isLoading
+                ? const CustomProgressIndicator(size: 20.0)
+                : const Text('Let\'s go'),
           ),
-        ),
+        )
       ],
     );
   }
 
-  void _handleButtonClick() async {
+  Future<bool> _handleButtonClick() async {
     final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
     userId = authProvider.currentUser?.uid ?? '';
-    setState(() {
-      isLoading = true;
-    });
+    final firebaseServices = FirebaseService();
     try {
-      await FirebaseService().recordUserAction(userId, "Let's go button");
-      if (mounted) {
-        Navigator.pushNamed(context, '/criteria');
-      }
+      await firebaseServices.recordUserAction(userId, "Let's go button");
+      return true;
     } catch (e) {
       debugPrint('Error recording user action: $e');
-    } finally {
-      if (mounted) {
-        setState(() {
-          isLoading = false;
-        });
-      }
+      return false;
     }
   }
 }

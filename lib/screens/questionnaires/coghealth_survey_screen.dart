@@ -12,16 +12,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class SurveyScreen extends StatefulWidget {
-  const SurveyScreen({
+class CogHealthSureveyScreen extends StatefulWidget {
+  const CogHealthSureveyScreen({
     super.key,
   });
 
   @override
-  State<SurveyScreen> createState() => _SurveyScreenState();
+  State<CogHealthSureveyScreen> createState() => _CogHealthSureveyScreenState();
 }
 
-class _SurveyScreenState extends State<SurveyScreen> {
+class _CogHealthSureveyScreenState extends State<CogHealthSureveyScreen> {
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _controller = TextEditingController();
   @override

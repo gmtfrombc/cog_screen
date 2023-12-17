@@ -116,6 +116,59 @@ class FirebaseService {
 
     return onboardingCompleted;
   }
+
+  //saving results from the coghealth test and brain score test
+  Future<void> saveCogHealthResults(String userId, int cogHealthScore) async {
+    var userDoc = _firebaseFirestore.collection('users').doc(userId);
+    var result = {
+      'coghealthscore': cogHealthScore,
+      'date': Timestamp.now(),
+    };
+
+    await userDoc.update({
+      'user_results': FieldValue.arrayUnion([result]),
+    }).catchError((error) {
+      debugPrint("Error saving CogHealth results: $error");
+    });
+  }
+
+  Future<void> saveBrainHealthResults(
+      String userId, int brainHealthScore) async {
+    var userDoc = _firebaseFirestore.collection('users').doc(userId);
+    var result = {
+      'brainhealthscore': brainHealthScore,
+      'date': Timestamp.now(),
+    };
+
+    await userDoc.update({
+      'user_results': FieldValue.arrayUnion([result]),
+    }).catchError((error) {
+      debugPrint("Error saving BrainHealth results: $error");
+    });
+  }
+
+  Future<Map<String, List<Map<String, dynamic>>>> getUserResults(
+      String userId) async {
+    var userDoc = _firebaseFirestore.collection('users').doc(userId);
+    var doc = await userDoc.get();
+    if (doc.exists) {
+      Map<String, List<Map<String, dynamic>>> results = {};
+      var userResults =
+          List<Map<String, dynamic>>.from(doc.data()?['user_results'] ?? []);
+      results['coghealth'] = userResults
+          .where((result) => result.containsKey('coghealthscore'))
+          .toList();
+      results['brainhealth'] = userResults
+          .where((result) => result.containsKey('brainhealthscore'))
+          .toList();
+      return results;
+    } else {
+      return {
+        'coghealth': [],
+        'brainhealth': []
+      }; // Return empty lists if no results
+    }
+  }
   // Getters for accessing the Firebase services
 
   FirebaseAuth get firebaseAuth => _firebaseAuth;

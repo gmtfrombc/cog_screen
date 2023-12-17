@@ -76,6 +76,7 @@ flutter:
     - lib/assets/images/cog_health_test2.png
     - lib/assets/images/cog_health_start2.png
     - lib/assets/images/memory_health.png
+    - lib/assets/images/memory_enhancement.png
     - lib/assets/images/research1.jpeg
     - lib/assets/images/research2.jpeg
     - lib/assets/images/research3.jpeg
@@ -88,7 +89,7 @@ flutter:
     - lib/assets/images/emotional.jpeg
     - lib/assets/images/movement.jpeg
     - lib/assets/images/cog_health.jpeg
-    - lib/assets/images/welcome.jpeg
+    - lib/assets/images/welcome.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

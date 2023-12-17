@@ -7,8 +7,8 @@ import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({super.key});
+class AppOnboardingScreen extends StatelessWidget {
+  const AppOnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class OnboardingScreen extends StatelessWidget {
             child: ClipPath(
               clipper: WaveClipper(),
               child: Image.asset(
-                'lib/assets/images/welcome.jpeg', // Replace with your image path
+                'lib/assets/images/welcome.png', // Replace with your image path
                 fit: BoxFit.fitWidth,
               ),
             ),

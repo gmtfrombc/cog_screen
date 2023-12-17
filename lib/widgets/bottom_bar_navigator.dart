@@ -26,7 +26,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
               route = '/home';
               break;
             case 1:
-              route = '/results';
+              route = '/allresults';
               break;
             case 2:
               route = '/shoppingCart';

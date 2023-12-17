@@ -96,7 +96,10 @@ class _AdviceScreenState extends State<AdviceScreen> {
                     '/cognitive',
                     'lib/assets/images/cog_health_test2.png',
                     AppTheme.tertiaryColor,
-                    () => Navigator.pushNamed(context, '/cognitive'),
+                    () => Navigator.pushNamed(
+                      context,
+                      '/cognitive',
+                    ),
                   ),
                   _buildTopCard(
                     context,
@@ -109,7 +112,19 @@ class _AdviceScreenState extends State<AdviceScreen> {
                       _handleButtonClick();
                       Navigator.pushNamed(context, '/eoOnboarding');
                     },
-                  ), // Add more cards if needed
+                  ),
+                  _buildTopCard(
+                    context,
+                    'Brain Health Questionnaire',
+                    AppConstants.memoryEnhancement,
+                    '/brainehealthquestionnaire',
+                    'lib/assets/images/memory_enhancement.png',
+                    AppTheme.primaryColor,
+                    () => Navigator.pushNamed(
+                      context,
+                      '/brainehealthquestionnaire',
+                    ),
+                  ), //// Add more cards if needed
                 ],
               ),
             ),

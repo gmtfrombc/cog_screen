@@ -1,7 +1,7 @@
 import 'package:cog_screen/providers/app_navigation_state.dart';
-import 'package:cog_screen/screens/coghealth_test.dart';
-import 'package:cog_screen/screens/survey_result_screen.dart';
-import 'package:cog_screen/screens/survey_screen.dart';
+import 'package:cog_screen/screens/onboarding/coghealthtest_onboarding.dart';
+import 'package:cog_screen/screens/results/coghealth_results_screen.dart';
+import 'package:cog_screen/screens/questionnaires/coghealth_survey_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +15,8 @@ class NavBarScreen extends StatefulWidget {
 class NavBarScreenState extends State<NavBarScreen> {
   final _screens = [
     const CognitiveScreen(),
-    const SurveyScreen(),
-    const SurveyResultScreen(),
+    const CogHealthSureveyScreen(),
+    const CogHealthResultsScreen(),
     // Add other screens here...
   ];
 
