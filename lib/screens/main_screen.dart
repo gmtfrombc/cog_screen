@@ -1,7 +1,6 @@
 // main_screen.dart
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/results/allresultsscreen.dart';
 import 'package:cog_screen/screens/shopping_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
@@ -17,8 +16,6 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
-    String userId = authProvider.currentUser?.uid ?? '';
     // Use Consumer to listen to the navigation state
     return Consumer<AppNavigationProvider>(
         builder: (context, navigationState, child) {
@@ -31,7 +28,7 @@ class MainScreen extends StatelessWidget {
           index: navigationState.currentIndex,
           children: <Widget>[
             const CognitiveScreen(),
-            AllResultsScreen(userId: userId),
+            AllResultsScreen(),
             const ShoppingScreen(),
             // Add other screens as needed
           ],

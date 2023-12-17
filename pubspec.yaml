@@ -33,14 +33,15 @@ dependencies:
   firebase_auth: ^4.15.0
   firebase_core: ^2.24.0
   firebase_storage: ^11.5.3
+  fl_chart: ^0.65.0
   flutter:
     sdk: flutter
   google_fonts: ^6.1.0
   intl: ^0.18.1
   provider: ^6.1.1
+  universal_html: ^2.2.4
   vibration: ^1.8.3
   webview_flutter: ^4.4.2
-  universal_html: ^2.2.4
 
 dev_dependencies:
   flutter_lints: ^3.0.1

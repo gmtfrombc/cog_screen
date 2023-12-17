@@ -89,9 +89,7 @@ class MyApp extends StatelessWidget {
             const CognitiveScreen(), // Add your StartScreen route
         '/survey': (context) => const CogHealthSureveyScreen(),
         '/results': (context) => const CogHealthResultsScreen(),
-        '/allresults': (context) => const AllResultsScreen(
-              userId: '0',
-            ),
+        '/allresults': (context) => const AllResultsScreen( ),
         '/surveyResultScreen': (context) => const CogHealthResultsScreen(),
         '/shoppingCart': (context) => const ShoppingScreen(),
         '/criteria': (context) => const CriteriaScreen(),
