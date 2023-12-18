@@ -36,6 +36,8 @@ class AppConstants {
       "Continue this protocol each night, changing the diffuser water daily before going to bed and rotating the essential oil mix.";
   static const String olfactoryEnrichment =
       'The Olfactory Enrichment Protocol is based on a study by Chen et al. (2020) that had adult subjects diffuse essential oils at night for six months.\n\n The results demonstrated improvement on memory tests by 226%, as well as positive changes in the brain memory regions.\n\nIf you would like to consider this treatment to support your cognitive health, then select "Get Started" below.\n\nYou will be asked to take a short questionnaire to ensure no medical contraindications.';
+  static const String brainCareShort =
+      "A comprehensive tool for assessing and improving brain health.";
   static const String braincareStart =
       "The McCANCE Brain Care Score was developed by the McCance Center for Brain Health at Massachusetts General Hospital. \n\nThe Brain Care Score is a 5-minute questionnaire intended to help you understand your brain health and identify areas for improvement.";
   static const String brainHealthExplanation =

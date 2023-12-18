@@ -112,50 +112,54 @@ class _CogHealthResultsScreenState extends State<CogHealthResultsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: OutlinedButton(
-              onPressed: () {
-                // Navigate to AdviceScreen and reset the survey
-                Navigator.pushNamed(context, '/advice');
-                Provider.of<SurveyProvider>(context, listen: false)
-                    .restartSurvey();
-              },
-              style: OutlinedButton.styleFrom(
-                foregroundColor: Colors.black,
-                side: BorderSide(
-                    color: AppTheme.secondaryColor,
-                    width: 1.0), // Border color and width
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OutlinedButton(
+                onPressed: () {
+                  // Navigate to AdviceScreen and reset the survey
+                  Navigator.pushNamed(context, '/advice');
+                  Provider.of<SurveyProvider>(context, listen: false)
+                      .restartSurvey();
+                },
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  side: BorderSide(
+                      color: AppTheme.secondaryColor,
+                      width: 1.0), // Border color and width
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: const Text('No thanks'),
               ),
-              child: const Text('No thanks'),
             ),
           ),
           const SizedBox(width: 10),
-          ElevatedButton(
-            style: ElevatedButtonTheme.of(context).style,
-            onPressed: _isLoading
-                ? null
-                : () async {
-                    setState(
-                      () => _isLoading = true,
-                    );
-                    bool saveSuccessful = await _saveCogHealthResults();
-                    if (saveSuccessful && mounted) {
-                      Navigator.pushNamed(context, '/advice');
-                      Provider.of<SurveyProvider>(context, listen: false)
-                          .restartSurvey();
-                    }
-                    if (mounted) {
-                      setState(() => _isLoading = false);
-                    }
-                  },
-            child: _isLoading
-                ? const CustomProgressIndicator(size: 20.0)
-                : const Text('Save my results'),
+          Expanded(
+            child: ElevatedButton(
+              style: ElevatedButtonTheme.of(context).style,
+              onPressed: _isLoading
+                  ? null
+                  : () async {
+                      setState(
+                        () => _isLoading = true,
+                      );
+                      bool saveSuccessful = await _saveCogHealthResults();
+                      if (saveSuccessful && mounted) {
+                        Navigator.pushNamed(context, '/advice');
+                        Provider.of<SurveyProvider>(context, listen: false)
+                            .restartSurvey();
+                      }
+                      if (mounted) {
+                        setState(() => _isLoading = false);
+                      }
+                    },
+              child: _isLoading
+                  ? const CustomProgressIndicator(size: 20.0)
+                  : const Text('Save my results'),
+            ),
           ),
         ],
       ),

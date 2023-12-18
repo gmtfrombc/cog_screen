@@ -79,8 +79,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
               height: verticalMargin,
             ),
             const SectionTitle(
-              title: 'Tools to Support Brain Health',
-              descrption: 'Assessment and support options.',
+              title: 'Assessments',
             ),
             SizedBox(
               height: defaultImageSize,
@@ -91,46 +90,52 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 children: <Widget>[
                   _buildTopCard(
                     context,
-                    'The CogHealth \nScreen',
-                    'A simple tool for assessing memory and cognitive function.',
-                    '/cognitive',
-                    'lib/assets/images/cog_health_test2.png',
-                    AppTheme.tertiaryColor,
-                    () => Navigator.pushNamed(
-                      context,
-                      '/cognitive',
-                    ),
-                  ),
-                  _buildTopCard(
-                    context,
-                    'Memory Enhancement Protocol',
-                    AppConstants.memoryEnhancement,
-                    '/eoOnboarding',
-                    'lib/assets/images/memory_health.png',
-                    Colors.amber,
-                    () {
-                      _handleButtonClick();
-                      Navigator.pushNamed(context, '/eoOnboarding');
-                    },
-                  ),
-                  _buildTopCard(
-                    context,
-                    'Brain Health Questionnaire',
-                    AppConstants.memoryEnhancement,
+                    'McCANCE Brain Care Score',
+                    AppConstants.brainCareShort,
                     '/brainehealthquestionnaire',
-                    'lib/assets/images/memory_enhancement.png',
+                    'lib/assets/images/memory_health.png',
                     AppTheme.primaryColor,
                     () => Navigator.pushNamed(
                       context,
                       '/brainehealthquestionnaire',
                     ),
+                  ),
+                  _buildTopCard(
+                    context,
+                    'The CogHealth Screening Test',
+                    'A short assessment of memory and cognitive function.',
+                    '/cognitive',
+                    'lib/assets/images/cog_health_test2.png',
+                    const Color(0xE9FCAF3B),
+                    () => Navigator.pushNamed(
+                      context,
+                      '/cognitive',
+                    ),
                   ), //// Add more cards if needed
                 ],
               ),
             ),
+            const SizedBox(
+              height: 5.0,
+            ),
+            const SectionTitle(title: 'Protocols'),
+            _buildMiddleCard(
+              context,
+              'Memory Enhancement Protocol',
+              AppConstants.memoryEnhancement,
+              '/eoOnboarding',
+              'lib/assets/images/memory_health.png',
+              const Color(0xE9FCAF3B),
+              () {
+                _handleButtonClick();
+                Navigator.pushNamed(context, '/eoOnboarding');
+              },
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
             const SectionTitle(
-              title: 'Maintaining Brain Health',
-              descrption: 'Lifestyle and integrated content for brain health.',
+              title: 'Education',
             ),
             AspectRatio(
               aspectRatio: 3 / 2,
@@ -139,20 +144,20 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 children: [
                   _buildMainCard(
                       context,
-                      'Essential Oils, Memory, and Cognitive Health',
+                      'Essential oils, memory, and cognitive health',
                       AppConstants.essentialOils,
                       '/essentialOils',
                       'lib/assets/images/dT_EO2.jpeg'),
                   _buildMainCard(
                       context,
-                      'Understanding Cognitive Health',
+                      'Some basic facts about brain health',
                       AppConstants.understandingCognitiveHealth,
                       '/viewScreen',
                       'lib/assets/images/brain_health_2.jpeg',
                       url: cogPath),
                   _buildMainCard(
                     context,
-                    'Lifestyle Strategies for a Health Brain',
+                    'Lifestyle strategies for a health brain',
                     AppConstants.lifestyleStrategies,
                     '/viewScreen',
                     'lib/assets/images/brain_outdoor_dog.jpeg',
@@ -186,6 +191,95 @@ class _AdviceScreenState extends State<AdviceScreen> {
           ),
           child: Stack(
             children: [
+              Positioned(
+                top: 25,
+                left: 20,
+                child: SizedBox(
+                  height: 80,
+                  width: 220,
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      //letterSpacing: 1.0,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 20,
+                bottom: 70,
+                right: 10,
+                child: SizedBox(
+                  height: 80,
+                  width: 200,
+                  child: Text(
+                    description,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 8.0,
+                bottom: 2.0,
+                child: Image.asset(
+                  imagePath,
+                  width: 100,
+                  height: 100,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMiddleCard(
+      BuildContext context,
+      String title,
+      String description,
+      String route,
+      String imagePath,
+      Color cardColor,
+      void Function()? onTap) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: screenWidth - 20,
+        height: 180,
+        decoration: BoxDecoration(
+          image: const DecorationImage(
+            image: AssetImage('lib/assets/images/memory_protocol.jpeg'),
+            fit: BoxFit.cover,
+          ),
+          borderRadius: BorderRadius.circular(12.0),
+          gradient: AppTheme.cardGradient,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              spreadRadius: 1, // Spread radius
+              blurRadius: 5, // Blur radius
+              offset: const Offset(0, 2), // Changes position of shadow
+            ),
+          ],
+        ),
+        child: Card(
+          color: Colors.transparent,
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Stack(
+            children: [
               Opacity(
                 opacity: 0.0,
                 child: Image.asset(
@@ -196,8 +290,9 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 ),
               ),
               Positioned(
-                top: 25,
+                //top: 25,
                 left: 20,
+                bottom: 10,
                 child: SizedBox(
                   height: 80,
                   width: 220,
@@ -230,13 +325,12 @@ class _AdviceScreenState extends State<AdviceScreen> {
                   ),
                 ),
               ),
-              Positioned(
-                right: 8.0,
-                bottom: 8.0,
-                child: Image.asset(
-                  imagePath,
-                  width: 80,
-                  height: 80,
+              const Positioned(
+                right: 12.0,
+                bottom: 12.0,
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
                 ),
               ),
             ],
@@ -249,86 +343,66 @@ class _AdviceScreenState extends State<AdviceScreen> {
   Widget _buildMainCard(BuildContext context, String title, String description,
       String route, String imagePath,
       {String? url}) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        gradient: AppTheme.cardGradient,
-      ),
-      child: Card(
-        margin: EdgeInsets.symmetric(
-            horizontal: horizontalMargin, vertical: verticalMargin),
-        elevation: 4.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
+    return InkWell(
+      onTap: () {
+        if (url != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ViewScreen(url: url),
+            ),
+          );
+        } else {
+          Navigator.pushNamed(context, route);
+        }
+      },
+      child: Container(
+        width: 200,
+        height: 250, // Set the height of the container
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          gradient: AppTheme.cardGradient,
         ),
-        shadowColor: cardShadowColor,
-        child: InkWell(
-          onTap: () {
-            if (url != null) {
-              // Navigate to the ViewScreen with a URL
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ViewScreen(url: url),
-                ),
-              );
-            } else {
-              // Navigate to the given route
-              Navigator.pushNamed(context, route);
-            }
-          },
-          child: Row(
-            crossAxisAlignment:
-                CrossAxisAlignment.center, // Center items vertically
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          shadowColor: cardShadowColor,
+          child: Stack(
             children: [
-              SizedBox(
-                width: 200,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Opacity(
-                      opacity: 0.9,
-                      child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded corners
-                        child: SizedBox(
-                          width: double
-                              .infinity, // Takes the full width of the card
-                          height: 100, // Fixed height for all images
-                          child: Image.asset(
-                            imagePath,
-                            fit: BoxFit
-                                .cover, // Covers the area while maintaining aspect ratio
-                          ),
-                        ),
-                      ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  imagePath,
+                  width: double.infinity,
+                  height:
+                      240, // Ensure the image height matches the container height
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 250, // Match the overlay height with the image height
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              Positioned(
+                top: 40,
+                left: 20,
+                child: SizedBox(
+                  height: 100,
+                  width: 120,
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
-                      child: Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        description,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.black,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ],

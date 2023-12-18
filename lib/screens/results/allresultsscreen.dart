@@ -9,6 +9,7 @@ import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -134,86 +135,121 @@ class AllResultsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Text(
               title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: GoogleFonts.robotoSlab(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  letterSpacing: 0.5),
             ),
           ),
           SizedBox(
-            height: 280,
-            width: 350,
+            height: 260,
+            width: 360,
             child: _buildChart(barGroups, sortedResults, maxY),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+            padding: const EdgeInsets.only(
+              top: 20.0,
+              bottom: 8.0,
+            ),
             child: Container(
-              width: 350,
+              width: 360,
               decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    AppTheme.primaryColor.withOpacity(
+                      0.6,
+                    ), // Top color of the gradient
+                    AppTheme.primaryColor.withOpacity(
+                      0.1,
+                    ), // Top color of the gradient
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(
+                  10,
+                ),
                 border: Border.all(
                   color: Colors.grey,
                 ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 4.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'Date',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'Score',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  ...List.generate(results.length, (index) {
-                    var result = results[index];
-                    String scoreKey = title.contains('CogHealth')
-                        ? 'coghealthscore'
-                        : 'brainhealthscore';
-                    String formattedDate = DateFormat('MM/dd/yyyy')
-                        .format(result['date'].toDate());
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2.0),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10.0,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
                             flex: 3,
                             child: Text(
-                              formattedDate,
-                              style: const TextStyle(fontSize: 16),
+                              'Date',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),
                           Expanded(
                             flex: 3,
                             child: Text(
-                              '${result[scoreKey]}',
-                              style: const TextStyle(fontSize: 16),
+                              'Score',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),
                         ],
                       ),
-                    );
-                  }),
-                ],
+                    ),
+                    ...List.generate(results.length, (index) {
+                      var result = results[index];
+                      String scoreKey = title.contains('CogHealth')
+                          ? 'coghealthscore'
+                          : 'brainhealthscore';
+                      String formattedDate = DateFormat('MM/dd/yyyy')
+                          .format(result['date'].toDate());
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                formattedDate,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                '${result[scoreKey]}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  ],
+                ),
               ),
             ),
           ),
@@ -227,63 +263,78 @@ class AllResultsScreen extends StatelessWidget {
     List<Map<String, dynamic>> results,
     double maxY,
   ) {
-    return BarChart(
-      BarChartData(
-        alignment: BarChartAlignment.spaceAround,
-        maxY: maxY, // Adjust according to your data
-        barGroups: barGroups,
-        titlesData: FlTitlesData(
-          bottomTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: true,
-              reservedSize: 40,
-              getTitlesWidget: (double value, TitleMeta meta) {
-                String date = DateFormat('MM/dd').format(
-                    (results[value.toInt()]['date'] as Timestamp).toDate());
-                return SideTitleWidget(
-                  axisSide: meta.axisSide,
-                  child: Text(date,
-                      style:
-                          const TextStyle(color: Colors.black, fontSize: 10)),
-                );
-              },
+    return Material(
+      elevation: 4.0,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(
+            20.0, 5.0, 10.0, 5.0), // Adjust padding as needed
+        child: SizedBox(
+          height: 200,
+          width: 350,
+          child: BarChart(
+            BarChartData(
+              alignment: BarChartAlignment.spaceAround,
+              maxY: maxY, // Adjust according to your data
+              barGroups: barGroups,
+              titlesData: FlTitlesData(
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: 40,
+                    getTitlesWidget: (double value, TitleMeta meta) {
+                      String date = DateFormat('MM/dd').format(
+                          (results[value.toInt()]['date'] as Timestamp)
+                              .toDate());
+                      return SideTitleWidget(
+                        axisSide: meta.axisSide,
+                        child: Text(date,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 10)),
+                      );
+                    },
+                  ),
+                ),
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    getTitlesWidget: (value, meta) => Text('${value.toInt()}'),
+                  ),
+                ),
+                topTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+                rightTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+              ),
+              gridData: FlGridData(
+                show: true,
+                drawHorizontalLine: false,
+                horizontalInterval: 1, // Adjust the interval as needed
+                getDrawingHorizontalLine: (value) {
+                  return const FlLine(
+                    color: Colors.grey,
+                    strokeWidth: 0.5,
+                  );
+                },
+                drawVerticalLine: true,
+                verticalInterval: 1, // Adjust the interval as needed
+                getDrawingVerticalLine: (value) {
+                  return const FlLine(
+                    color: Colors.black,
+                    strokeWidth: 1.0,
+                  );
+                },
+              ),
+              borderData: FlBorderData(
+                show: false,
+                border: Border.all(
+                  color: Colors.black87,
+                  width: 0.5,
+                ),
+              ),
             ),
           ),
-          leftTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: true,
-              getTitlesWidget: (value, meta) => Text('${value.toInt()}'),
-            ),
-          ),
-          topTitles: const AxisTitles(
-            sideTitles: SideTitles(showTitles: false),
-          ),
-          rightTitles: const AxisTitles(
-            sideTitles: SideTitles(showTitles: false),
-          ),
-        ),
-        gridData: FlGridData(
-          show: true,
-          drawHorizontalLine: false,
-          horizontalInterval: 1, // Adjust the interval as needed
-          getDrawingHorizontalLine: (value) {
-            return const FlLine(
-              color: Colors.grey,
-              strokeWidth: 0.5,
-            );
-          },
-          drawVerticalLine: true,
-          verticalInterval: 1, // Adjust the interval as needed
-          getDrawingVerticalLine: (value) {
-            return const FlLine(
-              color: Colors.grey,
-              strokeWidth: 0.5,
-            );
-          },
-        ),
-        borderData: FlBorderData(
-          show: true,
-          border: Border.all(color: Colors.grey, width: 0.5),
         ),
       ),
     );
