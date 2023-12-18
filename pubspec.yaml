@@ -69,6 +69,7 @@ flutter:
     - lib/assets/images/dT_EO12.jpeg
     - lib/assets/images/dT_EO13.jpeg
     - lib/assets/images/dT_EO14.jpeg
+    - lib/assets/images/diffusers.png
     - lib/assets/images/brain_health_2.jpeg
     - lib/assets/images/brain_health_onboarding.png
     - lib/assets/images/brain_outdoor_dog.jpeg

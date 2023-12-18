@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Positioned.fill(
               child: Container(
                 color: Colors.black
-                    .withOpacity(0.5), // Semi-transparent background
+                    .withOpacity(0.9), // Semi-transparent background
                 child: Center(
                   child: CustomProgressIndicator(
                     color: AppTheme.primaryColor,
@@ -120,70 +120,72 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Opacity(
         opacity:
-            element.isActive ? 1.0 : 0.5, // Adjust opacity based on isActive
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
-            gradient: AppTheme.cardGradient,
+            element.isActive ? 1.0 : 0.6, // Adjust opacity based on isActive
+        child: Card(
+          shadowColor: AppTheme.primaryColor,
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
           ),
-          child: Card(
-            shadowColor: AppTheme.primaryColor,
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(element.imagePath),
-                      fit: BoxFit.cover,
-                      colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(0.5),
-                        BlendMode.darken,
-                      ),
-                    ),
-                  ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  element.imagePath,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        element.title,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 26,
-                          letterSpacing: 1.2,
-                          shadows: _textShadow(),
-                        ),
-                      ),
-                      if (!element
-                          .isActive) // Conditional display of "Coming Soon"
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            'Coming soon',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 14,
-                              letterSpacing: 1.2,
-                              shadows: _textShadow(),
-                            ),
-                          ),
-                        ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.white.withOpacity(0.3),
+                      Colors.white.withOpacity(0.2),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      element.title,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 26,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    if (!element
+                        .isActive) // Conditional display of "Coming Soon"
+                      const Padding(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          'Coming soon',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),

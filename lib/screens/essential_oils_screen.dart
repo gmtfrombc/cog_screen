@@ -65,12 +65,12 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 10.0),
+          padding: const EdgeInsets.only(bottom: 30.0),
           child: ClipPath(
             clipper: ConvexBottomClipper(),
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                Theme.of(context).primaryColor.withOpacity(0.5),
+                AppTheme.primaryColor.withOpacity(0.9),
                 BlendMode.colorBurn,
               ),
               child: Image.asset(
@@ -81,18 +81,18 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
           ),
         ),
         Positioned(
-          top: 20,
+          top: 30,
           //bottom: 100,
-          left: 10,
+          left: 20,
           child: Text(
-            'Essential Oils and Brain\nHealth',
+            'Essential Oils \nand Brain Health',
             style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
                 letterSpacing: 0.5,
                 fontFamily: GoogleFonts.robotoSlab().fontFamily,
-                height: 1.2),
+                height: 1.4),
           ),
         ),
       ],
@@ -100,91 +100,105 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
   }
 
   Widget _buildTextURL(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 8,
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(6.0),
-            color: Colors.greenAccent.withOpacity(
-              0.2,
-            ),
-            child: Text(
-              'Recent Articles',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                fontFamily: GoogleFonts.robotoSlab().fontFamily,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12.0,
-            vertical: 2,
-          ),
-          child: RichText(
-            text: const TextSpan(
-              children: <TextSpan>[
-                TextSpan(
-                  text: '- Our latest article: ',
+    return Container(
+      width: double.infinity,
+      height: 220, // Spans the entire width of the screen
+      color: AppTheme.secondaryColor, // Background color
+      padding: const EdgeInsets.all(10), // Padding around the content
+      child: Stack(
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  'Recent Articles',
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: GoogleFonts.robotoSlab().fontFamily,
+                    color: Colors.white,
+                    letterSpacing: 0.5,
                   ),
                 ),
-                TextSpan(
-                  text:
-                      'How Essential Oils Benefit \n   Memory and Cognitive Health',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.black87,
-                    fontSize: 14,
+                const SizedBox(height: 8), // Spacing between widgets
+                const SizedBox(
+                  width: 240,
+                  child: Text(
+                    'Read our latest article on essential oils and cognitive health, memory, and more.',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12), // Spacing between widgets
+                TextButton(
+                  onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    await Navigator.pushNamed(context, '/viewScreen',
+                        arguments: articlePath);
+                    setState(
+                      () {
+                        isLoading = false;
+                      },
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 8.0),
+                    minimumSize: const Size(60, 40),
+                  ),
+                  child: const Text(
+                    'Read the full article',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-          child: TextButton(
-            onPressed: () async {
-              setState(() {
-                isLoading = true;
-              });
-              await Navigator.pushNamed(context, '/viewScreen',
-                  arguments: articlePath);
-              setState(
-                () {
-                  isLoading = false;
-                },
-              );
-            },
-            style: TextButton.styleFrom(
-              backgroundColor: AppTheme.tertiaryColor,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-              minimumSize: const Size(50, 30),
+          Positioned(
+            right: 10, // Distance from right
+            bottom: 10, // Distance from bottom
+            child: Image.asset(
+              'lib/assets/images/diffusers.png', // Replace with your image asset path
+              width: 120, // Adjust the width as needed
+              height: 120, // Adjust the height as needed
+              fit: BoxFit.cover,
             ),
-            child: const Text(
-              'Read the full article',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+          ),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.4),
+                shape: BoxShape.circle,
+              ),
+              child: const Center(
+                child: Icon(
+                  Icons.arrow_forward_sharp,
+                  size: 16,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -192,38 +206,26 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 8,
+            horizontal: 20,
+            vertical: 2.0,
           ),
-          child: Container(
-            padding: const EdgeInsets.all(6.0),
-            color: Colors.yellowAccent.withOpacity(
-              0.2,
-            ),
-            child: Text(
-              'Essential Oil Research',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                fontFamily: GoogleFonts.robotoSlab().fontFamily,
-                color: Colors.black,
-              ),
+          child: Text(
+            'Science and Research',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontFamily: GoogleFonts.robotoSlab().fontFamily,
+              color: Colors.black,
             ),
           ),
         ),
         const Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 12.0,
-            vertical: 2.0,
-          ),
-          child: Text(
-            '- Recent research on essential oils and cognitive \n   health, memory, and more.',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
+            vertical: 4.0,
           ),
         ),
       ],
@@ -250,85 +252,130 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     );
   }
 
-  Widget _buildSupportCard(BuildContext context, String title,
-      String description, String route, String imagePath, String url) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+  Widget _buildSupportCard(
+    BuildContext context,
+    String title,
+    String description,
+    String route,
+    String imagePath,
+    String url,
+  ) {
+    return InkWell(
+      onTap: () async {
+        setState(() {
+          isLoading = true;
+        });
+        await Navigator.pushNamed(context, '/viewScreen', arguments: url);
+        setState(
+          () {
+            isLoading = false;
+          },
+        );
+      },
       child: Container(
+        width: 180,
+        height: 250,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           gradient: AppTheme.cardGradient,
         ),
         child: Card(
-          margin: EdgeInsets.symmetric(
-              horizontal: horizontalMargin, vertical: verticalMargin),
-          elevation: 4.0,
+          clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(8.0),
           ),
           shadowColor: cardShadowColor,
-          child: InkWell(
-            onTap: () async {
-              setState(() {
-                isLoading = true;
-              });
-              await Navigator.pushNamed(context, '/viewScreen', arguments: url);
-              setState(
-                () {
-                  isLoading = false;
-                },
-              );
-            },
-            child: SizedBox(
-              width: 160,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Opacity(
-                    opacity: 0.9,
-                    child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular(10), // Rounded corners
-                      child: SizedBox(
-                        width:
-                            double.infinity, // Takes the full width of the card
-                        height: 100, // Fixed height for all images
-                        child: Image.asset(
-                          imagePath,
-                          fit: BoxFit
-                              .cover, // Covers the area while maintaining aspect ratio
-                        ),
+          child: SizedBox(
+            width: 160,
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.asset(
+                    imagePath,
+                    width: double.infinity,
+                    height: 240,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black.withOpacity(0.2), // Lighter opacity at top
+                        Colors.black
+                            .withOpacity(0.6), // Darker opacity at bottom
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 20,
+                  left: 20,
+                  child: Container(
+                    width: 77,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white, // Border color
+                        width: 1.0, // Border thickness
+                      ),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0), // Add padding inside the container
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment
+                            .spaceBetween, // Center the contents horizontally
+                        children: [
+                          const Icon(
+                            Icons.play_arrow,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                          const SizedBox(width: 4.0),
+                          Expanded(
+                            child: Text(
+                              description,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                letterSpacing: 0.9,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 6.0),
+                ),
+                Positioned(
+                  bottom: 30,
+                  left: 20,
+                  child: SizedBox(
+                    height: 100,
+                    width: 140,
                     child: Text(
                       title,
                       style: const TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14, // Increased font size
-                        color: Colors.black, // Consistent text color
+                        color: Colors.white,
+                        letterSpacing: 0.9,
                       ),
-                      maxLines: 2,
+                      maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      description,
-                      style: const TextStyle(
-                        fontSize: 12, // Increased font size
-                        fontWeight: FontWeight.w100,
-                        color: Colors.black, // Consistent text color
-                      ),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

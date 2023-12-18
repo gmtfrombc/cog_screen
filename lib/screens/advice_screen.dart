@@ -116,7 +116,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
               ),
             ),
             const SizedBox(
-              height: 5.0,
+              height: 10.0,
             ),
             const SectionTitle(title: 'Protocols'),
             _buildMiddleCard(
@@ -135,7 +135,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
               height: 8.0,
             ),
             const SectionTitle(
-              title: 'Education',
+              title: 'Learning Center',
             ),
             AspectRatio(
               aspectRatio: 3 / 2,
@@ -145,20 +145,20 @@ class _AdviceScreenState extends State<AdviceScreen> {
                   _buildMainCard(
                       context,
                       'Essential oils, memory, and cognitive health',
-                      AppConstants.essentialOils,
+                      'Learn',
                       '/essentialOils',
                       'lib/assets/images/dT_EO2.jpeg'),
                   _buildMainCard(
                       context,
-                      'Some basic facts about brain health',
-                      AppConstants.understandingCognitiveHealth,
+                      'Basic facts about brain health',
+                      '3 min',
                       '/viewScreen',
                       'lib/assets/images/brain_health_2.jpeg',
                       url: cogPath),
                   _buildMainCard(
                     context,
                     'Lifestyle strategies for a health brain',
-                    AppConstants.lifestyleStrategies,
+                    '3 min',
                     '/viewScreen',
                     'lib/assets/images/brain_outdoor_dog.jpeg',
                     url: lifestylePath,
@@ -218,9 +218,10 @@ class _AdviceScreenState extends State<AdviceScreen> {
                   child: Text(
                     description,
                     style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
+                      letterSpacing: 0.9,
                     ),
                   ),
                 ),
@@ -329,8 +330,9 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 right: 12.0,
                 bottom: 12.0,
                 child: Icon(
-                  Icons.arrow_forward_ios,
+                  Icons.arrow_forward_sharp,
                   color: Colors.white,
+                  size: 24,
                 ),
               ),
             ],
@@ -340,9 +342,14 @@ class _AdviceScreenState extends State<AdviceScreen> {
     );
   }
 
-  Widget _buildMainCard(BuildContext context, String title, String description,
-      String route, String imagePath,
-      {String? url}) {
+  Widget _buildMainCard(
+    BuildContext context,
+    String title,
+    String description,
+    String route,
+    String imagePath, {
+    String? url,
+  }) {
     return InkWell(
       onTap: () {
         if (url != null) {
@@ -357,7 +364,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
         }
       },
       child: Container(
-        width: 200,
+        width: 180,
         height: 250, // Set the height of the container
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
@@ -385,23 +392,68 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 width: double.infinity,
                 height: 250, // Match the overlay height with the image height
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withOpacity(0.6),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
               Positioned(
-                top: 40,
+                top: 20,
+                left: 20,
+                child: Container(
+                  width: 77,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.white, // Border color
+                      width: 0.5, // Border thickness
+                    ),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0), // Add padding inside the container
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment
+                          .spaceBetween, // Center the contents horizontally
+                      children: [
+                        Icon(
+                          Icons.arrow_forward_sharp,
+                          color: Colors.white.withOpacity(0.8),
+                          size: 18,
+                        ),
+                        const SizedBox(width: 4.0),
+                        Expanded(
+                          child: Text(
+                            description,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                              letterSpacing: 0.9,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 20,
                 left: 20,
                 child: SizedBox(
                   height: 100,
-                  width: 120,
+                  width: 130,
                   child: Text(
                     title,
                     style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                       color: Colors.white,
+                      letterSpacing: 0.9,
                     ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),
