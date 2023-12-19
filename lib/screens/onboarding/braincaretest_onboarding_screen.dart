@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class BrainCareTestInitialScreen extends StatelessWidget {
-  const BrainCareTestInitialScreen({super.key});
+class BrainHealthScoreOnboarding extends StatelessWidget {
+  const BrainHealthScoreOnboarding({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,44 +21,46 @@ class BrainCareTestInitialScreen extends StatelessWidget {
     final theme = Theme.of(context);
     String imagePath = 'lib/assets/images/memory_enhancement.png';
     final brainHealthProvider = Provider.of<BrainHealthProvider>(context);
-
     Widget content = Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          const SizedBox(height: 10),
-          GradientImage(imagePath: imagePath),
-          Text(
-            'Brain Care Score',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontFamily: GoogleFonts.roboto().fontFamily,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const SizedBox(height: 10),
+            GradientImage(imagePath: imagePath),
+            Text(
+              'Brain Care Score',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontFamily: GoogleFonts.roboto().fontFamily,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Text(
-              AppConstants.braincareStart,
-              textAlign: TextAlign.center,
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Text(
+                AppConstants.braincareStart,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyMedium
+                    ?.copyWith(fontSize: 16, fontWeight: FontWeight.w300),
+              ),
+            ),
+            Text(
+              "When you are ready, select 'Begin'",
               style: theme.textTheme.bodyMedium
-                  ?.copyWith(fontSize: 16, fontWeight: FontWeight.w300),
+                  ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
             ),
-          ),
-          Text(
-            "When you are ready, select 'Begin'",
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              brainHealthProvider.restartSurvey();
-              Navigator.pushNamed(context, '/braincaretest');
-            },
-            child: const Text('Begin'),
-          ),
-        ],
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                brainHealthProvider.restartSurvey();
+                Navigator.pushNamed(context, '/braincaretest');
+              },
+              child: const Text('Begin'),
+            ),
+          ],
+        ),
       ),
     );
 

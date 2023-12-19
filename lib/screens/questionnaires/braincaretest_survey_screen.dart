@@ -72,8 +72,12 @@ class BrainCareTestSurveyScreen extends StatelessWidget {
     }
 
     if (isLastCategory) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const BrainResultsScreen()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const BrainResultsScreen(),
+        ),
+      );
     } else {
       Navigator.pushReplacement(
         context,

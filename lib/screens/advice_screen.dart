@@ -256,7 +256,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
       onTap: onTap,
       child: Container(
         width: screenWidth - 20,
-        height: 180,
+        height: 200,
         decoration: BoxDecoration(
           image: const DecorationImage(
             image: AssetImage('lib/assets/images/memory_protocol.jpeg'),
@@ -293,7 +293,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
               Positioned(
                 //top: 25,
                 left: 20,
-                bottom: 10,
+                bottom: 20,
                 child: SizedBox(
                   height: 80,
                   width: 220,
@@ -310,7 +310,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
               ),
               Positioned(
                 left: 20,
-                bottom: 60,
+                bottom: 70,
                 right: 10,
                 child: SizedBox(
                   height: 80,
@@ -384,21 +384,13 @@ class _AdviceScreenState extends State<AdviceScreen> {
                   imagePath,
                   width: double.infinity,
                   height:
-                      240, // Ensure the image height matches the container height
+                      250, // Ensure the image height matches the container height
                   fit: BoxFit.cover,
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 250, // Match the overlay height with the image height
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.6),
-                  borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
               Positioned(
                 top: 20,
-                left: 20,
+                right: 20,
                 child: Container(
                   width: 77,
                   height: 30,
@@ -418,7 +410,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                       children: [
                         Icon(
                           Icons.arrow_forward_sharp,
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withOpacity(0.9),
                           size: 18,
                         ),
                         const SizedBox(width: 4.0),
@@ -427,7 +419,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                             description,
                             style: const TextStyle(
                               fontSize: 12,
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w600,
                               color: Colors.white,
                               letterSpacing: 0.9,
                             ),
@@ -439,7 +431,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 ),
               ),
               Positioned(
-                bottom: 20,
+                bottom: 25,
                 left: 20,
                 child: SizedBox(
                   height: 100,
@@ -455,6 +447,15 @@ class _AdviceScreenState extends State<AdviceScreen> {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
+                ),
+              ),
+              const Positioned(
+                right: 12.0,
+                bottom: 12.0,
+                child: Icon(
+                  Icons.arrow_forward_sharp,
+                  color: Colors.white,
+                  size: 24,
                 ),
               ),
             ],

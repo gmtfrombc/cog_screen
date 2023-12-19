@@ -24,58 +24,64 @@ class BrainCareOnboardingScreen extends StatelessWidget {
       ),
       showDrawer: false,
       showAppBar: true,
-      child: Column(
-        children: [
-          ClipPath(
-            clipper: WaveClipper(),
-            child: Image.asset(
-              'lib/assets/images/brain_health_onboarding.png',
-              fit: BoxFit.cover,
-              height: MediaQuery.of(context).size.height / 2.5,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ClipPath(
+              clipper: WaveClipper(),
+              child: Image.asset(
+                'lib/assets/images/brain_health_onboarding.png',
+                fit: BoxFit.cover,
+                height: MediaQuery.of(context).size.height / 2.5,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Welcome to the Brain Health',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: GoogleFonts.robotoSlab().fontFamily,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'In this module you will be able to:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Welcome to the Brain Health',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: GoogleFonts.robotoSlab().fontFamily,
                     ),
-                    _buildBulletItem(
-                        'Perform a brief cognitive screen called the CogHealth Test.'),
-                    _buildBulletItem(
-                        'Explore strategies to improve memory and cognitive health.'),
-                    _buildBulletItem(
-                        'Learn about the exciting research on essential oils and cognitive health.'),
-                  ],
-                ),
-                const SizedBox(height: 32),
-                ElevatedButton(
-                  style: ElevatedButtonTheme.of(context).style,
-                  onPressed: () => _showLearnMoreSheet(context),
-                  child: const Text('Get Started'),
-                ),
-              ],
+                  ),
+                  const SizedBox(height: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 2.0),
+                        child: Text(
+                          'The Brain Health module consists of:',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      _buildBulletItem(
+                          'Two assessments: the McCance Brain Care Score and the CogHealth Screening Test.'),
+                      _buildBulletItem(
+                          'Protocols to help improve memory and cognitive health.'),
+                      _buildBulletItem(
+                          'Educational content to help you understand the science behind brain health.'),
+                    ],
+                  ),
+                  const SizedBox(height: 32),
+                  ElevatedButton(
+                    style: ElevatedButtonTheme.of(context).style,
+                    onPressed: () => _showLearnMoreSheet(context),
+                    child: const Text('Get Started'),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -128,7 +134,7 @@ class BrainCareOnboardingScreen extends StatelessWidget {
 
 Widget _buildBulletItem(String text) {
   return Padding(
-    padding: const EdgeInsets.only(top: 8.0, left: 16.0),
+    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

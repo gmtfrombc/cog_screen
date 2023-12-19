@@ -6,11 +6,11 @@ import 'package:cog_screen/providers/cart_provider.dart';
 import 'package:cog_screen/screens/coming_soon_screen.dart';
 import 'package:cog_screen/screens/home_screen.dart';
 import 'package:cog_screen/screens/logins/login.dart';
-import 'package:cog_screen/screens/onboarding/brainhealth_onboarding.dart';
+import 'package:cog_screen/screens/onboarding/brainhealthmodule_onboarding_screen.dart';
 import 'package:cog_screen/screens/onboarding/eoprotocol_onboarding.dart';
 import 'package:cog_screen/screens/onboarding/apponboarding_screen.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
-import 'package:cog_screen/screens/questionnaires/braincaretest_inital_screen.dart';
+import 'package:cog_screen/screens/onboarding/braincaretest_onboarding_screen.dart';
 import 'package:cog_screen/screens/questionnaires/braincaretest_survey_screen.dart';
 import 'package:cog_screen/screens/research_screen.dart';
 import 'package:cog_screen/screens/results/allresultsscreen.dart';
@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
             const CognitiveScreen(), // Add your StartScreen route
         '/survey': (context) => const CogHealthSureveyScreen(),
         '/results': (context) => const CogHealthResultsScreen(),
-        '/allresults': (context) => const AllResultsScreen( ),
+        '/allresults': (context) => const AllResultsScreen(),
         '/surveyResultScreen': (context) => const CogHealthResultsScreen(),
         '/shoppingCart': (context) => const ShoppingScreen(),
         '/criteria': (context) => const CriteriaScreen(),
@@ -97,7 +97,7 @@ class MyApp extends StatelessWidget {
         '/essentialOils': (context) => const EssentialOilScreen(),
         '/protocol': (context) => const ProtocolScreen(),
         '/brainehealthquestionnaire': (context) =>
-            const BrainCareTestInitialScreen(),
+            const BrainHealthScoreOnboarding(),
         '/research': (context) => const ResearchScreen(),
         '/braincaretest': (context) => BrainCareTestSurveyScreen(
               category: brainCareData[0],

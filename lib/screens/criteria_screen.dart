@@ -1,7 +1,9 @@
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
+import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/utilities/constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
+import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -165,23 +167,36 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
     );
   }
 
-  void handleFloatingActionButtonPress() {
+  void handleFloatingActionButtonPress() async {
+    final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
     final criteriaProvider =
         Provider.of<CriteriaProvider>(context, listen: false);
+    final firebaseService = FirebaseService();
+    final userId = authProvider.currentUser?.uid ?? '';
+
     if (criteriaProvider.allAnswered()) {
       _showProgressIndicator();
+
+      try {
+        await firebaseService.recordOnboardingStatus(userId, "Criteria completed",true);
+        if (!mounted) return;
+        Navigator.of(context).pop(); // Close the prerogress indicator dialog
+        showCompletionDialog();
+      } catch (e) {
+        debugPrint('Error recording criteria completion: $e');
+      } finally {
+        if (mounted && Navigator.canPop(context)) {
+          Navigator.of(context)
+              .pop(); // Ensure the progress indicator is closed
+        }
+      }
     } else {
+      // Show a snackbar if not all questions are answered
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          duration: Duration(
-            seconds: 1,
-          ),
+          duration: Duration(seconds: 1),
           content: Text(
             "Please answer all questions.",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-            ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -193,10 +208,8 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(
-        child: CircularProgressIndicator(
-          color: AppTheme.primaryColor,
-        ),
+      builder: (context) => const Center(
+        child: CustomProgressIndicator(),
       ),
     );
 

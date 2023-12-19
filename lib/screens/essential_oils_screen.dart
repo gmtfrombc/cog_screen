@@ -40,7 +40,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         showEndDrawerIcon: true,
         showLeading: true,
       ),
-      showDrawer: false,
+      showDrawer: true,
       showAppBar: true,
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: appNavigationProvider.currentIndex,
@@ -87,12 +87,13 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
           child: Text(
             'Essential Oils \nand Brain Health',
             style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                letterSpacing: 0.5,
-                fontFamily: GoogleFonts.robotoSlab().fontFamily,
-                height: 1.4),
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              letterSpacing: 0.5,
+              fontFamily: GoogleFonts.robotoSlab().fontFamily,
+              height: 1.4,
+            ),
           ),
         ),
       ],
@@ -188,11 +189,25 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                 color: Colors.black.withOpacity(0.4),
                 shape: BoxShape.circle,
               ),
-              child: const Center(
-                child: Icon(
-                  Icons.arrow_forward_sharp,
-                  size: 16,
-                  color: Colors.white,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    await Navigator.pushNamed(context, '/viewScreen',
+                        arguments: articlePath);
+                    setState(
+                      () {
+                        isLoading = false;
+                      },
+                    );
+                  },
+                  child: const Icon(
+                    Icons.arrow_forward_sharp,
+                    size: 16,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -303,20 +318,11 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                   height: 250,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.black.withOpacity(0.2), // Lighter opacity at top
-                        Colors.black
-                            .withOpacity(0.6), // Darker opacity at bottom
-                      ],
-                    ),
                   ),
                 ),
                 Positioned(
                   top: 20,
-                  left: 20,
+                  right: 20,
                   child: Container(
                     width: 77,
                     height: 30,
@@ -373,6 +379,15 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                     ),
+                  ),
+                ),
+                const Positioned(
+                  right: 12.0,
+                  bottom: 12.0,
+                  child: Icon(
+                    Icons.arrow_forward_sharp,
+                    color: Colors.white,
+                    size: 24,
                   ),
                 ),
               ],

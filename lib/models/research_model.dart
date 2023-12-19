@@ -28,7 +28,7 @@ final List<ResearchElement> elements = [
       '/viewScreen',
       'https://powermeacademy.com/topic/a-review-of-essential-oils-and-the-nervous-system/'),
   ResearchElement(
-      "Essential Oils as a Potential Neuroprotective Remedy for Alzheimer's Disease",
+      "Essential oils as a potential neuroprotective remedy for Alzheimer's Disease",
       '3 min',
       'lib/assets/images/research3.jpeg',
       '/viewScreen',

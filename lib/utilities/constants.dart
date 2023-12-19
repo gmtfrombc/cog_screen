@@ -1,11 +1,7 @@
 class AppConstants {
   static const String loremIpsum =
       "In order for us to give you medical advice, please review and accept the following: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-  static const String cogHealthExplanation =
-      "The CogHealth Test is for screening purposes. Scores can vary between people with otherwise normal cognitive health. Please consult with a healthcare professional if you have any concerns.";
 
-  static const String cogHealthMore =
-      "To learn more about integrative treatment options for supporting and maintaning cognitive health, return to our 'Tools to Support Brain Health' section.";
   static const String cogHealthStart =
       "The CogHealth Test is a simple tool for assessing memory and cognitive health. It consists of 8 questions and has a maximum score of 10. You will need a two-sided piece of paper and a pen to complete the screen.";
 
@@ -43,7 +39,11 @@ class AppConstants {
   static const String brainHealthExplanation =
       "The McCANCE Brain Care Score is a comprehensive tool developed by the McCance Center for Brain Health at Massachusetts General Hospital, aimed at assessing and improving brain health.";
   static const String brainHealthMore =
-      "To learn more about integrative treatment options for supporting and maintaning cognitive health, return to our 'Tools to Support Brain Health' section.";
+      "We recommend rechecking your Brain Health Score in a few months after making appropriate lifestyle changes. Also consider our 'Memory Enhancement Protocol, provided on the main 'Brain Health' screen.\n\nSelect 'Save my results' so you can track your results over time. You can easily review your results at anytime by selecting 'Results' from the bottom menu.";
+  static const String cogHealthExplanation =
+      "The CogHealth Test is for screening purposes. Scores can vary between people with otherwise normal cognitive health. Please consult with a healthcare professional if you have any concerns.";
+  static const String cogHealthMore =
+      "We recommend rechecking your CogHealth Test in a few months after making appropriate lifestyle changes. Also consider our 'Memory Enhancement Protocol, provided on the main 'Brain Health' screen.\n\nSelect 'Save my results' so you can track your results over time. You can easily review your results at anytime by selecting 'Results' from the bottom menu.";
   static const String welcome =
-      "Welcome to the PowerME Integrative Health App from PowerME Labs! \n\nHere you can dive into a wealth of medical insights and practical strategies, designed to enhance vital aspects of your health such as brain function, sleep quality, metabolic balance, and more.\n\nWhile we offer a range of integrative treatment options, we encourage consulting your healthcare provider before starting any new treatments.\n\nCurrently, we don't collect health information, but stay tuned for more features as our program evolves.\n\nWelcome aboard!\n\nYour PowerME Team ";
+      "Welcome to the PowerME Integrative Health App from PowerME Labs! \n\nHere you can dive into a wealth of insights and practical strategies, designed to enhance vital aspects of your health such as brain function, sleep quality, metabolic balance, and more.\n\nDuring this test phase, we won't collect health information. But stay tuned for more features as our program evolves.\n\nWelcome aboard!\n\nYour PowerME Team ";
 }

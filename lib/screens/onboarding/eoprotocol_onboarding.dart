@@ -106,13 +106,7 @@ class _EOProtocolOnboardingScreenState
                     setState(
                       () => _isLoading = true,
                     );
-                    bool saveSuccessful = await _handleButtonClick();
-                    if (saveSuccessful && mounted) {
-                      Navigator.pushNamed(context, '/criteria');
-                    }
-                    if (mounted) {
-                      setState(() => _isLoading = false);
-                    }
+                    await _handleButtonClick();
                   },
             child: _isLoading
                 ? const CustomProgressIndicator(size: 20.0)
@@ -123,16 +117,33 @@ class _EOProtocolOnboardingScreenState
     );
   }
 
-  Future<bool> _handleButtonClick() async {
+  Future<void> _handleButtonClick() async {
     final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
     userId = authProvider.currentUser?.uid ?? '';
     final firebaseServices = FirebaseService();
+
+    if (!mounted) return;
+    setState(() => _isLoading = true);
+
     try {
-      await firebaseServices.recordUserAction(userId, "Let's go button");
-      return true;
+      bool criteriaCompleted = await firebaseServices.checkOnboardingCompleted(
+          userId, "Criteria completed");
+
+      if (!mounted) return;
+      if (criteriaCompleted) {
+        Navigator.pushNamed(
+            context, '/protocol'); // Go to protocol if completed
+      } else {
+        await firebaseServices.recordUserAction(userId, "Let's go button");
+        if (!mounted) return;
+        Navigator.pushNamed(context, '/criteria');
+      }
     } catch (e) {
-      debugPrint('Error recording user action: $e');
-      return false;
+      debugPrint('Error in _handleButtonClick: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 }

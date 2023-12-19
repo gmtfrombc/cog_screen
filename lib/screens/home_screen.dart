@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Opacity(
         opacity:
-            element.isActive ? 1.0 : 0.6, // Adjust opacity based on isActive
+            element.isActive ? 1.0 : 0.5, // Adjust opacity based on isActive
         child: Card(
           shadowColor: AppTheme.primaryColor,
           clipBehavior: Clip.antiAlias,
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.white.withOpacity(0.3),
-                      Colors.white.withOpacity(0.2),
+                      Colors.white.withOpacity(0.1),
                     ],
                   ),
                 ),
@@ -163,8 +163,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 26,
+                        fontSize: 28,
                         letterSpacing: 1.2,
+                        shadows: [
+                          Shadow(
+                            offset: Offset(1.0, 1.0),
+                            blurRadius: 2.0,
+                            color: Colors.grey,
+                          ),
+                        ],
                       ),
                     ),
                     if (!element
@@ -177,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 14,
+                            fontSize: 16,
                             letterSpacing: 1.2,
                           ),
                         ),
@@ -198,19 +205,15 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       isLoading = true;
     });
-
     try {
       bool onboardingCompleted =
           await FirebaseService().checkOnboardingCompleted(
         userId,
         element.title,
       );
-
       if (!mounted) return;
-
       if (onboardingCompleted) {
         Navigator.pushNamed(context, element.route);
-        debugPrint('Onboarding already completed for ${element.title}');
       } else {
         await FirebaseService()
             .recordOnboardingStatus(userId, element.title, true);
@@ -222,7 +225,6 @@ class _HomeScreenState extends State<HomeScreen> {
           element.onboardingRoute,
           arguments: element,
         );
-        debugPrint('Routing to /advice');
       }
     } catch (e) {
       debugPrint('Error handling button click: $e');
@@ -233,15 +235,5 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     }
-  }
-
-  List<Shadow> _textShadow() {
-    return [
-      Shadow(
-        offset: const Offset(1.0, 1.0),
-        blurRadius: 3.0,
-        color: Colors.black.withOpacity(0.8),
-      ),
-    ];
   }
 }

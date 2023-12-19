@@ -20,7 +20,6 @@ class FirebaseService {
   }
 
   Future<void> signOut() async {
-    debugPrint('Signing out user ${_firebaseAuth.currentUser?.uid}');
     await _firebaseAuth.signOut();
   }
 
@@ -34,7 +33,6 @@ class FirebaseService {
   }
 
   Future<void> recordUserAction(String userId, String actionDetails) async {
-    debugPrint('Recording user action: $actionDetails');
     var action = {
       'actionDetails': actionDetails,
       'timestamp': Timestamp.now(),
@@ -44,7 +42,6 @@ class FirebaseService {
 
     await userDoc.get().then((doc) async {
       if (!doc.exists) {
-        debugPrint('Creating user document with initial action');
         await userDoc.set({
           'user_actions': [action],
         });
@@ -54,13 +51,10 @@ class FirebaseService {
             actions.any((a) => a['actionDetails'] == actionDetails);
 
         if (!actionExists) {
-          debugPrint('Adding new action');
           await userDoc.update({
             'user_actions': FieldValue.arrayUnion([action]),
           });
-        } else {
-          debugPrint('Action already exists, not adding again');
-        }
+        } else {}
       }
     }).catchError((error) {
       debugPrint("Error updating/creating user action: $error");
@@ -69,15 +63,11 @@ class FirebaseService {
 
   Future<void> recordOnboardingStatus(
       String userId, String moduleName, bool completed) async {
-    debugPrint('Recording onboarding status for $moduleName: $completed');
     var userDoc = _firebaseFirestore.collection('users').doc(userId);
 
     // Check if the document for this user already exists
     var doc = await userDoc.get();
     if (!doc.exists) {
-      // If the document does not exist, create it with the initial onboarding status
-      debugPrint(
-          'Creating new user document for $userId with onboarding status');
       await userDoc.set({
         'user_actions': [
           {

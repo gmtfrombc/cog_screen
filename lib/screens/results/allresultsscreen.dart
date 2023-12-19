@@ -6,6 +6,7 @@ import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
+import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -45,37 +46,62 @@ class AllResultsScreen extends StatelessWidget {
           future: FirebaseService().getUserResults(userId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return const CustomProgressIndicator();
             } else if (snapshot.hasError) {
               return Text("Error: ${snapshot.error}");
             } else if (snapshot.hasData) {
               var cogHealthResults = snapshot.data!['coghealth'];
               var brainHealthResults = snapshot.data!['brainhealth'];
-              debugPrint(cogHealthResults.toString());
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    _buildTestResultsSection(
-                      'CogHealth Test Results',
-                      cogHealthResults,
-                      'coghealthscore',
-                    ),
-                    const SizedBox(
-                      height: 16.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                      child: Divider(
-                        color: Colors.grey
-                            .withOpacity(0.3), // Color of the divider
-                        thickness: 1, // Thickness of the divider
+                    if (cogHealthResults != null && cogHealthResults.isNotEmpty)
+                      _buildTestResultsSection(
+                        'CogHealth Test Results',
+                        cogHealthResults,
+                        'coghealthscore',
+                      )
+                    else
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text(
+                            'There are no CogHealth Test results available. Please complete a CogHealth Test to see results.',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ),
-                    ),
-                    _buildTestResultsSection(
-                      'Brain Score Results',
-                      brainHealthResults,
-                      'brainhealthscore',
-                    ),
+                    // Divider only if both sections are available
+                    if (cogHealthResults != null &&
+                        cogHealthResults.isNotEmpty &&
+                        brainHealthResults != null &&
+                        brainHealthResults.isNotEmpty)
+                      const Divider(),
+                    if (brainHealthResults != null &&
+                        brainHealthResults.isNotEmpty)
+                      _buildTestResultsSection(
+                        'Brain Health Test Results',
+                        brainHealthResults,
+                        'brainhealthscore',
+                      )
+                    else
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text(
+                            'There are no Brain Care Score results available. Please complete a Brain Care Score to see results.',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               );

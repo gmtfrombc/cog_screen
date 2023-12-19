@@ -28,65 +28,67 @@ class CognitiveScreen extends StatelessWidget {
     final surveyProvider = Provider.of<SurveyProvider>(context);
 
     Widget content = Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          const SizedBox(height: 10), // Add some space above the title (20px
-          GradientImage(
-            imagePath: imagePath,
-          ),
-          const SizedBox(height: 40),
-          Text(
-            'The CogHealth Test',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontFamily: GoogleFonts.roboto().fontFamily,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const SizedBox(height: 10), // Add some space above the title (20px
+            GradientImage(
+              imagePath: imagePath,
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Text(
-              AppConstants.cogHealthStart,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w300,
+            const SizedBox(height: 40),
+            Text(
+              'The CogHealth Test',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontFamily: GoogleFonts.roboto().fontFamily,
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          Column(
-            children: [
-              Text(
-                "When you are ready, select 'Begin'",
+            const SizedBox(
+              height: 20,
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Text(
+                AppConstants.cogHealthStart,
+                textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButtonTheme.of(context).style,
-                onPressed: () {
-                  surveyProvider.restartSurvey();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CogHealthSureveyScreen(),
-                    ),
-                  );
-                },
-                child: const Text('Begin'),
-              ),
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(height: 10),
+            Column(
+              children: [
+                Text(
+                  "When you are ready, select 'Begin'",
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  style: ElevatedButtonTheme.of(context).style,
+                  onPressed: () {
+                    surveyProvider.restartSurvey();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CogHealthSureveyScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text('Begin'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
 
