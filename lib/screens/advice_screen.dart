@@ -186,8 +186,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
               Positioned(
                 right: 8.0,
                 bottom: 2.0,
-                child: Image.asset(
-                  item.imagePath,
+                child: Image.network(
+                  item.imageUrl,
                   width: 100,
                   height: 100,
                 ),
@@ -214,8 +214,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
         width: screenWidth - 20,
         height: 200,
         decoration: BoxDecoration(
-          image: const DecorationImage(
-            image: AssetImage('lib/assets/images/memory_protocol.jpeg'),
+          image: DecorationImage(
+            image: NetworkImage(item.imageUrl),
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.circular(12.0),
@@ -239,8 +239,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
             children: [
               Opacity(
                 opacity: 0.0,
-                child: Image.asset(
-                  item.imagePath,
+                child: Image.network(
+                  item.imageUrl,
                   width: defaultImageSize,
                   height: defaultImageSize,
                   fit: BoxFit.cover,
@@ -332,8 +332,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(
-                  item.imagePath,
+                child: Image.network(
+                  item.imageUrl,
                   width: double.infinity,
                   height:
                       250, // Ensure the image height matches the container height

@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = false;
   String userId = '';
+
   @override
   void initState() {
     super.initState();
@@ -31,21 +32,22 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Theme.of(context).primaryColor,
       body: Stack(
         children: [
-          _buildTop(context),
-          if (isLoading) ...[
-            Positioned.fill(
-              child: Container(
-                color: Colors.black
-                    .withOpacity(0.9), // Semi-transparent background
-                child: Center(
-                  child: CustomProgressIndicator(
-                    color: AppTheme.primaryColor,
-                  ),
-                ),
-              ),
-            ),
-          ],
+          _buildTop(context), // Your existing HomeScreen UI
+          if (isLoading) _buildLoadingOverlay() // Overlay if loading
         ],
+      ),
+    );
+  }
+
+  Widget _buildLoadingOverlay() {
+    return Positioned.fill(
+      child: Container(
+        color: Colors.black.withOpacity(0.5), // Semi-transparent overlay
+        child: Center(
+          child: CustomProgressIndicator(
+            color: AppTheme.primaryColor,
+          ), // Loading indicator
+        ),
       ),
     );
   }
@@ -202,42 +204,39 @@ class _HomeScreenState extends State<HomeScreen> {
   void _handleButtonClick(HealthElement element) async {
     final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
     userId = authProvider.currentUser?.uid ?? '';
-    setState(() {
-      isLoading = true;
-    });
+    setState(() => isLoading = true);
+
     try {
-      bool onboardingCompleted =
-          await FirebaseService().checkOnboardingCompleted(
-        userId,
-        element.title,
-      );
+      await preloadImages(element);
+      bool onboardingCompleted = await FirebaseService()
+          .checkOnboardingCompleted(userId, element.title);
       if (!mounted) return;
+
       if (onboardingCompleted) {
-        Navigator.pushNamed(
-          context,
-          '/advice',
-          arguments: element
-        );
+        navigateToAdviceScreen(element);
       } else {
         await FirebaseService()
             .recordOnboardingStatus(userId, element.title, true);
-
         if (!mounted) return;
-
-        Navigator.pushNamed(
-          context,
-          element.onboardingRoute,
-          arguments: element,
-        );
+        navigateToAdviceScreen(element);
       }
     } catch (e) {
       debugPrint('Error handling button click: $e');
     } finally {
       if (mounted) {
-        setState(() {
-          isLoading = false;
-        });
+        setState(() => isLoading = false);
       }
     }
+  }
+
+  Future<void> preloadImages(HealthElement element) async {
+    for (var item
+        in element.assessments + element.protocols + element.learningCenter) {
+      await precacheImage(NetworkImage(item.imageUrl), context);
+    }
+  }
+
+  void navigateToAdviceScreen(HealthElement element) {
+    Navigator.pushNamed(context, '/advice', arguments: element);
   }
 }

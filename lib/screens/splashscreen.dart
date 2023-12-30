@@ -1,4 +1,6 @@
+import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/screens/logins/login.dart';
+import 'package:cog_screen/services/firebase_storage_services.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -9,17 +11,27 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _controller;
+  late AnimationController
+      _pulseController; // New controller for pulsating effect
   late Animation<double> _scaleAnimation;
   late Animation<double> _rotationAnimation;
   late Animation<double> _opacityAnimation;
+  late Animation<double> _pulseAnimation;
+  FirebaseStorageService storageService = FirebaseStorageService();
+
+  bool _isLoadingImages = true;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    _pulseController = AnimationController(
+      duration: const Duration(milliseconds: 800),
       vsync: this,
     );
 
@@ -35,22 +47,46 @@ class SplashScreenState extends State<SplashScreen>
       CurvedAnimation(parent: _controller, curve: const Interval(0.8, 1.0)),
     );
 
-    _controller.forward().then(
-      (_) {
-        Future.delayed(const Duration(milliseconds: 1500), () {
-          Navigator.of(context).pushReplacement(PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const LoginScreen(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
-            },
-          ));
-        });
-      },
+    _pulseAnimation = Tween<double>(begin: 0.95, end: 1.05).animate(
+      CurvedAnimation(
+        parent: _pulseController,
+        curve: Curves.easeInOut,
+      ),
+    )..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _pulseController.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          _pulseController.forward();
+        }
+      });
+
+    _controller.forward();
+    _pulseController.forward();
+
+    // Load images and navigate
+    loadImageUrls().then((_) {
+      _isLoadingImages = false;
+      _pulseController.stop(); // Stop pulsating animation
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        if (mounted) {
+          navigateToLoginScreen();
+        }
+      });
+    });
+  }
+
+  void navigateToLoginScreen() {
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const LoginScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
     );
   }
 
@@ -69,12 +105,14 @@ class SplashScreenState extends State<SplashScreen>
           alignment: Alignment.center,
           children: [
             AnimatedBuilder(
-              animation: _controller,
+              animation: Listenable.merge([_controller, _pulseController]),
               builder: (_, child) {
                 return Transform.rotate(
                   angle: _rotationAnimation.value * 2 * 3.14159,
                   child: Transform.scale(
-                    scale: _scaleAnimation.value,
+                    scale: _isLoadingImages
+                        ? _pulseAnimation.value
+                        : _scaleAnimation.value,
                     child: child,
                   ),
                 );
@@ -100,9 +138,35 @@ class SplashScreenState extends State<SplashScreen>
                 ),
               ),
             ),
+            if (_isLoadingImages && _controller.isCompleted)
+              const CircularProgressIndicator(),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> loadImageUrls() async {
+    Map<String, String> imageUrls = await storageService.getImageUrls();
+
+    for (HealthElement element in elements) {
+      // Update image URLs in assessments
+      for (ContentItem item in element.assessments) {
+        String originalKey = item.imageUrl;
+        item.imageUrl = imageUrls[originalKey] ?? item.imageUrl;
+      }
+
+      // Update image URLs in protocols
+      for (ContentItem item in element.protocols) {
+        String originalKey = item.imageUrl;
+        item.imageUrl = imageUrls[originalKey] ?? item.imageUrl;
+      }
+
+      // Update image URLs in learningCenter
+      for (ContentItem item in element.learningCenter) {
+        String originalKey = item.imageUrl;
+        item.imageUrl = imageUrls[originalKey] ?? item.imageUrl;
+      }
+    }
   }
 }

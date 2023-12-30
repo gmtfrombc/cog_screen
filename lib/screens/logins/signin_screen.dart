@@ -82,7 +82,7 @@ class _SignInState extends State<SignIn> {
           ),
           const SizedBox(height: 24),
           TextFormField(
-            //controller: _controller1,
+            controller: _controller1,
             focusNode: _focusNode1,
             decoration: const InputDecoration(
               labelText: 'Email',
@@ -98,7 +98,7 @@ class _SignInState extends State<SignIn> {
           ),
           const SizedBox(height: 15.0),
           TextFormField(
-            //controller: _controller2,
+            controller: _controller2,
             focusNode: _focusNode2,
             decoration: InputDecoration(
               labelText: 'Password',
@@ -175,8 +175,8 @@ class _SignInState extends State<SignIn> {
     try {
       email = email;
       password = password;
-      // email = "gmtfrombc@gmail.com";
-      // password = "password";
+      email = "gmtfrombc@gmail.com";
+      password = "password";
       await authProvider.signInWithEmailAndPassword(
         email,
         password,
