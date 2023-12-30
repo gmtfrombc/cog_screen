@@ -6,7 +6,6 @@ import 'package:cog_screen/screens/view_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
-import 'package:cog_screen/utilities/constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:cog_screen/widgets/section_title_widget.dart';
@@ -26,10 +25,6 @@ class _AdviceScreenState extends State<AdviceScreen> {
   final double verticalMargin = 4.0;
   final EdgeInsets cardPadding = const EdgeInsets.all(8.0);
   final Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
-  final lifestylePath =
-      'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/';
-  final cogPath =
-      'https://powermeacademy.com/lessons/understanding-cognitive-health/';
   bool isLoading = false;
   String userId = '';
   double defaultImageSize = 250.0;
@@ -67,106 +62,35 @@ class _AdviceScreenState extends State<AdviceScreen> {
     );
   }
 
+// plan to use ChatGPT for refactoring this: see _buildAdviceContent, _buildSectionCards, from the chat.
   Widget _buildAdviceContent(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: horizontalMargin,
-          vertical: verticalMargin,
-        ),
+            horizontal: horizontalMargin, vertical: verticalMargin),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: verticalMargin,
-            ),
-            const SectionTitle(
-              title: 'Assessments',
-            ),
-            SizedBox(
-              height: defaultImageSize,
-              width: double.infinity,
-              //width: 200, // Adjust the height as needed
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  _buildTopCard(
-                    context,
-                    'McCANCE Brain Care Score',
-                    AppConstants.brainCareShort,
-                    '/brainehealthquestionnaire',
-                    'lib/assets/images/memory_health.png',
-                    AppTheme.primaryColor,
-                    () => Navigator.pushNamed(
-                      context,
-                      '/brainehealthquestionnaire',
-                    ),
-                  ),
-                  _buildTopCard(
-                    context,
-                    'The CogHealth Screening Test',
-                    'A short assessment of memory and cognitive function.',
-                    '/cognitive',
-                    'lib/assets/images/cog_health_test2.png',
-                    const Color(0xE9FCAF3B),
-                    () => Navigator.pushNamed(
-                      context,
-                      '/cognitive',
-                    ),
-                  ), //// Add more cards if needed
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            const SectionTitle(title: 'Protocols'),
-            _buildMiddleCard(
+            _buildSectionCards(
               context,
-              'Memory Enhancement Protocol',
-              AppConstants.memoryEnhancement,
-              '/eoOnboarding',
-              'lib/assets/images/memory_health.png',
-              const Color(0xE9FCAF3B),
-              () {
-                _handleButtonClick();
-                Navigator.pushNamed(context, '/eoOnboarding');
-              },
+              widget.healthElement.assessments,
+              'Assessments',
+              _buildTopCard,
+              defaultImageSize,
             ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            const SectionTitle(
-              title: 'Learning Center',
-            ),
-            AspectRatio(
-              aspectRatio: 3 / 2,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  _buildMainCard(
-                      context,
-                      'Essential oils, memory, and cognitive health',
-                      'Learn',
-                      '/essentialOils',
-                      'lib/assets/images/dT_EO2.jpeg'),
-                  _buildMainCard(
-                      context,
-                      'Basic facts about brain health',
-                      '3 min',
-                      '/viewScreen',
-                      'lib/assets/images/brain_health_2.jpeg',
-                      url: cogPath),
-                  _buildMainCard(
-                    context,
-                    'Lifestyle strategies for a health brain',
-                    '3 min',
-                    '/viewScreen',
-                    'lib/assets/images/brain_outdoor_dog.jpeg',
-                    url: lifestylePath,
-                  ),
-                ],
-              ),
+            _buildSectionCards(
+                context,
+                widget.healthElement.protocols,
+                'Protocols',
+                _buildMiddleCard,
+                180 // Reduced height for middle cards
+                ),
+            _buildSectionCards(
+              context,
+              widget.healthElement.learningCenter,
+              'Learning Center',
+              _buildMainCard,
+              200,
             ),
           ],
         ),
@@ -174,10 +98,41 @@ class _AdviceScreenState extends State<AdviceScreen> {
     );
   }
 
-  Widget _buildTopCard(BuildContext context, String title, String description,
-      String route, String imagePath, Color cardColor, void Function()? onTap) {
+  Widget _buildSectionCards(
+    BuildContext context,
+    List<ContentItem> items,
+    String sectionTitle,
+    Function(BuildContext, ContentItem) buildCardFunction,
+    double cardHeight,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SectionTitle(title: sectionTitle),
+        SizedBox(
+          height: cardHeight,
+          width: double.infinity,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return buildCardFunction(context, items[index]);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTopCard(
+    BuildContext context,
+    ContentItem item,
+  ) {
     return InkWell(
-      onTap: onTap,
+      onTap: () => Navigator.pushNamed(
+        context,
+        item.route,
+      ),
       child: Container(
         width: defaultImageSize,
         height: defaultImageSize,
@@ -186,7 +141,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
           gradient: AppTheme.cardGradient,
         ),
         child: Card(
-          color: cardColor,
+          color: item.cardColor,
           clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
@@ -200,7 +155,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                   height: 80,
                   width: 220,
                   child: Text(
-                    title,
+                    item.title,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -218,7 +173,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                   height: 80,
                   width: 200,
                   child: Text(
-                    description,
+                    item.description,
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -232,7 +187,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 right: 8.0,
                 bottom: 2.0,
                 child: Image.asset(
-                  imagePath,
+                  item.imagePath,
                   width: 100,
                   height: 100,
                 ),
@@ -244,18 +199,17 @@ class _AdviceScreenState extends State<AdviceScreen> {
     );
   }
 
-  Widget _buildMiddleCard(
-      BuildContext context,
-      String title,
-      String description,
-      String route,
-      String imagePath,
-      Color cardColor,
-      void Function()? onTap) {
+  Widget _buildMiddleCard(BuildContext context, ContentItem item) {
     double screenWidth = MediaQuery.of(context).size.width;
-
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        //todo: not all items will have a _handleButtonClick event (i.e. 'isInterested' button click)
+        _handleButtonClick();
+        Navigator.pushNamed(
+          context,
+          item.route,
+        );
+      },
       child: Container(
         width: screenWidth - 20,
         height: 200,
@@ -286,7 +240,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
               Opacity(
                 opacity: 0.0,
                 child: Image.asset(
-                  imagePath,
+                  item.imagePath,
                   width: defaultImageSize,
                   height: defaultImageSize,
                   fit: BoxFit.cover,
@@ -300,7 +254,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                   height: 80,
                   width: 220,
                   child: Text(
-                    title,
+                    item.title,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -318,7 +272,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                   height: 80,
                   width: 200,
                   child: Text(
-                    description,
+                    item.description,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -346,23 +300,19 @@ class _AdviceScreenState extends State<AdviceScreen> {
 
   Widget _buildMainCard(
     BuildContext context,
-    String title,
-    String description,
-    String route,
-    String imagePath, {
-    String? url,
-  }) {
+    ContentItem item,
+  ) {
     return InkWell(
       onTap: () {
-        if (url != null) {
+        if (item.url != null) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ViewScreen(url: url),
+              builder: (context) => ViewScreen(url: item.url!),
             ),
           );
         } else {
-          Navigator.pushNamed(context, route);
+          Navigator.pushNamed(context, item.route);
         }
       },
       child: Container(
@@ -383,7 +333,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
-                  imagePath,
+                  item.imagePath,
                   width: double.infinity,
                   height:
                       250, // Ensure the image height matches the container height
@@ -418,7 +368,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                         const SizedBox(width: 4.0),
                         Expanded(
                           child: Text(
-                            description,
+                            item.description,
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
@@ -439,7 +389,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                   height: 100,
                   width: 130,
                   child: Text(
-                    title,
+                    item.title,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -468,12 +418,13 @@ class _AdviceScreenState extends State<AdviceScreen> {
   }
 
   void _handleButtonClick() async {
+    HealthElement healthElement = widget.healthElement;
     setState(() {
       isLoading = true;
     });
     try {
-      await FirebaseService().recordUserAction(userId, 'InterestedButton');
-      // Removed the navigation call from here
+      await FirebaseService().recordUserAction(userId,
+          '${healthElement.title}: Interested'); // Removed the navigation call from here
     } catch (e) {
       debugPrint('Error recording user action: $e');
     } finally {
