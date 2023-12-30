@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color _secondaryColor =
-      Color.fromARGB(255, 71, 135, 112); // Deep green
-  static const Color _primaryColor = Color.fromARGB(255, 83, 111, 160);
+      Color(0xFF478770); // Deep green
+  static const Color _primaryColor = Color(0xFF536FA0);
   static const Color _tertiaryColor =
       Color.fromARGB(255, 196, 26, 222); // Muted blue
   static const Color _primaryBackgroundColor = Color(0xFFfaf4ed);

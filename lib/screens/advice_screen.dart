@@ -1,3 +1,4 @@
+import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
@@ -13,7 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AdviceScreen extends StatefulWidget {
-  const AdviceScreen({super.key});
+  final HealthElement healthElement;
+  const AdviceScreen({super.key, required this.healthElement});
 
   @override
   State<AdviceScreen> createState() => _AdviceScreenState();

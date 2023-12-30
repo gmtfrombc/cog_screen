@@ -84,7 +84,7 @@ class AllResultsScreen extends StatelessWidget {
                     if (brainHealthResults != null &&
                         brainHealthResults.isNotEmpty)
                       _buildTestResultsSection(
-                        'Brain Health Test Results',
+                        'Brain Care Score',
                         brainHealthResults,
                         'brainhealthscore',
                       )

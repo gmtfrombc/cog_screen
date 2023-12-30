@@ -213,7 +213,11 @@ class _HomeScreenState extends State<HomeScreen> {
       );
       if (!mounted) return;
       if (onboardingCompleted) {
-        Navigator.pushNamed(context, element.route);
+        Navigator.pushNamed(
+          context,
+          '/advice',
+          arguments: element
+        );
       } else {
         await FirebaseService()
             .recordOnboardingStatus(userId, element.title, true);

@@ -1,5 +1,6 @@
 import 'package:cog_screen/data/braincarescore_data.dart';
 import 'package:cog_screen/firebase_options.dart';
+import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/braincarescore_provider.dart';
 import 'package:cog_screen/providers/cart_provider.dart';
@@ -93,7 +94,6 @@ class MyApp extends StatelessWidget {
         '/surveyResultScreen': (context) => const CogHealthResultsScreen(),
         '/shoppingCart': (context) => const ShoppingScreen(),
         '/criteria': (context) => const CriteriaScreen(),
-        '/advice': (context) => const AdviceScreen(),
         '/essentialOils': (context) => const EssentialOilScreen(),
         '/protocol': (context) => const ProtocolScreen(),
         '/brainehealthquestionnaire': (context) =>
@@ -110,17 +110,26 @@ class MyApp extends StatelessWidget {
         '/brainCareOboarding': (context) => const BrainCareOnboardingScreen(),
       },
       onGenerateRoute: (RouteSettings settings) {
-        if (settings.name == '/viewScreen') {
-          final String? url = settings.arguments as String?;
-          if (url != null) {
+        switch (settings.name) {
+          case '/viewScreen':
+            final String? url = settings.arguments as String?;
+            if (url != null) {
+              return MaterialPageRoute(
+                builder: (context) => ViewScreen(url: url),
+              );
+            } else {
+              return MaterialPageRoute(
+                  builder: (context) => const HomeScreen());
+            }
+          case '/advice':
+            final HealthElement element = settings.arguments as HealthElement;
             return MaterialPageRoute(
-              builder: (context) => ViewScreen(url: url),
+              builder: (context) => AdviceScreen(healthElement: element),
             );
-          } else {
-            return MaterialPageRoute(builder: (context) => const HomeScreen());
-          }
+          default:
+            // Handle other routes or return null for unhandled routes
+            return null;
         }
-        return null;
       },
     );
   }
