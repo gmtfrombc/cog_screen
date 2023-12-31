@@ -1,163 +1,48 @@
+import 'package:cog_screen/data/survey_repository.dart';
 import 'package:cog_screen/models/survey_model.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class SurveyProvider extends ChangeNotifier {
-  final List<Question> _questions;
-  final List<UserResponse> _userResponses = [];
-  int _currentQuestionIndex = 0;
-  String? _selectOption;
+class SurveyProvider with ChangeNotifier {
+  final Map<String, int> _userResponses = {};
   int _totalScore = 0;
-  bool _isTimerButtonEnabled = true; // New property
+  int _currentCategoryIndex = 0;
+  final String _surveyType;
 
-  bool _hasSeenInstructionForQuestion4 = false;
-  bool _hasSeenInstructionForQuestion7 = false;
-  bool _surveyEnded = false;
-  bool _hasSeenFinishInstruction = false;
-  bool get isLastQuestion => _currentQuestionIndex == _questions.length - 1;
-  bool get isTimerButtonEnabled => _isTimerButtonEnabled;
+  SurveyProvider(this._surveyType);
 
-  List<Question> get questions => _questions;
-  List<UserResponse> get userResponses => _userResponses;
-  Question get currentQuestion => _questions[_currentQuestionIndex];
-  String? get selectedOption => _selectOption;
-  bool get surveyEnded => _surveyEnded;
-  int get totalScore => _totalScore;
-
-  bool get shouldShowFinishInstruction {
-    // Assuming this instruction should appear before question 4's instructions
-    return _currentQuestionIndex == 3 &&
-        !_hasSeenFinishInstruction &&
-        !_hasSeenInstructionForQuestion4;
-  }
-
-  // Check whether to show instructions before question 4
-  bool get shouldShowInstructionForQuestion4 {
-    return _currentQuestionIndex == 3 &&
-        !_hasSeenInstructionForQuestion4; // Index 3 is before question id='4'
-  }
-
-  // Check whether to show instructions before question 7
-  bool get shouldShowInstructionForQuestion7 {
-    return _currentQuestionIndex == 6 &&
-        !_hasSeenInstructionForQuestion7; // Index 6 is before question id='7'
-  }
-
-  SurveyProvider({
-    required questions,
-  }) : _questions = questions;
-
-  void selectOption(String option) {
-    _selectOption = option;
+  void setUserResponse(String category, int rank) {
+    _userResponses[category] = rank;
     notifyListeners();
   }
 
-  void seeFinishInstruction() {
-    _hasSeenFinishInstruction = true;
+  int getUserResponse(String category) {
+    return _userResponses[category] ?? -1;
+  }
+
+  void incrementTotalScore(int rank) {
+    _totalScore += rank;
     notifyListeners();
   }
 
-  void seeInstructionForQuestion4() {
-    _hasSeenInstructionForQuestion4 = true;
-    notifyListeners();
+  int getTotalScore() {
+    return _totalScore;
   }
 
-  void seeInstructionForQuestion7() {
-    _hasSeenInstructionForQuestion7 = true;
-    notifyListeners();
-  }
-
-  void addResponse(String userAnswer) {
-    String currentQuestionId = _questions[_currentQuestionIndex].id;
-    UserResponse response =
-        UserResponse(userAnswer: userAnswer, questionId: currentQuestionId);
-    _userResponses.add(response);
-
-    // Update the score based on the current question and user's answer
-    updateScore(currentQuestion, userAnswer);
-    notifyListeners();
-  }
-
-  void updateScore(Question question, String userAnswer) {
-    // Handling the date question
-    if (question.id == "1") {
-      try {
-        DateTime userDate = DateFormat('MM/dd/yyyy').parse(userAnswer.trim());
-        DateTime currentDate = DateTime.now();
-        if (userDate.year == currentDate.year &&
-            userDate.month == currentDate.month &&
-            userDate.day == currentDate.day) {
-          _totalScore += 1;
-        }
-      } catch (e) {
-        // Handle parse error if the user input is not a valid date
-        debugPrint("Error parsing date: $e");
-      }
-    }
-    // Handling Question 7 with custom scoring logic
-    else if (question.id == "7") {
-      _totalScore += calculateScoreForQuestion7(userAnswer);
-    }
-    // Handling other questions
-    else if (question.validateAnswer(userAnswer)) {
-      _totalScore += 1;
-    }
-
-    notifyListeners(); // Notify listeners of the score update
-  }
-
-  int calculateScoreForQuestion7(String userAnswer) {
-    int numOfAnimals = int.tryParse(userAnswer) ?? 0;
-    if (numOfAnimals == 0) {
-      return 0;
-    } else if (numOfAnimals >= 1 && numOfAnimals <= 5) {
-      return 1;
-    } else if (numOfAnimals >= 6 && numOfAnimals <= 12) {
-      return 2;
-    } else {
-      return 3;
-    }
-  }
-  void startTimer() {
-    _isTimerButtonEnabled = false;
-    notifyListeners();
-  }
-
-  void nextQuestion(BuildContext context) {
-    if (_currentQuestionIndex < _questions.length - 1) {
-      // Check for specific question IDs before incrementing the index
-      if (_questions[_currentQuestionIndex].id == '4') {
-        _hasSeenInstructionForQuestion4 = false;
-      }
-      if (_questions[_currentQuestionIndex].id == '7') {
-        _hasSeenInstructionForQuestion7 = false;
-      }
-      _currentQuestionIndex++;
-      _selectOption = null;
-    } else {
-      endSurvey(context);
-    }
-    notifyListeners();
-  }
-
-  void endSurvey(BuildContext context) {
-    _surveyEnded = true;
-    notifyListeners();
-    // Use Navigator to navigate to SurveyResultScreen
-    Navigator.pushNamed(context, '/surveyResultScreen');
-  }
-
-  // Method to reset the survey and start over
   void restartSurvey() {
-    _currentQuestionIndex = 0;
     _userResponses.clear();
-    _selectOption = null;
-    _hasSeenInstructionForQuestion4 = false;
-    _hasSeenInstructionForQuestion7 = false;
-    _surveyEnded = false;
-    _hasSeenFinishInstruction = false;
-    _totalScore = 0; 
-    _isTimerButtonEnabled  = true; 
+    _totalScore = 0;
+    _currentCategoryIndex = 0; // Reset the index when restarting the survey
+    notifyListeners();
+  }
+
+  SurveyCategory getCurrentCategory() {
+    return SurveyRepository.getSurveyData(_surveyType)[_currentCategoryIndex];
+  }
+
+  int get currentCategoryIndex => _currentCategoryIndex;
+
+  void incrementCategoryIndex() {
+    _currentCategoryIndex++;
     notifyListeners();
   }
 }

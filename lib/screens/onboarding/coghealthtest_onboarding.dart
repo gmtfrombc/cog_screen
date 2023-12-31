@@ -2,7 +2,7 @@ import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
-import 'package:cog_screen/providers/survey_provider.dart';
+import 'package:cog_screen/providers/cog_provider.dart';
 import 'package:cog_screen/screens/questionnaires/coghealth_survey_screen.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/utilities/constants.dart';
@@ -25,7 +25,7 @@ class CognitiveScreen extends StatelessWidget {
     final appNavigationProvider = Provider.of<AppNavigationProvider>(
       context,
     );
-    final surveyProvider = Provider.of<SurveyProvider>(context);
+    final surveyProvider = Provider.of<CogProvider>(context);
 
     Widget content = Center(
       child: SingleChildScrollView(

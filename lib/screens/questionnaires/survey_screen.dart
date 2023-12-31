@@ -1,7 +1,7 @@
-import 'package:cog_screen/data/braincarescore_data.dart';
-import 'package:cog_screen/models/braincarescore_model.dart';
+import 'package:cog_screen/data/survey_repository.dart';
+import 'package:cog_screen/models/survey_model.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
-import 'package:cog_screen/providers/braincarescore_provider.dart';
+import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/screens/results/braincare_results_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
@@ -10,18 +10,26 @@ import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BrainCareTestSurveyScreen extends StatelessWidget {
-  final BrainCareCategory category;
-  final int categoryIndex;
+class SurveyScreen extends StatefulWidget {
+  final String surveyType;
 
-  const BrainCareTestSurveyScreen(
-      {super.key, required this.category, required this.categoryIndex});
+  const SurveyScreen({
+    super.key,
+    required this.surveyType,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<BrainHealthProvider>(context, listen: false);
-    final isLastCategory = categoryIndex == brainCareData.length - 1;
+  State<SurveyScreen> createState() => _SurveyScreenState();
+}
 
+class _SurveyScreenState extends State<SurveyScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final surveyProvider = Provider.of<SurveyProvider>(context, listen: false);
+    final surveyData = SurveyRepository.getSurveyData(widget.surveyType);
+    final isLastCategory =
+        surveyProvider.currentCategoryIndex == surveyData.length - 1;
+    final category = surveyData[surveyProvider.currentCategoryIndex];
     return BaseScreen(
       authProvider: Provider.of<AuthProviderClass>(context, listen: false),
       customAppBar: CustomAppBar(
@@ -53,9 +61,9 @@ class BrainCareTestSurveyScreen extends StatelessWidget {
               title: Text(criterion.description),
               leading: Radio<int>(
                 value: criterion.rank,
-                groupValue: provider.getUserResponse(category.category),
+                groupValue: surveyProvider.getUserResponse(category.category),
                 onChanged: (value) => _onCriterionSelected(
-                    context, provider, value, criterion, isLastCategory),
+                    context, surveyProvider, value, criterion, isLastCategory),
               ),
             );
           }),
@@ -64,14 +72,20 @@ class BrainCareTestSurveyScreen extends StatelessWidget {
     );
   }
 
-  void _onCriterionSelected(BuildContext context, BrainHealthProvider provider,
-      int? value, BrainCareCriterion criterion, bool isLastCategory) {
-    if (provider.getUserResponse(category.category) != value) {
-      provider.setUserResponse(category.category, value ?? -1);
-      provider.incrementTotalScore(criterion.rank);
+  void _onCriterionSelected(BuildContext context, SurveyProvider surveyProvider,
+      int? value, SurveyCriterion criterion, bool isLastCategory) {
+    // Obtain the current category from the provider
+    final currentCategory = surveyProvider.getCurrentCategory();
+
+    // Set user response if different from existing value
+    if (surveyProvider.getUserResponse(currentCategory.category) != value) {
+      surveyProvider.setUserResponse(currentCategory.category, value ?? -1);
+      surveyProvider.incrementTotalScore(criterion.rank);
     }
 
+    // Check if it's the last category
     if (isLastCategory) {
+      // Navigate to the results screen if it's the last category
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -79,12 +93,15 @@ class BrainCareTestSurveyScreen extends StatelessWidget {
         ),
       );
     } else {
+      // Increment the current category index for the next category
+      surveyProvider.incrementCategoryIndex();
+
+      // Navigate to the same SurveyScreen with the next category
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => BrainCareTestSurveyScreen(
-            category: brainCareData[categoryIndex + 1],
-            categoryIndex: categoryIndex + 1,
+          builder: (context) => SurveyScreen(
+            surveyType: widget.surveyType, // Pass only the surveyType
           ),
         ),
       );

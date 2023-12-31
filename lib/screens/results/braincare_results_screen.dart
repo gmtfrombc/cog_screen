@@ -1,5 +1,5 @@
 import 'package:cog_screen/providers/auth_provider.dart';
-import 'package:cog_screen/providers/braincarescore_provider.dart';
+import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
@@ -24,7 +24,7 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
   @override
   Widget build(BuildContext context) {
     String imagePath = 'lib/assets/images/memory_enhancement.png';
-    final provider = Provider.of<BrainHealthProvider>(context, listen: false);
+    final provider = Provider.of<SurveyProvider>(context, listen: false);
     final totalScore = provider.getTotalScore();
     final theme = Theme.of(context);
 
@@ -108,7 +108,7 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
                 onPressed: () {
                   // Navigate to AdviceScreen and reset the survey
                   Navigator.pushNamed(context, '/advice');
-                  Provider.of<BrainHealthProvider>(context, listen: false)
+                  Provider.of<SurveyProvider>(context, listen: false)
                       .restartSurvey();
                 },
                 style: OutlinedButton.styleFrom(
@@ -137,7 +137,7 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
                       bool saveSuccessful = await _saveBrainHealthResults();
                       if (saveSuccessful && mounted) {
                         Navigator.pushNamed(context, '/advice');
-                        Provider.of<BrainHealthProvider>(context, listen: false)
+                        Provider.of<SurveyProvider>(context, listen: false)
                             .restartSurvey();
                       }
                       if (mounted) {
@@ -157,7 +157,7 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
   Future<bool> _saveBrainHealthResults() async {
     final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
     final brainHealthProvider =
-        Provider.of<BrainHealthProvider>(context, listen: false);
+        Provider.of<SurveyProvider>(context, listen: false);
     final firebaseService = FirebaseService();
     final totalScore = brainHealthProvider.getTotalScore();
     final userId = authProvider.currentUser?.uid ?? '';

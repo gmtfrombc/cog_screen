@@ -1,8 +1,7 @@
-import 'package:cog_screen/data/braincarescore_data.dart';
 import 'package:cog_screen/firebase_options.dart';
 import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
-import 'package:cog_screen/providers/braincarescore_provider.dart';
+import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/providers/cart_provider.dart';
 import 'package:cog_screen/screens/coming_soon_screen.dart';
 import 'package:cog_screen/screens/home_screen.dart';
@@ -12,7 +11,7 @@ import 'package:cog_screen/screens/onboarding/eoprotocol_onboarding.dart';
 import 'package:cog_screen/screens/onboarding/apponboarding_screen.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
 import 'package:cog_screen/screens/onboarding/braincaretest_onboarding_screen.dart';
-import 'package:cog_screen/screens/questionnaires/braincaretest_survey_screen.dart';
+import 'package:cog_screen/screens/questionnaires/survey_screen.dart';
 import 'package:cog_screen/screens/research_screen.dart';
 import 'package:cog_screen/screens/results/allresultsscreen.dart';
 import 'package:cog_screen/screens/shopping_screen.dart';
@@ -20,7 +19,7 @@ import 'package:cog_screen/screens/view_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/data/survey_data.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
-import 'package:cog_screen/providers/survey_provider.dart';
+import 'package:cog_screen/providers/cog_provider.dart';
 import 'package:cog_screen/providers/criteria_provider.dart';
 import 'package:cog_screen/screens/advice_screen.dart';
 import 'package:cog_screen/screens/criteria_screen.dart';
@@ -55,9 +54,9 @@ Future<void> main() async {
           create: (context) => AppNavigationProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => SurveyProvider(questions: hardcodedQuestions),
+          create: (context) => CogProvider(questions: hardcodedQuestions),
         ),
-        ChangeNotifierProvider(create: (_) => BrainHealthProvider()),
+        ChangeNotifierProvider(create: (_) => SurveyProvider('Brain Health')),
         ChangeNotifierProvider(
           create: (context) => CriteriaProvider(),
         ),
@@ -99,9 +98,8 @@ class MyApp extends StatelessWidget {
         '/brainehealthquestionnaire': (context) =>
             const BrainHealthScoreOnboarding(),
         '/research': (context) => const ResearchScreen(),
-        '/braincaretest': (context) => BrainCareTestSurveyScreen(
-              category: brainCareData[0],
-              categoryIndex: 0,
+        '/braincaretest': (context) => const SurveyScreen(
+              surveyType: 'Brain Care',
             ),
         '/splashscreen': (context) => const SplashScreen(),
         '/comingsoon': (context) => const ComingSoonScreen(),

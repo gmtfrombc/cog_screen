@@ -1,6 +1,6 @@
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
-import 'package:cog_screen/providers/braincarescore_provider.dart';
+import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/utilities/constants.dart';
@@ -20,7 +20,7 @@ class BrainHealthScoreOnboarding extends StatelessWidget {
     final appNavigationProvider = Provider.of<AppNavigationProvider>(context);
     final theme = Theme.of(context);
     String imagePath = 'lib/assets/images/memory_enhancement.png';
-    final brainHealthProvider = Provider.of<BrainHealthProvider>(context);
+    final brainHealthProvider = Provider.of<SurveyProvider>(context);
     Widget content = Center(
       child: SingleChildScrollView(
         child: Column(

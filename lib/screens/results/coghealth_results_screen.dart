@@ -1,5 +1,5 @@
 import 'package:cog_screen/providers/auth_provider.dart';
-import 'package:cog_screen/providers/survey_provider.dart';
+import 'package:cog_screen/providers/cog_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
@@ -26,7 +26,7 @@ class _CogHealthResultsScreenState extends State<CogHealthResultsScreen> {
     String imagePath = 'lib/assets/images/cog_health_start2.png';
     final theme = Theme.of(context);
 
-    Widget content = Consumer<SurveyProvider>(
+    Widget content = Consumer<CogProvider>(
       builder: (context, surveyProvider, child) {
         String resultText =
             'Your CogHealth Screening Score: ${surveyProvider.totalScore}/10';
@@ -116,7 +116,7 @@ class _CogHealthResultsScreenState extends State<CogHealthResultsScreen> {
                 onPressed: () {
                   // Navigate to AdviceScreen and reset the survey
                   Navigator.pushNamed(context, '/advice');
-                  Provider.of<SurveyProvider>(context, listen: false)
+                  Provider.of<CogProvider>(context, listen: false)
                       .restartSurvey();
                 },
                 style: OutlinedButton.styleFrom(
@@ -146,7 +146,7 @@ class _CogHealthResultsScreenState extends State<CogHealthResultsScreen> {
                       bool saveSuccessful = await _saveCogHealthResults();
                       if (saveSuccessful && mounted) {
                         Navigator.pushNamed(context, '/advice');
-                        Provider.of<SurveyProvider>(context, listen: false)
+                        Provider.of<CogProvider>(context, listen: false)
                             .restartSurvey();
                       }
                       if (mounted) {
@@ -165,7 +165,7 @@ class _CogHealthResultsScreenState extends State<CogHealthResultsScreen> {
 
   Future<bool> _saveCogHealthResults() async {
     final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
-    final surveyProvider = Provider.of<SurveyProvider>(context, listen: false);
+    final surveyProvider = Provider.of<CogProvider>(context, listen: false);
     final firebaseService = FirebaseService();
     final totalScore = surveyProvider.totalScore;
     final userId = authProvider.currentUser?.uid ?? '';

@@ -1,4 +1,4 @@
-import 'package:cog_screen/models/survey_model.dart';
+import 'package:cog_screen/models/cog_model.dart';
 import 'package:intl/intl.dart';
 
 List<Question> hardcodedQuestions = [

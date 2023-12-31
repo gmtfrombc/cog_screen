@@ -1,7 +1,7 @@
-import 'package:cog_screen/models/survey_model.dart';
+import 'package:cog_screen/models/cog_model.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
-import 'package:cog_screen/providers/survey_provider.dart';
+import 'package:cog_screen/providers/cog_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/screens/countdown_timer.dart';
 import 'package:cog_screen/themes/app_theme.dart';
@@ -38,7 +38,7 @@ class _CogHealthSureveyScreenState extends State<CogHealthSureveyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final surveyProvider = Provider.of<SurveyProvider>(context);
+    final surveyProvider = Provider.of<CogProvider>(context);
     final screenHeight = MediaQuery.of(context).size.height;
 
     Widget content = Padding(
@@ -61,7 +61,7 @@ class _CogHealthSureveyScreenState extends State<CogHealthSureveyScreen> {
   }
 
   Widget _buildBody(
-      SurveyProvider provider, double screenHeight, BuildContext context) {
+      CogProvider provider, double screenHeight, BuildContext context) {
     if (provider.shouldShowFinishInstruction) {
       return _buildInstructionScreen(
         context,
@@ -120,7 +120,7 @@ class _CogHealthSureveyScreenState extends State<CogHealthSureveyScreen> {
   }
 
   Widget _buildQuestion7Instruction(
-      BuildContext context, SurveyProvider provider, double screenHeight) {
+      BuildContext context, CogProvider provider, double screenHeight) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -152,7 +152,7 @@ class _CogHealthSureveyScreenState extends State<CogHealthSureveyScreen> {
     );
   }
 
-  Widget _buildQuestionContent(Question question, SurveyProvider provider,
+  Widget _buildQuestionContent(Question question, CogProvider provider,
       BuildContext context, double screenHeight) {
     return SingleChildScrollView(
       child: Padding(
@@ -178,7 +178,7 @@ class _CogHealthSureveyScreenState extends State<CogHealthSureveyScreen> {
   }
 
   Widget _buildAnswerWidget(
-      Question question, SurveyProvider surveyProvider, BuildContext context) {
+      Question question, CogProvider surveyProvider, BuildContext context) {
     TextInputType keyboardType = question.keyboardType;
     bool shouldShowDollarSign = question.shouldShowDollarSign;
 
@@ -261,7 +261,7 @@ class _CogHealthSureveyScreenState extends State<CogHealthSureveyScreen> {
   }
 
   Widget _buildMultipleChoice(
-      Question question, SurveyProvider surveyProvider, BuildContext context) {
+      Question question, CogProvider surveyProvider, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
@@ -304,7 +304,7 @@ class _CogHealthSureveyScreenState extends State<CogHealthSureveyScreen> {
   }
 
   Widget _buildDatePicker(
-      Question question, SurveyProvider surveyProvider, BuildContext context) {
+      Question question, CogProvider surveyProvider, BuildContext context) {
     return Center(
       child: ElevatedButton(
         child: const Text(
