@@ -21,7 +21,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
   int _remainingSeconds = 15;
 
   void _startTimer() {
-    _remainingSeconds = 15;
+    _remainingSeconds = 2;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_remainingSeconds > 0) {
         setState(() {

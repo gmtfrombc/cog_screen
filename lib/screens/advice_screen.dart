@@ -4,6 +4,7 @@ import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/screens/view_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
+import 'package:cog_screen/services/firebase_storage_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
@@ -14,7 +15,9 @@ import 'package:provider/provider.dart';
 
 class AdviceScreen extends StatefulWidget {
   final HealthElement healthElement;
-  const AdviceScreen({super.key, required this.healthElement});
+  final String moduleName;
+  const AdviceScreen(
+      {super.key, required this.healthElement, required this.moduleName});
 
   @override
   State<AdviceScreen> createState() => _AdviceScreenState();
@@ -28,6 +31,33 @@ class _AdviceScreenState extends State<AdviceScreen> {
   bool isLoading = false;
   String userId = '';
   double defaultImageSize = 250.0;
+  Map<String, String> imageUrls = {};
+  @override
+  void initState() {
+    super.initState();
+    isLoading = false;
+    _loadImageUrls();
+  }
+
+  Future<void> _loadImageUrls() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      FirebaseStorageService storageService = FirebaseStorageService();
+      imageUrls = await storageService.getModuleImageUrls(widget.moduleName);
+    } catch (e) {
+      debugPrint('Error loading images: $e');
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final appNavigationProvider = Provider.of<AppNavigationProvider>(
@@ -128,11 +158,16 @@ class _AdviceScreenState extends State<AdviceScreen> {
     BuildContext context,
     ContentItem item,
   ) {
+    String imageUrl = imageUrls[item.imageUrl] ?? ''; // Use the fetched URL
+
     return InkWell(
-      onTap: () => Navigator.pushNamed(
-        context,
-        item.route,
-      ),
+      onTap: () {
+        debugPrint('Advice image for ${item.title}: ${item.imageUrl}');
+        Navigator.pushNamed(
+          context,
+          item.route,
+        );
+      },
       child: Container(
         width: defaultImageSize,
         height: defaultImageSize,
@@ -187,9 +222,12 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 right: 8.0,
                 bottom: 2.0,
                 child: Image.network(
-                  item.imageUrl,
+                  imageUrl,
                   width: 100,
                   height: 100,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Text('Image not available');
+                  },
                 ),
               ),
             ],
@@ -201,6 +239,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
 
   Widget _buildMiddleCard(BuildContext context, ContentItem item) {
     double screenWidth = MediaQuery.of(context).size.width;
+    String imageUrl = imageUrls[item.imageUrl] ?? ''; // Use the fetched URL
+    // Debug print statements to check the imageUrl
     return InkWell(
       onTap: () {
         //todo: not all items will have a _handleButtonClick event (i.e. 'isInterested' button click)
@@ -215,7 +255,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
         height: 200,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(item.imageUrl),
+            image: NetworkImage(imageUrl),
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.circular(12.0),
@@ -240,10 +280,14 @@ class _AdviceScreenState extends State<AdviceScreen> {
               Opacity(
                 opacity: 0.0,
                 child: Image.network(
-                  item.imageUrl,
+                  imageUrl,
                   width: defaultImageSize,
                   height: defaultImageSize,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    debugPrint('Error loading image: $error');
+                    return const Text('Image not available');
+                  },
                 ),
               ),
               Positioned(
@@ -302,6 +346,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
     BuildContext context,
     ContentItem item,
   ) {
+    String imageUrl = imageUrls[item.imageUrl] ?? ''; // Use the fetched URL
+
     return InkWell(
       onTap: () {
         if (item.url != null) {
@@ -333,11 +379,14 @@ class _AdviceScreenState extends State<AdviceScreen> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
-                  item.imageUrl,
+                  imageUrl,
                   width: double.infinity,
                   height:
                       250, // Ensure the image height matches the container height
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Text('Image not available');
+                  },
                 ),
               ),
               Positioned(

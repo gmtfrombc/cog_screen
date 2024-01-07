@@ -59,6 +59,12 @@ flutter:
   uses-material-design: true
 
   assets:
+    - lib/assets/images/pm_icon_small.png
+    - lib/assets/images/pm_icon_full.png
+    - lib/assets/images/brain_health_2.jpeg
+    - lib/assets/images/brain_health_onboarding.png
+    - lib/assets/images/cog_health_start2.png
+    - lib/assets/images/diffusers.png
     - lib/assets/images/dT_EO1.jpeg
     - lib/assets/images/dT_EO2.jpeg
     - lib/assets/images/dT_EO3.jpeg
@@ -69,29 +75,12 @@ flutter:
     - lib/assets/images/dT_EO12.jpeg
     - lib/assets/images/dT_EO13.jpeg
     - lib/assets/images/dT_EO14.jpeg
-    - lib/assets/images/diffusers.png
-    - lib/assets/images/brain_health_2.jpeg
-    - lib/assets/images/brain_health_onboarding.png
-    - lib/assets/images/brain_outdoor_dog.jpeg
-    - lib/assets/images/pm_icon_small.png
-    - lib/assets/images/pm_icon_full.png
-    - lib/assets/images/cog_health_test2.png
-    - lib/assets/images/cog_health_start2.png
-    - lib/assets/images/memory_health.png
     - lib/assets/images/memory_enhancement.png
+    - lib/assets/images/memory_health.png
     - lib/assets/images/memory_protocol.jpeg
     - lib/assets/images/research1.jpeg
     - lib/assets/images/research2.jpeg
-    - lib/assets/images/research3.jpeg
     - lib/assets/images/research4.jpeg
-    - lib/assets/images/sleep.jpeg
-    - lib/assets/images/stress.jpeg
-    - lib/assets/images/gut.jpeg
-    - lib/assets/images/metabolic.jpeg
-    - lib/assets/images/aging.jpeg
-    - lib/assets/images/emotional.jpeg
-    - lib/assets/images/movement.jpeg
-    - lib/assets/images/cog_health.jpeg
     - lib/assets/images/welcome.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

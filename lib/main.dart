@@ -6,7 +6,7 @@ import 'package:cog_screen/providers/cart_provider.dart';
 import 'package:cog_screen/screens/coming_soon_screen.dart';
 import 'package:cog_screen/screens/home_screen.dart';
 import 'package:cog_screen/screens/logins/login.dart';
-import 'package:cog_screen/screens/onboarding/brainhealthmodule_onboarding_screen.dart';
+import 'package:cog_screen/screens/onboarding/moduleOnboarding.dart';
 import 'package:cog_screen/screens/onboarding/eoprotocol_onboarding.dart';
 import 'package:cog_screen/screens/onboarding/apponboarding_screen.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(), // Add your StartScreen route
         '/cognitive': (context) =>
             const CognitiveScreen(), // Add your StartScreen route
-        '/survey': (context) => const CogHealthSureveyScreen(),
+        '/survey': (context) => const CogHealthSurveyScreen(),
         '/results': (context) => const CogHealthResultsScreen(),
         '/allresults': (context) => const AllResultsScreen(),
         '/surveyResultScreen': (context) => const CogHealthResultsScreen(),
@@ -98,17 +98,24 @@ class MyApp extends StatelessWidget {
         '/brainehealthquestionnaire': (context) =>
             const BrainHealthScoreOnboarding(),
         '/research': (context) => const ResearchScreen(),
-        '/braincaretest': (context) => const SurveyScreen(
-              surveyType: 'Brain Care',
-            ),
         '/splashscreen': (context) => const SplashScreen(),
         '/comingsoon': (context) => const ComingSoonScreen(),
         '/onboarding': (context) => const AppOnboardingScreen(),
         '/eoOnboarding': (context) => const EOProtocolOnboardingScreen(),
-        '/brainCareOboarding': (context) => const BrainCareOnboardingScreen(),
       },
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
+          case '/moduleOnboarding':
+            if (settings.arguments is HealthElement) {
+              final HealthElement element = settings.arguments as HealthElement;
+              return MaterialPageRoute(
+                builder: (context) => ModuleOnboarding(healthElement: element),
+              );
+            } else {
+              return MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              );
+            }
           case '/viewScreen':
             final String? url = settings.arguments as String?;
             if (url != null) {
@@ -120,9 +127,25 @@ class MyApp extends StatelessWidget {
                   builder: (context) => const HomeScreen());
             }
           case '/advice':
-            final HealthElement element = settings.arguments as HealthElement;
+            if (settings.arguments is HealthElement) {
+              final HealthElement element = settings.arguments as HealthElement;
+              String moduleName = element.title
+                  .replaceAll(' ', '');
+              return MaterialPageRoute(
+                builder: (context) => AdviceScreen(healthElement: element, moduleName: moduleName),
+              );
+            } else {
+              return MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              );
+            }
+          case '/braincaretest':
+            final args = settings.arguments as Map<String,
+                dynamic>; // Assuming arguments are passed as a Map
+            final surveyType =
+                args['surveyType'] as String; // Extract the surveyType
             return MaterialPageRoute(
-              builder: (context) => AdviceScreen(healthElement: element),
+              builder: (context) => SurveyScreen(surveyType: surveyType),
             );
           default:
             // Handle other routes or return null for unhandled routes

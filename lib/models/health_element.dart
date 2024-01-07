@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class HealthElement {
   final String title;
-  final String imagePath;
+  String imagePath;
   final String onboardingRoute;
   final bool isActive;
   final List<ContentItem> assessments;
@@ -43,7 +43,7 @@ class ContentItem {
 final List<HealthElement> elements = [
   HealthElement(
     title: "Brain Health",
-    imagePath: "lib/assets/images/cog_health.jpeg",
+    imagePath: "cog_health",
     onboardingRoute: "/brainCareOboarding",
     isActive: true,
     assessments: [
@@ -52,14 +52,14 @@ final List<HealthElement> elements = [
         title: "McCANCE Brain Care Score'",
         description: AppConstants.brainCareShort,
         route: '/brainehealthquestionnaire',
-        imageUrl: 'memory_health',
+        imageUrl: 'brain_assessment1',
         cardColor: AppTheme.primaryColor,
       ),
       ContentItem(
         title: "The CogHealth Screening Test'",
         description: "A short assessment of memory and cognitive function.",
         route: '/cognitive',
-        imageUrl: 'cog_health_test2',
+        imageUrl: 'brain_assessment2',
         cardColor: const Color(0xE9FCAF3B),
       ),
     ],
@@ -69,7 +69,7 @@ final List<HealthElement> elements = [
         title: "Memory Enhancement Protocol",
         description: AppConstants.memoryEnhancement,
         route: '/eoOnboarding',
-        imageUrl: 'memory_protocol',
+        imageUrl: 'brain_protocol1',
         cardColor: const Color(0xE9FCAF3B),
       ),
     ],
@@ -79,13 +79,13 @@ final List<HealthElement> elements = [
         title: 'Essential oils, memory, and cognitive health',
         description: 'Learn',
         route: '/essentialOils',
-        imageUrl: 'dt_EO2',
+        imageUrl: 'brain_learning1',
       ),
       ContentItem(
         title: 'Basic facts about brain health',
         description: '3 min',
         route: '/viewScreen',
-        imageUrl: 'brain_health_2',
+        imageUrl: 'brain_learning2',
         url:
             'https://powermeacademy.com/lessons/understanding-cognitive-health/',
       ),
@@ -93,70 +93,70 @@ final List<HealthElement> elements = [
         title: 'Lifestyle strategies for a health brain',
         description: '3 min',
         route: '/viewScreen',
-        imageUrl: 'brain_outdoor_dog',
+        imageUrl: 'brain_learning3',
         url:
             'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
       ),
     ],
   ),
-  // HealthElement(
-  //   title: "Sleep",
-  //   imagePath: "lib/assets/images/sleep.jpeg",
-  //   onboardingRoute: "/comingsoon",
-  //   isActive: false,
-  //   assessments: [
-  //     //Assessments
-  //     ContentItem(
-  //       title: "McCANCE Brain Care Score'",
-  //       description: AppConstants.brainCareShort,
-  //       route: '/brainehealthquestionnaire',
-  //       imageUrl: 'memory_health',
-  //       cardColor: AppTheme.primaryColor,
-  //     ),
-  //     ContentItem(
-  //       title: "The CogHealth Screening Test'",
-  //       description: "A short assessment of memory and cognitive function.",
-  //       route: '/cognitive',
-  //       imageUrl: 'cog_health_test2',
-  //       cardColor: const Color(0xE9FCAF3B),
-  //     ),
-  //   ],
-  //   protocols: [
-  //     //protocols
-  //     ContentItem(
-  //       title: "Memory Enhancement Protocol",
-  //       description: AppConstants.memoryEnhancement,
-  //       route: '/eoOnboarding',
-  //       imageUrl: 'memory_protocol',
-  //       cardColor: const Color(0xE9FCAF3B),
-  //     ),
-  //   ],
-  //   learningCenter: [
-  //     //learning center
-  //     ContentItem(
-  //       title: 'Essential oils, memory, and cognitive health',
-  //       description: 'Learn',
-  //       route: '/essentialOils',
-  //       imageUrl: 'dT_EO2',
-  //     ),
-  //     ContentItem(
-  //       title: 'Basic facts about brain health',
-  //       description: '3 min',
-  //       route: '/viewScreen',
-  //       imageUrl: 'brain_health_2',
-  //       url:
-  //           'https://powermeacademy.com/lessons/understanding-cognitive-health/',
-  //     ),
-  //     ContentItem(
-  //       title: 'Lifestyle strategies for a health brain',
-  //       description: '3 min',
-  //       route: '/viewScreen',
-  //       imageUrl: 'brain_outdoor_dog',
-  //       url:
-  //           'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
-  //     ),
-  //   ],
-  // ),
+  HealthElement(
+    title: "Sleep",
+    imagePath: "sleep",
+    onboardingRoute: "/brainCareOboarding",
+    isActive: true,
+    assessments: [
+      //Assessments
+      ContentItem(
+        title: "PowerME Sleep Assessment",
+        description: AppConstants.brainCareShort,
+        route: '/brainehealthquestionnaire',
+        imageUrl: 'sleep_assessment1',
+        cardColor: const Color.fromARGB(255, 175, 11, 203),
+      ),
+      ContentItem(
+        title: "Sleep Hygiene Evaluation",
+        description: "A short assessment of sleep hygiene",
+        route: '/cognitive',
+        imageUrl: 'sleep_assessment2',
+        cardColor: const Color.fromARGB(255, 6, 138, 63),
+      ),
+    ],
+    protocols: [
+      //protocols
+      ContentItem(
+        title: "Sleep Enhancement Protocol",
+        description: AppConstants.memoryEnhancement,
+        route: '/eoOnboarding',
+        imageUrl: 'sleep_protocol1',
+        cardColor: const Color(0xE9FCAF3B),
+      ),
+    ],
+    learningCenter: [
+      //learning center
+      ContentItem(
+        title: 'Sleep, memory, and cognitive health',
+        description: 'Learn',
+        route: '/essentialOils',
+        imageUrl: 'sleep_learning1',
+      ),
+      ContentItem(
+        title: 'Basic facts about sleep',
+        description: '3 min',
+        route: '/viewScreen',
+        imageUrl: 'sleep_learning2',
+        url:
+            'https://powermeacademy.com/lessons/understanding-cognitive-health/',
+      ),
+      ContentItem(
+        title: 'Lifestyle strategies for a good sleep',
+        description: '3 min',
+        route: '/viewScreen',
+        imageUrl: 'sleep_learning3',
+        url:
+            'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
+      ),
+    ],
+  ),
   // HealthElement(
   //   title: "Stress",
   //   imagePath: "lib/assets/images/stress.jpeg",

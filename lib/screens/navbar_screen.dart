@@ -15,7 +15,7 @@ class NavBarScreen extends StatefulWidget {
 class NavBarScreenState extends State<NavBarScreen> {
   final _screens = [
     const CognitiveScreen(),
-    const CogHealthSureveyScreen(),
+    const CogHealthSurveyScreen(),
     const CogHealthResultsScreen(),
     // Add other screens here...
   ];

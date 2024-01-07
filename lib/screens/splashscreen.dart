@@ -64,7 +64,7 @@ class SplashScreenState extends State<SplashScreen>
     _pulseController.forward();
 
     // Load images and navigate
-    loadImageUrls().then((_) {
+    _loadImageUrls().then((_) {
       _isLoadingImages = false;
       _pulseController.stop(); // Stop pulsating animation
       Future.delayed(const Duration(milliseconds: 1500), () {
@@ -146,26 +146,38 @@ class SplashScreenState extends State<SplashScreen>
     );
   }
 
-  Future<void> loadImageUrls() async {
-    Map<String, String> imageUrls = await storageService.getImageUrls();
+  Future<void> _loadImageUrls() async {
+    try {
+      Map<String, String> homeImageUrls =
+          await storageService.getModuleImageUrls('Home');
+      //debugPrint('Fetched home image URLs: $homeImageUrls');
 
-    for (HealthElement element in elements) {
-      // Update image URLs in assessments
-      for (ContentItem item in element.assessments) {
-        String originalKey = item.imageUrl;
-        item.imageUrl = imageUrls[originalKey] ?? item.imageUrl;
+      List<Future> preloadTasks = [];
+      for (HealthElement element in elements) {
+        // debugPrint(
+        //     'Checking image for ${element.title} with current imagePath: ${element.imagePath}');
+        if (homeImageUrls.containsKey(element.imagePath)) {
+          String imageUrl = homeImageUrls[element.imagePath]!;
+          element.imagePath = imageUrl;
+          // debugPrint(
+          //     'Updated imagePath for ${element.title}: ${element.imagePath}');
+          if (mounted) {
+            var preloadTask = precacheImage(NetworkImage(imageUrl), context);
+            preloadTasks.add(preloadTask);
+            // debugPrint('Preloading image for ${element.title}: $imageUrl');
+          }
+        } else {
+          debugPrint('Error loading image (no image) for ${element.title}');
+        }
       }
-
-      // Update image URLs in protocols
-      for (ContentItem item in element.protocols) {
-        String originalKey = item.imageUrl;
-        item.imageUrl = imageUrls[originalKey] ?? item.imageUrl;
+      await Future.wait(preloadTasks);
+      if (mounted) {
+        setState(() => _isLoadingImages = false);
       }
-
-      // Update image URLs in learningCenter
-      for (ContentItem item in element.learningCenter) {
-        String originalKey = item.imageUrl;
-        item.imageUrl = imageUrls[originalKey] ?? item.imageUrl;
+    } catch (e) {
+      debugPrint('Error loading images: $e');
+      if (mounted) {
+        // Handle error state if needed
       }
     }
   }

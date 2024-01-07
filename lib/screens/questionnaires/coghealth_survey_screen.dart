@@ -12,16 +12,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CogHealthSureveyScreen extends StatefulWidget {
-  const CogHealthSureveyScreen({
+class CogHealthSurveyScreen extends StatefulWidget {
+  const CogHealthSurveyScreen({
     super.key,
   });
 
   @override
-  State<CogHealthSureveyScreen> createState() => _CogHealthSureveyScreenState();
+  State<CogHealthSurveyScreen> createState() => _CogHealthSurveyScreenState();
 }
 
-class _CogHealthSureveyScreenState extends State<CogHealthSureveyScreen> {
+class _CogHealthSurveyScreenState extends State<CogHealthSurveyScreen> {
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _controller = TextEditingController();
   @override
@@ -38,7 +38,7 @@ class _CogHealthSureveyScreenState extends State<CogHealthSureveyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final surveyProvider = Provider.of<CogProvider>(context);
+    final surveyProvider = Provider.of<CogProvider>(context, listen: true);
     final screenHeight = MediaQuery.of(context).size.height;
 
     Widget content = Padding(

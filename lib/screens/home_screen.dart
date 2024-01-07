@@ -1,7 +1,9 @@
 import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/screens/advice_screen.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
+import 'package:cog_screen/services/firebase_storage_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_progress_indicator.dart';
@@ -114,6 +116,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildElementCard(BuildContext context, HealthElement element) {
+    //debugPrint('Loading image for ${element.title}: ${element.imagePath}');
+
     return InkWell(
       onTap: () {
         if (element.isActive) {
@@ -134,11 +138,16 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(
+                child: Image.network(
                   element.imagePath,
                   width: double.infinity,
                   height: double.infinity,
                   fit: BoxFit.cover,
+                  errorBuilder: (BuildContext context, Object exception,
+                      StackTrace? stackTrace) {
+                    return const Text(
+                        'Image not available'); // Error handling for images
+                  },
                 ),
               ),
               Container(
@@ -218,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
         await FirebaseService()
             .recordOnboardingStatus(userId, element.title, true);
         if (!mounted) return;
-        navigateToAdviceScreen(element);
+        navigateToOnboardingScreen(element);
       }
     } catch (e) {
       debugPrint('Error handling button click: $e');
@@ -230,13 +239,35 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> preloadImages(HealthElement element) async {
-    for (var item
-        in element.assessments + element.protocols + element.learningCenter) {
-      await precacheImage(NetworkImage(item.imageUrl), context);
+    FirebaseStorageService storageService = FirebaseStorageService();
+    //debugPrint('Home Screen Preloading images for ${element.title}');
+    Map<String, String> urls =
+        await storageService.getModuleImageUrls(element.title);
+
+    for (var url in urls.values) {
+      // debugPrint('Home Screen: Preloading image: $url');
+      if (mounted) {
+        await precacheImage(NetworkImage(url), context);
+      }
     }
   }
 
+  // Navigate to AdviceScreen with the selected HealthElement
   void navigateToAdviceScreen(HealthElement element) {
-    Navigator.pushNamed(context, '/advice', arguments: element);
+    // Modified to include moduleName in the arguments
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AdviceScreen(
+          healthElement: element,
+          moduleName: element.title
+              .replaceAll(' ', ''), // Converts 'Brain Health' to 'BrainHealth'
+        ),
+      ),
+    );
+  }
+
+  void navigateToOnboardingScreen(HealthElement element) {
+    Navigator.pushNamed(context, '/moduleOnboarding', arguments: element);
   }
 }

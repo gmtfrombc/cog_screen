@@ -55,7 +55,14 @@ class BrainHealthScoreOnboarding extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 brainHealthProvider.restartSurvey();
-                Navigator.pushNamed(context, '/braincaretest');
+                debugPrint('Navigating to Brain Health Survey');
+                Navigator.pushNamed(
+                  context,
+                  '/braincaretest',
+                  arguments: {
+                    'surveyType': 'Brain Health',
+                  },
+                );
               },
               child: const Text('Begin'),
             ),

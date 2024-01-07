@@ -8,7 +8,11 @@ class SurveyProvider with ChangeNotifier {
   int _currentCategoryIndex = 0;
   final String _surveyType;
 
-  SurveyProvider(this._surveyType);
+  SurveyProvider(this._surveyType) {
+    debugPrint('Initializing SurveyProvider with Survey Type: $_surveyType');
+    debugPrint('Survey Type: $_surveyType');
+    debugPrint('Survey Data: ${SurveyRepository.getSurveyData(_surveyType)}');
+  }
 
   void setUserResponse(String category, int rank) {
     _userResponses[category] = rank;
@@ -34,9 +38,19 @@ class SurveyProvider with ChangeNotifier {
     _currentCategoryIndex = 0; // Reset the index when restarting the survey
     notifyListeners();
   }
+//todo put this back to normal
+  // SurveyCategory getCurrentCategory() {
+  //   return SurveyRepository.getSurveyData(_surveyType)[_currentCategoryIndex];
+  // }
 
   SurveyCategory getCurrentCategory() {
-    return SurveyRepository.getSurveyData(_surveyType)[_currentCategoryIndex];
+    var data = SurveyRepository.getSurveyData(_surveyType);
+    // Check if the index is valid
+    if (_currentCategoryIndex >= data.length) {
+      throw RangeError(
+          'Current category index $_currentCategoryIndex is out of range for survey type $_surveyType');
+    }
+    return data[_currentCategoryIndex];
   }
 
   int get currentCategoryIndex => _currentCategoryIndex;

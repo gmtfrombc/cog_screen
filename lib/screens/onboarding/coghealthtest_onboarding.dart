@@ -1,3 +1,4 @@
+import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
@@ -75,11 +76,19 @@ class CognitiveScreen extends StatelessWidget {
                 ElevatedButton(
                   style: ElevatedButtonTheme.of(context).style,
                   onPressed: () {
+                    // Assuming elements[0] is your brain health element
+                    HealthElement brainHealthElement = elements[0];
+
+                    // Set the currentHealthElement in CogProvider
+                    Provider.of<CogProvider>(context, listen: false)
+                        .setCurrentHealthElement(brainHealthElement);
+
+                    // Restart the survey and navigate to the survey screen
                     surveyProvider.restartSurvey();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CogHealthSureveyScreen(),
+                        builder: (context) => const CogHealthSurveyScreen(),
                       ),
                     );
                   },

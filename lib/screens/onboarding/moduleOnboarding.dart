@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
@@ -6,10 +7,16 @@ import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cog_screen/models/health_element.dart';
 import 'package:provider/provider.dart';
 
-class BrainCareOnboardingScreen extends StatelessWidget {
-  const BrainCareOnboardingScreen({super.key});
+class ModuleOnboarding extends StatelessWidget {
+  final HealthElement healthElement; // Add this line
+
+  const ModuleOnboarding({
+    super.key,
+    required this.healthElement,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -89,11 +96,12 @@ class BrainCareOnboardingScreen extends StatelessWidget {
   void _showLearnMoreSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (BuildContext context) => _learnMoreBottomSheet(context),
+      builder: (BuildContext context) =>
+          _learnMoreBottomSheet(context, healthElement),
     );
   }
 
-  Widget _learnMoreBottomSheet(BuildContext context) {
+  Widget _learnMoreBottomSheet(BuildContext context, HealthElement element) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -110,14 +118,15 @@ class BrainCareOnboardingScreen extends StatelessWidget {
               ElevatedButton(
                 child: const Text('I Agree'),
                 onPressed: () {
-                  Navigator.pop(context); // Close the bottom sheet
-                  Navigator.pushNamed(
-                      context, '/advice'); // Navigate to CriteriaScreen
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/advice',
+                      arguments: element); // Navigate Advice
                 },
               ),
               ElevatedButton(
-                onPressed: () =>
-                    Navigator.pop(context), // Close the bottom sheet
+                onPressed: () {
+                  Navigator.pop(context);
+                }, // Close the bottom sheet
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
                       Colors.grey, // Optional: style for the cancel button

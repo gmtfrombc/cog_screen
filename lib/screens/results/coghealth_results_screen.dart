@@ -1,3 +1,4 @@
+import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/cog_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
@@ -114,10 +115,19 @@ class _CogHealthResultsScreenState extends State<CogHealthResultsScreen> {
               padding: const EdgeInsets.all(8.0),
               child: OutlinedButton(
                 onPressed: () {
-                  // Navigate to AdviceScreen and reset the survey
-                  Navigator.pushNamed(context, '/advice');
-                  Provider.of<CogProvider>(context, listen: false)
-                      .restartSurvey();
+                  var provider =
+                      Provider.of<CogProvider>(context, listen: false);
+                  if (provider.currentHealthElement != null) {
+                    Navigator.pushNamed(
+                      context,
+                      '/advice',
+                      arguments: provider.currentHealthElement,
+                    );
+                  } else {
+                    // Handle the case where the HealthElement is not available
+                    Navigator.pushNamed(context, '/home');
+                  }
+                  provider.restartSurvey();
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.black,
@@ -136,27 +146,37 @@ class _CogHealthResultsScreenState extends State<CogHealthResultsScreen> {
           const SizedBox(width: 10),
           Expanded(
             child: ElevatedButton(
-              style: ElevatedButtonTheme.of(context).style,
-              onPressed: _isLoading
-                  ? null
-                  : () async {
-                      setState(
-                        () => _isLoading = true,
-                      );
-                      bool saveSuccessful = await _saveCogHealthResults();
-                      if (saveSuccessful && mounted) {
-                        Navigator.pushNamed(context, '/advice');
-                        Provider.of<CogProvider>(context, listen: false)
-                            .restartSurvey();
-                      }
-                      if (mounted) {
-                        setState(() => _isLoading = false);
-                      }
-                    },
-              child: _isLoading
-                  ? const CustomProgressIndicator(size: 20.0)
-                  : const Text('Save my results'),
-            ),
+            style: ElevatedButtonTheme.of(context).style,
+            onPressed: _isLoading
+                ? null
+                : () async {
+                    setState(() => _isLoading = true);
+
+                    bool saveSuccessful = await _saveCogHealthResults();
+                    if (saveSuccessful && mounted) {
+                      // Set the current health element in CogProvider
+                      Provider.of<CogProvider>(context, listen: false)
+                          .setCurrentHealthElement(elements[
+                              0]); // Assuming elements[0] is your cognitive health element
+
+                      // Navigate to AdviceScreen
+                      Navigator.pushNamed(context, '/advice',
+                          arguments: elements[0]);
+
+                      // Restart the survey
+                      Provider.of<CogProvider>(context, listen: false)
+                          .restartSurvey();
+                    }
+
+                    if (mounted) {
+                      setState(() => _isLoading = false);
+                    }
+                  },
+            child: _isLoading
+                ? const CustomProgressIndicator(size: 20.0)
+                : const Text('Save my results'),
+          )
+
           ),
         ],
       ),

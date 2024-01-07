@@ -1,4 +1,5 @@
 import 'package:cog_screen/models/cog_model.dart';
+import 'package:cog_screen/models/health_element.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -9,7 +10,7 @@ class CogProvider extends ChangeNotifier {
   String? _selectOption;
   int _totalScore = 0;
   bool _isTimerButtonEnabled = true; // New property
-
+  HealthElement? _currentHealthElement;
   bool _hasSeenInstructionForQuestion4 = false;
   bool _hasSeenInstructionForQuestion7 = false;
   bool _surveyEnded = false;
@@ -23,6 +24,8 @@ class CogProvider extends ChangeNotifier {
   String? get selectedOption => _selectOption;
   bool get surveyEnded => _surveyEnded;
   int get totalScore => _totalScore;
+
+  HealthElement? get currentHealthElement => _currentHealthElement;
 
   bool get shouldShowFinishInstruction {
     // Assuming this instruction should appear before question 4's instructions
@@ -46,6 +49,11 @@ class CogProvider extends ChangeNotifier {
   CogProvider({
     required questions,
   }) : _questions = questions;
+
+  void setCurrentHealthElement(HealthElement element) {
+    _currentHealthElement = element;
+    notifyListeners();
+  }
 
   void selectOption(String option) {
     _selectOption = option;
