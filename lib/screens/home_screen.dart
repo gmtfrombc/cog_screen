@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 4,
                     mainAxisSpacing: 4,
-                    childAspectRatio: 0.8,
+                    childAspectRatio: 0.9,
                   ),
                   itemCount: elements.length,
                   itemBuilder: (context, index) {
@@ -150,24 +150,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-              // ClipRRect(
-              //   borderRadius: BorderRadius.circular(8.0),
-              //   child: imageUrl != null      ? Image.network(
-              //           imageUrl,
-              //           width: double.infinity,
-              //           height: double.infinity,
-              //           fit: BoxFit.cover,
-              //           errorBuilder: (BuildContext context, Object exception,
-              //               StackTrace? stackTrace) {
-              //             return const Text(
-              //               'Error loading image',
-              //             );
-              //           },
-              //         )
-              //       : const Center(
-              //           child: Text(
-              //               'No Image Available')), // Placeholder when no image URL is available
-              // ),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
