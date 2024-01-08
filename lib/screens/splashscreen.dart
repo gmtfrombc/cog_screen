@@ -147,38 +147,58 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _loadImageUrls() async {
+    // debugPrint('Starting _loadImageUrls');
     try {
-      Map<String, String> homeImageUrls =
-          await storageService.getModuleImageUrls('Home');
-      //debugPrint('Fetched home image URLs: $homeImageUrls');
-
       List<Future> preloadTasks = [];
       for (HealthElement element in elements) {
-        // debugPrint(
-        //     'Checking image for ${element.title} with current imagePath: ${element.imagePath}');
-        if (homeImageUrls.containsKey(element.imagePath)) {
-          String imageUrl = homeImageUrls[element.imagePath]!;
-          element.imagePath = imageUrl;
-          // debugPrint(
-          //     'Updated imagePath for ${element.title}: ${element.imagePath}');
-          if (mounted) {
-            var preloadTask = precacheImage(NetworkImage(imageUrl), context);
-            preloadTasks.add(preloadTask);
-            // debugPrint('Preloading image for ${element.title}: $imageUrl');
+        //debugPrint('Processing element: ${element.title}');
+
+        if (element.isActive) {
+          // debugPrint('Element is active. Preloading all images.');
+          for (HealthElementImage image in element.images) {
+            await preloadImage(image, preloadTasks);
           }
         } else {
-          debugPrint('Error loading image (no image) for ${element.title}');
+          //debugPrint('Element is inactive. Preloading only /Home image.');
+          HealthElementImage? homeImage = element.images.firstWhere(
+              (img) => img.folder == 'Home',
+              orElse: () => HealthElementImage(
+                  name: '', type: '', folder: 'Home', url: null));
+          if (homeImage.name.isNotEmpty) {
+            await preloadImage(homeImage, preloadTasks);
+          }
         }
       }
       await Future.wait(preloadTasks);
+      //debugPrint('Completed preloading all images.');
       if (mounted) {
         setState(() => _isLoadingImages = false);
       }
     } catch (e) {
-      debugPrint('Error loading images: $e');
+      debugPrint('Error in _loadImageUrls: $e');
       if (mounted) {
         // Handle error state if needed
       }
+    }
+  }
+
+  Future<void> preloadImage(
+      HealthElementImage image, List<Future> preloadTasks) async {
+    String filePath = '${image.folder}/${image.name}.${image.type}';
+    //debugPrint('Fetching URL for $filePath'); // Check file path for each image
+
+    try {
+      String imageUrl = await storageService.getDownloadURL(filePath);
+      image.url = imageUrl;
+      // debugPrint(
+      //     'Fetched URL for $filePath: $imageUrl'); // Confirm successful fetch
+      if (mounted) {
+        var preloadTask = precacheImage(NetworkImage(imageUrl), context);
+        preloadTasks.add(preloadTask);
+      }
+    } catch (e) {
+      debugPrint(
+          'Error fetching URL for $filePath: $e'); // Catch errors for individual image fetch
     }
   }
 }

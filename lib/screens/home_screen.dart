@@ -1,9 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/advice_screen.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
-import 'package:cog_screen/services/firebase_storage_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_progress_indicator.dart';
@@ -117,6 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildElementCard(BuildContext context, HealthElement element) {
     //debugPrint('Loading image for ${element.title}: ${element.imagePath}');
+    String? imageUrl =
+        element.images.isNotEmpty ? element.images.first.url : null;
 
     return InkWell(
       onTap: () {
@@ -138,18 +140,34 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  element.imagePath,
+                child: Image(
+                  image: CachedNetworkImageProvider(imageUrl!),
                   width: double.infinity,
                   height: double.infinity,
                   fit: BoxFit.cover,
-                  errorBuilder: (BuildContext context, Object exception,
-                      StackTrace? stackTrace) {
-                    return const Text(
-                        'Image not available'); // Error handling for images
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Text('Image not available'); // Error handling
                   },
                 ),
               ),
+              // ClipRRect(
+              //   borderRadius: BorderRadius.circular(8.0),
+              //   child: imageUrl != null      ? Image.network(
+              //           imageUrl,
+              //           width: double.infinity,
+              //           height: double.infinity,
+              //           fit: BoxFit.cover,
+              //           errorBuilder: (BuildContext context, Object exception,
+              //               StackTrace? stackTrace) {
+              //             return const Text(
+              //               'Error loading image',
+              //             );
+              //           },
+              //         )
+              //       : const Center(
+              //           child: Text(
+              //               'No Image Available')), // Placeholder when no image URL is available
+              // ),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
@@ -216,9 +234,10 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() => isLoading = true);
 
     try {
-      await preloadImages(element);
+      // Check if the onboarding has been completed for the selected element
       bool onboardingCompleted = await FirebaseService()
           .checkOnboardingCompleted(userId, element.title);
+
       if (!mounted) return;
 
       if (onboardingCompleted) {
@@ -238,35 +257,20 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> preloadImages(HealthElement element) async {
-    FirebaseStorageService storageService = FirebaseStorageService();
-    //debugPrint('Home Screen Preloading images for ${element.title}');
-    Map<String, String> urls =
-        await storageService.getModuleImageUrls(element.title);
-
-    for (var url in urls.values) {
-      // debugPrint('Home Screen: Preloading image: $url');
-      if (mounted) {
-        await precacheImage(NetworkImage(url), context);
-      }
-    }
-  }
-
-  // Navigate to AdviceScreen with the selected HealthElement
+// Navigate to AdviceScreen with the selected HealthElement
   void navigateToAdviceScreen(HealthElement element) {
-    // Modified to include moduleName in the arguments
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AdviceScreen(
           healthElement: element,
-          moduleName: element.title
-              .replaceAll(' ', ''), // Converts 'Brain Health' to 'BrainHealth'
+          moduleName: element.title.replaceAll(' ', ''),
         ),
       ),
     );
   }
 
+// Navigate to the onboarding screen for the selected HealthElement
   void navigateToOnboardingScreen(HealthElement element) {
     Navigator.pushNamed(context, '/moduleOnboarding', arguments: element);
   }
