@@ -116,7 +116,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildElementCard(BuildContext context, HealthElement element) {
-    //debugPrint('Loading image for ${element.title}: ${element.imagePath}');
     String? imageUrl =
         element.images.isNotEmpty ? element.images.first.url : null;
 

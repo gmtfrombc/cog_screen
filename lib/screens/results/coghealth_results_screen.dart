@@ -4,7 +4,7 @@ import 'package:cog_screen/providers/cog_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
-import 'package:cog_screen/utilities/constants.dart';
+import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
@@ -54,7 +54,7 @@ class _CogHealthResultsScreenState extends State<CogHealthResultsScreen> {
                 Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: Text(
-                    AppConstants.cogHealthExplanation,
+                    BrainConstants.cogHealthExplanation,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       fontSize: 14,
@@ -72,7 +72,7 @@ class _CogHealthResultsScreenState extends State<CogHealthResultsScreen> {
                 Padding(
                   padding: const EdgeInsets.all(14.0),
                   child: Text(
-                    AppConstants.cogHealthMore,
+                    BrainConstants.cogHealthMore,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       fontSize: 14,
@@ -145,7 +145,7 @@ class _CogHealthResultsScreenState extends State<CogHealthResultsScreen> {
           ),
           const SizedBox(width: 10),
           Expanded(
-            child: ElevatedButton(
+              child: ElevatedButton(
             style: ElevatedButtonTheme.of(context).style,
             onPressed: _isLoading
                 ? null
@@ -175,9 +175,7 @@ class _CogHealthResultsScreenState extends State<CogHealthResultsScreen> {
             child: _isLoading
                 ? const CustomProgressIndicator(size: 20.0)
                 : const Text('Save my results'),
-          )
-
-          ),
+          )),
         ],
       ),
     );

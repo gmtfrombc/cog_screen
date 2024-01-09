@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:provider/provider.dart';
-import 'package:cog_screen/utilities/constants.dart';
+import 'package:cog_screen/utilities/brain_constants.dart';
 
 class ProtocolScreen extends StatelessWidget {
   const ProtocolScreen({super.key});
@@ -27,7 +27,7 @@ class ProtocolScreen extends StatelessWidget {
                     children: [
                       const SizedBox(height: 20),
                       const Text(
-                        AppConstants.protocol,
+                        BrainConstants.protocol,
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 20),
@@ -42,7 +42,7 @@ class ProtocolScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        AppConstants.frequencyDuration,
+                        BrainConstants.frequencyDuration,
                         style: TextStyle(
                           fontSize: 16,
                         ),

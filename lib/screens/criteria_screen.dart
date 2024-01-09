@@ -1,7 +1,7 @@
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
-import 'package:cog_screen/utilities/constants.dart';
+import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
@@ -86,7 +86,7 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
             bottom: 8.0,
           ),
           child: Text(
-            AppConstants.medAdvice,
+            BrainConstants.medAdvice,
             textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontSize: 14,
@@ -178,7 +178,8 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
       _showProgressIndicator();
 
       try {
-        await firebaseService.recordOnboardingStatus(userId, "Criteria completed",true);
+        await firebaseService.recordOnboardingStatus(
+            userId, "Criteria completed", true);
         if (!mounted) return;
         Navigator.of(context).pop(); // Close the prerogress indicator dialog
         showCompletionDialog();

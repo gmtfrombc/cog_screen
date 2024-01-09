@@ -3,7 +3,7 @@ import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
-import 'package:cog_screen/utilities/constants.dart';
+import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
@@ -58,7 +58,7 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
               Padding(
                 padding: const EdgeInsets.all(14.0),
                 child: Text(
-                  AppConstants.brainHealthExplanation,
+                  BrainConstants.brainHealthExplanation,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontSize: 14,
@@ -76,7 +76,7 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
               Padding(
                 padding: const EdgeInsets.all(14.0),
                 child: Text(
-                  AppConstants.brainHealthMore,
+                  BrainConstants.brainHealthMore,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontSize: 14,

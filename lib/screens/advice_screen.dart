@@ -152,6 +152,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
     return InkWell(
       onTap: () {
         debugPrint('Advice image for ${item.title}: ${item.imageUrl}');
+        debugPrint('Route is ${item.route}');
         Navigator.pushNamed(
           context,
           item.route,

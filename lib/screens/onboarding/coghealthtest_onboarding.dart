@@ -6,7 +6,7 @@ import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/cog_provider.dart';
 import 'package:cog_screen/screens/questionnaires/coghealth_survey_screen.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
-import 'package:cog_screen/utilities/constants.dart';
+import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:cog_screen/widgets/gradient_image.dart';
@@ -54,7 +54,7 @@ class CognitiveScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(14.0),
               child: Text(
-                AppConstants.cogHealthStart,
+                BrainConstants.cogHealthStart,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   fontSize: 16,

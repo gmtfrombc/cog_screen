@@ -17,9 +17,5 @@ class SurveyRepository {
     debugPrint('Survey Data Length: ${data.length}');
     return data;
   }
-  // Method to retrieve survey data based on type.
-  // static List<SurveyCategory> getSurveyData(String surveyType) {
-  //   return _surveys[surveyType] ?? [];
-  // }
-  
+
 }

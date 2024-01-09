@@ -2,7 +2,7 @@ import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
-import 'package:cog_screen/utilities/constants.dart';
+import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +51,7 @@ class _EOProtocolOnboardingScreenState
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        AppConstants.olfactoryEnrichment,
+                        BrainConstants.olfactoryEnrichment,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,

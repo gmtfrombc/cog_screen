@@ -2,7 +2,7 @@
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
-import 'package:cog_screen/utilities/constants.dart';
+import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +108,7 @@ class ModuleOnboarding extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
-            AppConstants.loremIpsum,
+            BrainConstants.loremIpsum,
             textAlign: TextAlign.justify,
           ),
           const SizedBox(height: 20),

@@ -1,5 +1,5 @@
 import 'package:cog_screen/themes/app_theme.dart';
-import 'package:cog_screen/utilities/constants.dart';
+import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:flutter/material.dart';
 
 class HealthElement {
@@ -101,7 +101,7 @@ final List<HealthElement> elements = [
       //Assessments
       ContentItem(
         title: "McCANCE Brain Care Score'",
-        description: AppConstants.brainCareShort,
+        description: BrainConstants.brainCareShort,
         route: '/brainehealthquestionnaire',
         imageUrl: 'brain_assessment1',
         cardColor: AppTheme.primaryColor,
@@ -118,7 +118,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: AppConstants.memoryEnhancement,
+        description: BrainConstants.memoryEnhancement,
         route: '/eoOnboarding',
         imageUrl: 'brain_protocol1',
         cardColor: const Color(0xE9FCAF3B),
@@ -195,7 +195,7 @@ final List<HealthElement> elements = [
       //Assessments
       ContentItem(
         title: "PowerME Sleep Assessment",
-        description: AppConstants.brainCareShort,
+        description: BrainConstants.brainCareShort,
         route: '/brainehealthquestionnaire',
         imageUrl: 'sleep_assessment1',
         cardColor: const Color.fromARGB(255, 175, 11, 203),
@@ -212,7 +212,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Sleep Enhancement Protocol",
-        description: AppConstants.memoryEnhancement,
+        description: BrainConstants.memoryEnhancement,
         route: '/eoOnboarding',
         imageUrl: 'sleep_protocol1',
         cardColor: const Color(0xE9FCAF3B),
@@ -289,7 +289,7 @@ final List<HealthElement> elements = [
       //Assessments
       ContentItem(
         title: "McCANCE Brain Care Score'",
-        description: AppConstants.brainCareShort,
+        description: BrainConstants.brainCareShort,
         route: '/brainehealthquestionnaire',
         imageUrl: 'memory_health',
         cardColor: AppTheme.primaryColor,
@@ -306,7 +306,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: AppConstants.memoryEnhancement,
+        description: BrainConstants.memoryEnhancement,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),
@@ -383,7 +383,7 @@ final List<HealthElement> elements = [
       //Assessments
       ContentItem(
         title: "McCANCE Brain Care Score'",
-        description: AppConstants.brainCareShort,
+        description: BrainConstants.brainCareShort,
         route: '/brainehealthquestionnaire',
         imageUrl: 'memory_health',
         cardColor: AppTheme.primaryColor,
@@ -400,7 +400,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: AppConstants.memoryEnhancement,
+        description: BrainConstants.memoryEnhancement,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),
@@ -477,7 +477,7 @@ final List<HealthElement> elements = [
       //Assessments
       ContentItem(
         title: "McCANCE Brain Care Score'",
-        description: AppConstants.brainCareShort,
+        description: BrainConstants.brainCareShort,
         route: '/brainehealthquestionnaire',
         imageUrl: 'memory_health',
         cardColor: AppTheme.primaryColor,
@@ -494,7 +494,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: AppConstants.memoryEnhancement,
+        description: BrainConstants.memoryEnhancement,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),
@@ -571,7 +571,7 @@ final List<HealthElement> elements = [
       //Assessments
       ContentItem(
         title: "McCANCE Brain Care Score'",
-        description: AppConstants.brainCareShort,
+        description: BrainConstants.brainCareShort,
         route: '/brainehealthquestionnaire',
         imageUrl: 'memory_health',
         cardColor: AppTheme.primaryColor,
@@ -588,7 +588,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: AppConstants.memoryEnhancement,
+        description: BrainConstants.memoryEnhancement,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),
@@ -665,7 +665,7 @@ final List<HealthElement> elements = [
       //Assessments
       ContentItem(
         title: "McCANCE Brain Care Score'",
-        description: AppConstants.brainCareShort,
+        description: BrainConstants.brainCareShort,
         route: '/brainehealthquestionnaire',
         imageUrl: 'memory_health',
         cardColor: AppTheme.primaryColor,
@@ -682,7 +682,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: AppConstants.memoryEnhancement,
+        description: BrainConstants.memoryEnhancement,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),
@@ -759,7 +759,7 @@ final List<HealthElement> elements = [
       //Assessments
       ContentItem(
         title: "McCANCE Brain Care Score'",
-        description: AppConstants.brainCareShort,
+        description: BrainConstants.brainCareShort,
         route: '/brainehealthquestionnaire',
         imageUrl: 'memory_health',
         cardColor: AppTheme.primaryColor,
@@ -776,7 +776,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: AppConstants.memoryEnhancement,
+        description: BrainConstants.memoryEnhancement,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),
