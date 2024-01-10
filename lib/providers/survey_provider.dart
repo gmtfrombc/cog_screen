@@ -8,11 +8,7 @@ class SurveyProvider with ChangeNotifier {
   int _currentCategoryIndex = 0;
   final String _surveyType;
 
-  SurveyProvider(this._surveyType) {
-    debugPrint('Initializing SurveyProvider with Survey Type: $_surveyType');
-    debugPrint('Survey Type: $_surveyType');
-    debugPrint('Survey Data: ${SurveyRepository.getSurveyData(_surveyType)}');
-  }
+  SurveyProvider(this._surveyType);
 
   void setUserResponse(String category, int rank) {
     _userResponses[category] = rank;

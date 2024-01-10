@@ -1,9 +1,9 @@
+import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
-import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
@@ -12,14 +12,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class BrainHealthScoreOnboarding extends StatelessWidget {
-  const BrainHealthScoreOnboarding({super.key});
+class DynamicOnboardingScreen extends StatelessWidget {
+  final ContentItem onboardingContent;
+  const DynamicOnboardingScreen({
+    super.key,
+    required this.onboardingContent,
+  });
 
   @override
   Widget build(BuildContext context) {
     final appNavigationProvider = Provider.of<AppNavigationProvider>(context);
     final theme = Theme.of(context);
-    String imagePath = 'lib/assets/images/memory_enhancement.png';
+    String imagePath = onboardingContent.surveyImage;
     final surveyProvider = Provider.of<SurveyProvider>(context);
     Widget content = Center(
       child: SingleChildScrollView(
@@ -27,20 +31,24 @@ class BrainHealthScoreOnboarding extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             const SizedBox(height: 10),
-            GradientImage(imagePath: imagePath),
+            GradientImage(
+              imagePath: imagePath,
+            ),
+            const SizedBox(height: 20),
             Text(
-              'Brain Care Score',
+              onboardingContent.onboardingTitle,
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
                 fontFamily: GoogleFonts.roboto().fontFamily,
               ),
+              textAlign: TextAlign.center,
             ),
             Padding(
               padding: const EdgeInsets.all(14.0),
               child: Text(
-                BrainConstants.braincareStart,
+                onboardingContent.onboardingDescription,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium
                     ?.copyWith(fontSize: 16, fontWeight: FontWeight.w300),
@@ -57,9 +65,9 @@ class BrainHealthScoreOnboarding extends StatelessWidget {
                 surveyProvider.restartSurvey();
                 Navigator.pushNamed(
                   context,
-                  '/braincaretest',
+                  '/surveyscreen',
                   arguments: {
-                    'surveyType': 'Brain Health',
+                    'surveyType': onboardingContent.surveyType,
                   },
                 );
               },

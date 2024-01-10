@@ -1,5 +1,6 @@
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/utilities/brain_constants.dart';
+import 'package:cog_screen/utilities/sleep_constants.dart';
 import 'package:flutter/material.dart';
 
 class HealthElement {
@@ -29,6 +30,10 @@ class ContentItem {
   String imageUrl; // Changed to non-final to update later
   final Color? cardColor;
   final String? url;
+  final String onboardingTitle;
+  final String onboardingDescription;
+  final String surveyType;
+  final String surveyImage;
 
   ContentItem({
     required this.title,
@@ -37,6 +42,10 @@ class ContentItem {
     required this.imageUrl,
     this.cardColor,
     this.url,
+    this.onboardingTitle = '',
+    this.onboardingDescription = '',
+    this.surveyType = '',
+    this.surveyImage = '',
   });
 }
 
@@ -105,6 +114,10 @@ final List<HealthElement> elements = [
         route: '/brainehealthquestionnaire',
         imageUrl: 'brain_assessment1',
         cardColor: AppTheme.primaryColor,
+        onboardingDescription: BrainConstants.braincareStart,
+        onboardingTitle: "Brain Care Score",
+        surveyType: 'Brain Health',
+        surveyImage: 'lib/assets/images/memory_enhancement.png',
       ),
       ContentItem(
         title: "The CogHealth Screening Test'",
@@ -195,10 +208,14 @@ final List<HealthElement> elements = [
       //Assessments
       ContentItem(
         title: "PowerME Sleep Assessment",
-        description: BrainConstants.brainCareShort,
+        description: SleepConstants.sleepAssessment,
         route: '/brainehealthquestionnaire',
-        imageUrl: 'sleep_assessment1',
         cardColor: const Color.fromARGB(255, 175, 11, 203),
+        imageUrl: 'sleep_assessment1',
+        onboardingTitle: "The PowerME Sleep Assessment",
+        onboardingDescription: SleepConstants.sleepAssessment,
+        surveyType: 'Sleep',
+        surveyImage: 'lib/assets/images/sleep_assessment_pm.jpeg',
       ),
       ContentItem(
         title: "Sleep Hygiene Evaluation",

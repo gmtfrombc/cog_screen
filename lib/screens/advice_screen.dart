@@ -3,6 +3,7 @@ import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
+import 'package:cog_screen/screens/onboarding/dynamic_onboarding_screen.dart';
 import 'package:cog_screen/screens/view_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
@@ -151,11 +152,16 @@ class _AdviceScreenState extends State<AdviceScreen> {
     String imageUrl = image.url ?? '';
     return InkWell(
       onTap: () {
-        debugPrint('Advice image for ${item.title}: ${item.imageUrl}');
-        debugPrint('Route is ${item.route}');
-        Navigator.pushNamed(
+        debugPrint('Survey Type: ${item.surveyType}');
+        debugPrint('Title: ${item.onboardingTitle}');
+        debugPrint('Description: ${item.onboardingDescription}');
+        Navigator.push(
           context,
-          item.route,
+          MaterialPageRoute(
+            builder: (context) => DynamicOnboardingScreen(
+              onboardingContent: item,
+            ),
+          ),
         );
       },
       child: Container(

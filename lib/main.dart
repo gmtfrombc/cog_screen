@@ -10,7 +10,6 @@ import 'package:cog_screen/screens/onboarding/moduleOnboarding.dart';
 import 'package:cog_screen/screens/onboarding/eoprotocol_onboarding.dart';
 import 'package:cog_screen/screens/onboarding/apponboarding_screen.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
-import 'package:cog_screen/screens/onboarding/braincaretest_onboarding_screen.dart';
 import 'package:cog_screen/screens/questionnaires/survey_screen.dart';
 import 'package:cog_screen/screens/research_screen.dart';
 import 'package:cog_screen/screens/results/allresultsscreen.dart';
@@ -95,8 +94,6 @@ class MyApp extends StatelessWidget {
         '/criteria': (context) => const CriteriaScreen(),
         '/essentialOils': (context) => const EssentialOilScreen(),
         '/protocol': (context) => const ProtocolScreen(),
-        '/brainehealthquestionnaire': (context) =>
-            const BrainHealthScoreOnboarding(),
         '/research': (context) => const ResearchScreen(),
         '/splashscreen': (context) => const SplashScreen(),
         '/comingsoon': (context) => const ComingSoonScreen(),
@@ -129,17 +126,17 @@ class MyApp extends StatelessWidget {
           case '/advice':
             if (settings.arguments is HealthElement) {
               final HealthElement element = settings.arguments as HealthElement;
-              String moduleName = element.title
-                  .replaceAll(' ', '');
+              String moduleName = element.title.replaceAll(' ', '');
               return MaterialPageRoute(
-                builder: (context) => AdviceScreen(healthElement: element, moduleName: moduleName),
+                builder: (context) => AdviceScreen(
+                    healthElement: element, moduleName: moduleName),
               );
             } else {
               return MaterialPageRoute(
                 builder: (context) => const HomeScreen(),
               );
             }
-          case '/braincaretest':
+          case '/surveyscreen':
             final args = settings.arguments as Map<String,
                 dynamic>; // Assuming arguments are passed as a Map
             final surveyType =

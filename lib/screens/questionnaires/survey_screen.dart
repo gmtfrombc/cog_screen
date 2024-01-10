@@ -27,9 +27,6 @@ class _SurveyScreenState extends State<SurveyScreen> {
   Widget build(BuildContext context) {
     final surveyProvider = Provider.of<SurveyProvider>(context, listen: false);
     final surveyData = SurveyRepository.getSurveyData(widget.surveyType);
-    debugPrint(
-        'Current Category Index: ${surveyProvider.currentCategoryIndex}');
-    debugPrint('Survey Data Length: ${surveyData.length}');
     final isLastCategory =
         surveyProvider.currentCategoryIndex == surveyData.length - 1;
     final category = surveyData[surveyProvider.currentCategoryIndex];
