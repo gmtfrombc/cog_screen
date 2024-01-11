@@ -213,12 +213,13 @@ final List<HealthElement> elements = [
       //Assessments
       ContentItem(
         title: "Pittsburgh Sleep Quality Index",
-        description: "A validated tool for assessing  sleep quality",
+        description:
+            "A comprehensive tool for assessing  a broad range of sleep metrics.",
         route: '/cognitive',
         imageUrl: 'sleep_assessment2',
         cardColor: const Color.fromARGB(255, 6, 138, 63),
         onboardingTitle: "Pittsburgh Sleep Quality Index",
-        onboardingDescription: SleepConstants.sleepAssessment,
+        onboardingDescription: SleepConstants.sleepPSQI,
         surveyType: 'PSQI',
         surveyImage: 'lib/assets/images/psqi_survey.jpeg',
       ),
