@@ -109,7 +109,7 @@ final List<HealthElement> elements = [
     assessments: [
       //Assessments
       ContentItem(
-        title: "McCANCE Brain Care Score'",
+        title: "McCANCE Brain Care Score",
         description: BrainConstants.brainCareShort,
         route: '/brainehealthquestionnaire',
         imageUrl: 'brain_assessment1',
@@ -120,7 +120,7 @@ final List<HealthElement> elements = [
         surveyImage: 'lib/assets/images/memory_enhancement.png',
       ),
       ContentItem(
-        title: "The CogHealth Screening Test'",
+        title: "The CogHealth Screening Test",
         description: "A short assessment of memory and cognitive function.",
         route: '/cognitive',
         imageUrl: 'brain_assessment2',
@@ -184,6 +184,11 @@ final List<HealthElement> elements = [
         folder: 'Sleep',
       ),
       HealthElementImage(
+        name: 'sleep_assessment3',
+        type: 'png',
+        folder: 'Sleep',
+      ),
+      HealthElementImage(
         name: 'sleep_protocol1',
         type: 'jpeg',
         folder: 'Sleep',
@@ -207,8 +212,19 @@ final List<HealthElement> elements = [
     assessments: [
       //Assessments
       ContentItem(
+        title: "Pittsburgh Sleep Quality Index",
+        description: "A validated tool for assessing  sleep quality",
+        route: '/cognitive',
+        imageUrl: 'sleep_assessment2',
+        cardColor: const Color.fromARGB(255, 6, 138, 63),
+        onboardingTitle: "Pittsburgh Sleep Quality Index",
+        onboardingDescription: SleepConstants.sleepAssessment,
+        surveyType: 'PSQI',
+        surveyImage: 'lib/assets/images/psqi_survey.jpeg',
+      ),
+      ContentItem(
         title: "PowerME Sleep Assessment",
-        description: SleepConstants.sleepAssessment,
+        description: SleepConstants.pmSleepAssessment,
         route: '/brainehealthquestionnaire',
         cardColor: const Color.fromARGB(255, 175, 11, 203),
         imageUrl: 'sleep_assessment1',
@@ -218,11 +234,15 @@ final List<HealthElement> elements = [
         surveyImage: 'lib/assets/images/sleep_assessment_pm.jpeg',
       ),
       ContentItem(
-        title: "Sleep Hygiene Evaluation",
-        description: "A short assessment of sleep hygiene",
-        route: '/cognitive',
-        imageUrl: 'sleep_assessment2',
-        cardColor: const Color.fromARGB(255, 6, 138, 63),
+        title: "Sleep Hygiene Tool",
+        description: SleepConstants.sleepHygieneTool,
+        route: '/brainehealthquestionnaire',
+        cardColor: const Color.fromARGB(255, 62, 6, 147),
+        imageUrl: 'sleep_assessment3',
+        onboardingTitle: "Sleep Hygiene Tool",
+        onboardingDescription: SleepConstants.sleepHygieneTool,
+        surveyType: 'Sleep Hygiene',
+        surveyImage: 'lib/assets/images/sleep_assessment_pm.jpeg',
       ),
     ],
     protocols: [
@@ -748,6 +768,11 @@ final List<HealthElement> elements = [
       ),
       HealthElementImage(
         name: 'sleep_assessment2',
+        type: 'png',
+        folder: 'Sleep',
+      ),
+      HealthElementImage(
+        name: 'sleep_assessment3',
         type: 'png',
         folder: 'Sleep',
       ),

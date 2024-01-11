@@ -21,10 +21,12 @@ class DynamicOnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(
+        'Building DynamicOnboardingScreen for content: ${onboardingContent.title}');
+
     final appNavigationProvider = Provider.of<AppNavigationProvider>(context);
     final theme = Theme.of(context);
     String imagePath = onboardingContent.surveyImage;
-    final surveyProvider = Provider.of<SurveyProvider>(context);
     Widget content = Center(
       child: SingleChildScrollView(
         child: Column(
@@ -62,7 +64,10 @@ class DynamicOnboardingScreen extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
+                final surveyProvider =
+                    Provider.of<SurveyProvider>(context, listen: false);
                 surveyProvider.restartSurvey();
+                surveyProvider.setSurveyType(onboardingContent.surveyType);
                 Navigator.pushNamed(
                   context,
                   '/surveyscreen',

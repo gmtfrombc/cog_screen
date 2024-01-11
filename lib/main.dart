@@ -55,7 +55,9 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => CogProvider(questions: hardcodedQuestions),
         ),
-        ChangeNotifierProvider(create: (_) => SurveyProvider('Brain Health')),
+        ChangeNotifierProvider(
+          create: (_) => SurveyProvider(),
+        ),
         ChangeNotifierProvider(
           create: (context) => CriteriaProvider(),
         ),
@@ -137,12 +139,8 @@ class MyApp extends StatelessWidget {
               );
             }
           case '/surveyscreen':
-            final args = settings.arguments as Map<String,
-                dynamic>; // Assuming arguments are passed as a Map
-            final surveyType =
-                args['surveyType'] as String; // Extract the surveyType
             return MaterialPageRoute(
-              builder: (context) => SurveyScreen(surveyType: surveyType),
+              builder: (context) => const SurveyScreen(),
             );
           default:
             // Handle other routes or return null for unhandled routes

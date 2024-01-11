@@ -6,10 +6,20 @@ class SurveyProvider with ChangeNotifier {
   final Map<String, int> _userResponses = {};
   int _totalScore = 0;
   int _currentCategoryIndex = 0;
-  final String _surveyType;
+  String? _surveyType;
 
-  SurveyProvider(this._surveyType);
+  String? get surveyType => _surveyType;
 
+  SurveyProvider();
+
+  void setSurveyType(String type) {
+    _surveyType = type;
+    _userResponses.clear();
+    _totalScore = 0;
+    _currentCategoryIndex = 0;
+
+    notifyListeners();
+  }
   void setUserResponse(String category, int rank) {
     _userResponses[category] = rank;
     notifyListeners();
@@ -29,6 +39,7 @@ class SurveyProvider with ChangeNotifier {
   }
 
   void restartSurvey() {
+    debugPrint('Restarting survey for surveyType: $_surveyType');
     _userResponses.clear();
     _totalScore = 0;
     _currentCategoryIndex = 0; // Reset the index when restarting the survey
@@ -40,7 +51,13 @@ class SurveyProvider with ChangeNotifier {
   // }
 
   SurveyCategory getCurrentCategory() {
-    var data = SurveyRepository.getSurveyData(_surveyType);
+    if (_surveyType == null) {
+      throw StateError('Survey type not set');
+    }
+    var data = SurveyRepository.getSurveyData(_surveyType!);
+    debugPrint(
+        'Getting current category for surveyType $_surveyType at index $_currentCategoryIndex');
+
     // Check if the index is valid
     if (_currentCategoryIndex >= data.length) {
       throw RangeError(
@@ -53,6 +70,9 @@ class SurveyProvider with ChangeNotifier {
 
   void incrementCategoryIndex() {
     _currentCategoryIndex++;
+    debugPrint(
+        'Incrementing category index to $_currentCategoryIndex for surveyType $_surveyType');
+
     notifyListeners();
   }
 }

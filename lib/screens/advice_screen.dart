@@ -147,14 +147,16 @@ class _AdviceScreenState extends State<AdviceScreen> {
     BuildContext context,
     ContentItem item,
   ) {
+    debugPrint(
+        'Building top card in AdviceScreen for item: ${item.title} with surveyType: ${item.surveyType}');
+
     HealthElementImage image =
         findImageForContentItem(item, widget.healthElement.images);
     String imageUrl = image.url ?? '';
     return InkWell(
       onTap: () {
-        debugPrint('Survey Type: ${item.surveyType}');
-        debugPrint('Title: ${item.onboardingTitle}');
-        debugPrint('Description: ${item.onboardingDescription}');
+        debugPrint(
+            'Navigating to DynamicOnboardingScreen with item: ${item.title} and surveyType: ${item.surveyType}');
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -184,7 +186,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 left: 20,
                 child: SizedBox(
                   height: 80,
-                  width: 220,
+                  width: 210,
                   child: Text(
                     item.title,
                     style: const TextStyle(
@@ -467,6 +469,9 @@ class _AdviceScreenState extends State<AdviceScreen> {
   }
 
   void _handleButtonClick() async {
+    debugPrint(
+        'Handling button click in AdviceScreen for element: ${widget.healthElement.title}');
+
     HealthElement healthElement = widget.healthElement;
     setState(() {
       isLoading = true;
@@ -490,7 +495,9 @@ class _AdviceScreenState extends State<AdviceScreen> {
     HealthElementImage defaultImage =
         HealthElementImage(name: '', type: '', folder: '', url: null);
     return images.firstWhere(
-      (img) => img.name == item.imageUrl,
+      (img) {
+        return img.name == item.imageUrl;
+      },
       orElse: () => defaultImage,
     );
   }

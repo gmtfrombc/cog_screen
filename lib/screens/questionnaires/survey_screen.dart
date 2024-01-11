@@ -11,12 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SurveyScreen extends StatefulWidget {
-  final String surveyType;
-
-  const SurveyScreen({
-    super.key,
-    required this.surveyType,
-  });
+  const SurveyScreen({super.key});
 
   @override
   State<SurveyScreen> createState() => _SurveyScreenState();
@@ -26,7 +21,8 @@ class _SurveyScreenState extends State<SurveyScreen> {
   @override
   Widget build(BuildContext context) {
     final surveyProvider = Provider.of<SurveyProvider>(context, listen: false);
-    final surveyData = SurveyRepository.getSurveyData(widget.surveyType);
+    final surveyData =
+        SurveyRepository.getSurveyData(surveyProvider.surveyType!);
     final isLastCategory =
         surveyProvider.currentCategoryIndex == surveyData.length - 1;
     final category = surveyData[surveyProvider.currentCategoryIndex];
@@ -74,6 +70,8 @@ class _SurveyScreenState extends State<SurveyScreen> {
 
   void _onCriterionSelected(BuildContext context, SurveyProvider surveyProvider,
       int? value, SurveyCriterion criterion, bool isLastCategory) {
+    // debugPrint('Current Survey Type: ${widget.surveyType}'); // Debugging line
+
     // Obtain the current category from the provider
     final currentCategory = surveyProvider.getCurrentCategory();
 
@@ -85,6 +83,9 @@ class _SurveyScreenState extends State<SurveyScreen> {
 
     // Check if it's the last category
     if (isLastCategory) {
+      // debugPrint(
+      //     'Navigating to next SurveyScreen with Survey Type: ${widget.surveyType}'); // Debugging line
+
       // Navigate to the results screen if it's the last category
       Navigator.push(
         context,
@@ -100,9 +101,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => SurveyScreen(
-            surveyType: widget.surveyType, // Pass only the surveyType
-          ),
+          builder: (context) => const SurveyScreen(),
         ),
       );
     }
