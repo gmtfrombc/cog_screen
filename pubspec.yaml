@@ -79,6 +79,9 @@ flutter:
     - lib/assets/images/memory_enhancement.png
     - lib/assets/images/memory_health.png
     - lib/assets/images/memory_protocol.jpeg
+    - lib/assets/images/onboarding_image1.png
+    - lib/assets/images/onboarding_image2.png
+    - lib/assets/images/onboarding_image3.png
     - lib/assets/images/research1.jpeg
     - lib/assets/images/research2.jpeg
     - lib/assets/images/research3.jpeg

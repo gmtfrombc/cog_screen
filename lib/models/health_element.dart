@@ -8,7 +8,7 @@ class HealthElement {
   final String onboardingRoute;
   final bool isActive;
   final List<ContentItem> assessments;
-  final List<ContentItem> protocols;
+  final List<ContentItem> integrativeHealth;
   final List<ContentItem> learningCenter;
   final List<HealthElementImage> images; // New field for images
 
@@ -17,7 +17,7 @@ class HealthElement {
     required this.onboardingRoute,
     required this.isActive,
     required this.assessments,
-    required this.protocols,
+    required this.integrativeHealth,
     required this.learningCenter,
     required this.images, // New parameter for images
   });
@@ -125,26 +125,29 @@ final List<HealthElement> elements = [
         route: '/cognitive',
         imageUrl: 'brain_assessment2',
         cardColor: const Color(0xE9FCAF3B),
+        onboardingDescription: BrainConstants.cogHealthStart,
+        onboardingTitle: "CogHealth Screening Test",
+        surveyImage: 'lib/assets/images/cog_health_start2.png',
       ),
     ],
-    protocols: [
-      //protocols
+    integrativeHealth: [
+      //integrative health
+      ContentItem(
+        title: 'Essential oils and cognitive health',
+        description: 'Explore the benefits of essential oils and memory',
+        route: '/essentialOils',
+        imageUrl: 'brain_learning1',
+      ),
       ContentItem(
         title: "Memory Enhancement Protocol",
         description: BrainConstants.memoryEnhancement,
         route: '/eoOnboarding',
         imageUrl: 'brain_protocol1',
-        cardColor: const Color(0xE9FCAF3B),
+        //cardColor: const Color(0xE9FCAF3B),
       ),
     ],
     learningCenter: [
-      //learning center
-      ContentItem(
-        title: 'Essential oils, memory, and cognitive health',
-        description: 'Learn',
-        route: '/essentialOils',
-        imageUrl: 'brain_learning1',
-      ),
+      //learning cente
       ContentItem(
         title: 'Basic facts about brain health',
         description: '3 min',
@@ -246,24 +249,25 @@ final List<HealthElement> elements = [
         surveyImage: 'lib/assets/images/sleep_assessment_pm.jpeg',
       ),
     ],
-    protocols: [
-      //protocols
+    integrativeHealth: [
+      //integrative health
+      ContentItem(
+        title: 'Integrative Health for Sleep',
+        description: 'Explore integrative health strategies',
+        route: '/essentialOils',
+        imageUrl: 'sleep_learning1',
+      ),
       ContentItem(
         title: "Sleep Enhancement Protocol",
         description: BrainConstants.memoryEnhancement,
         route: '/eoOnboarding',
         imageUrl: 'sleep_protocol1',
-        cardColor: const Color(0xE9FCAF3B),
+        //cardColor: const Color(0xE9FCAF3B),
       ),
     ],
     learningCenter: [
       //learning center
-      ContentItem(
-        title: 'Sleep, memory, and cognitive health',
-        description: 'Learn',
-        route: '/essentialOils',
-        imageUrl: 'sleep_learning1',
-      ),
+
       ContentItem(
         title: 'Basic facts about sleep',
         description: '3 min',
@@ -340,7 +344,7 @@ final List<HealthElement> elements = [
         cardColor: const Color(0xE9FCAF3B),
       ),
     ],
-    protocols: [
+    integrativeHealth: [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
@@ -434,7 +438,7 @@ final List<HealthElement> elements = [
         cardColor: const Color(0xE9FCAF3B),
       ),
     ],
-    protocols: [
+    integrativeHealth: [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
@@ -528,7 +532,7 @@ final List<HealthElement> elements = [
         cardColor: const Color(0xE9FCAF3B),
       ),
     ],
-    protocols: [
+    integrativeHealth: [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
@@ -622,7 +626,7 @@ final List<HealthElement> elements = [
         cardColor: const Color(0xE9FCAF3B),
       ),
     ],
-    protocols: [
+    integrativeHealth: [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
@@ -716,7 +720,7 @@ final List<HealthElement> elements = [
         cardColor: const Color(0xE9FCAF3B),
       ),
     ],
-    protocols: [
+    integrativeHealth: [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
@@ -815,7 +819,7 @@ final List<HealthElement> elements = [
         cardColor: const Color(0xE9FCAF3B),
       ),
     ],
-    protocols: [
+    integrativeHealth: [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",

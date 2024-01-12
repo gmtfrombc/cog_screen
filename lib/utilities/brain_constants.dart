@@ -3,7 +3,7 @@ class BrainConstants {
       "In order for us to give you medical advice, please review and accept the following: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
   static const String cogHealthStart =
-      "The CogHealth Test is a simple tool for assessing memory and cognitive health. It consists of 8 questions and has a maximum score of 10. You will need a two-sided piece of paper and a pen to complete the screen.";
+      "The CogHealth Test is a simple tool for assessing memory and cognitive health. It consists of 8 questions and has a maximum score of 10. \n\nYou will need a two-sided piece of paper and a pen to complete the screen.";
 
   static const String understandingCognitiveHealth =
       "Our cognitive health is a reflection of our brain health. It is the ability to think clearly, remember, and learn new things. Cognitive health is important at every stage of life. It is important to understand that cognitive health is not static. It can change over time and can be improved with the right interventions.";
@@ -16,8 +16,7 @@ class BrainConstants {
 
   static const String medAdvice =
       "In order to ensure that there you have no medical contraindications for Olfactory Enrichment, please complete the following questionnaire.";
-  static const String memoryEnhancement =
-      "Olfactory enrichment using essential oils.";
+  static const String memoryEnhancement = "Olfactory enrichment";
   static const String overnightOlfactory =
       "This study demonstrated that overnight olfactory enrichment using an odorant diffuser improved memory and modified the uncinate fasciculus in older adults. The results suggest that olfactory stimulation may be a promising non-pharmacological intervention for improving memory and cognitive health.";
   static const String lavenderAromatherapy =
@@ -44,6 +43,4 @@ class BrainConstants {
       "The CogHealth Test is for screening purposes. Scores can vary between people with otherwise normal cognitive health. Please consult with a healthcare professional if you have any concerns.";
   static const String cogHealthMore =
       "We recommend rechecking your CogHealth Test in a few months after making appropriate lifestyle changes. Also consider our 'Memory Enhancement Protocol, provided on the main 'Brain Health' screen.\n\nSelect 'Save my results' so you can track your results over time. You can easily review your results at anytime by selecting 'Results' from the bottom menu.";
-  static const String welcome =
-      "Welcome to the PowerME Integrative Health App from PowerME Labs! \n\nHere you can dive into a wealth of insights and practical strategies, designed to enhance vital aspects of your health such as brain function, sleep quality, metabolic balance, and more.\n\nDuring this test phase, we won't collect health information. But stay tuned for more features as our program evolves.\n\nWelcome aboard!\n\nYour PowerME Team ";
 }

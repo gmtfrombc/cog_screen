@@ -9,6 +9,7 @@ import 'package:cog_screen/screens/logins/login.dart';
 import 'package:cog_screen/screens/onboarding/moduleOnboarding.dart';
 import 'package:cog_screen/screens/onboarding/eoprotocol_onboarding.dart';
 import 'package:cog_screen/screens/onboarding/apponboarding_screen.dart';
+import 'package:cog_screen/screens/onboarding/onboarding_welcome.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
 import 'package:cog_screen/screens/questionnaires/survey_screen.dart';
 import 'package:cog_screen/screens/research_screen.dart';
@@ -101,6 +102,7 @@ class MyApp extends StatelessWidget {
         '/comingsoon': (context) => const ComingSoonScreen(),
         '/onboarding': (context) => const AppOnboardingScreen(),
         '/eoOnboarding': (context) => const EOProtocolOnboardingScreen(),
+        '/onboardingWelcome': (context) => const OnboardingWelcomeScreen(),
       },
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {

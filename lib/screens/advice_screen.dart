@@ -99,8 +99,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
             ),
             _buildSectionCards(
                 context,
-                widget.healthElement.protocols,
-                'Protocols',
+                widget.healthElement.integrativeHealth,
+                'Integrative Health',
                 _buildMiddleCard,
                 180 // Reduced height for middle cards
                 ),
@@ -124,23 +124,36 @@ class _AdviceScreenState extends State<AdviceScreen> {
     Function(BuildContext, ContentItem) buildCardFunction,
     double cardHeight,
   ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionTitle(title: sectionTitle),
-        SizedBox(
-          height: cardHeight,
-          width: double.infinity,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return buildCardFunction(context, items[index]);
-            },
+    if (sectionTitle == 'Integrative Health') {
+      // Check if it's the middle section
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionTitle(title: sectionTitle),
+          ...items.map(
+            (item) => buildCardFunction(context, item),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionTitle(title: sectionTitle),
+          SizedBox(
+            height: cardHeight,
+            width: double.infinity,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return buildCardFunction(context, items[index]);
+              },
+            ),
+          ),
+        ],
+      );
+    }
   }
 
   Widget _buildTopCard(
@@ -249,96 +262,101 @@ class _AdviceScreenState extends State<AdviceScreen> {
           item.route,
         );
       },
-      child: Container(
-        width: screenWidth - 20,
-        height: 200,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: CachedNetworkImageProvider(
-              imageUrl,
-            ),
-            fit: BoxFit.cover,
-          ),
-          borderRadius: BorderRadius.circular(12.0),
-          gradient: AppTheme.cardGradient,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              spreadRadius: 1, // Spread radius
-              blurRadius: 5, // Blur radius
-              offset: const Offset(0, 2), // Changes position of shadow
-            ),
-          ],
-        ),
-        child: Card(
-          color: Colors.transparent,
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: Stack(
-            children: [
-              Opacity(
-                opacity: 0.0,
-                child: Image.network(
+      child: Column(
+        children: [
+          const SizedBox(height: 10),
+          Container(
+            width: screenWidth - 20,
+            height: 180,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: CachedNetworkImageProvider(
                   imageUrl,
-                  width: defaultImageSize,
-                  height: defaultImageSize,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    debugPrint('Error loading image: $error');
-                    return const Text('Image not available');
-                  },
                 ),
+                fit: BoxFit.cover,
               ),
-              Positioned(
-                //top: 25,
-                left: 20,
-                bottom: 20,
-                child: SizedBox(
-                  height: 80,
-                  width: 220,
-                  child: Text(
-                    item.title,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      //letterSpacing: 1.0,
+              borderRadius: BorderRadius.circular(12.0),
+              gradient: AppTheme.cardGradient,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  spreadRadius: 1, // Spread radius
+                  blurRadius: 5, // Blur radius
+                  offset: const Offset(0, 2), // Changes position of shadow
+                ),
+              ],
+            ),
+            child: Card(
+              color: Colors.transparent,
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Stack(
+                children: [
+                  Opacity(
+                    opacity: 0.0,
+                    child: Image.network(
+                      imageUrl,
+                      width: defaultImageSize,
+                      height: defaultImageSize,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        debugPrint('Error loading image: $error');
+                        return const Text('Image not available');
+                      },
                     ),
                   ),
-                ),
-              ),
-              Positioned(
-                left: 20,
-                bottom: 70,
-                right: 10,
-                child: SizedBox(
-                  height: 80,
-                  width: 200,
-                  child: Text(
-                    item.description,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                      letterSpacing: 0.9,
+                  Positioned(
+                    //top: 25,
+                    left: 20,
+                    bottom: 20,
+                    child: SizedBox(
+                      height: 80,
+                      width: 220,
+                      child: Text(
+                        item.title,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          //letterSpacing: 1.0,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Positioned(
+                    left: 20,
+                    bottom: 70,
+                    right: 10,
+                    child: SizedBox(
+                      height: 80,
+                      width: 200,
+                      child: Text(
+                        item.description,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          letterSpacing: 0.9,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Positioned(
+                    right: 12.0,
+                    bottom: 12.0,
+                    child: Icon(
+                      Icons.arrow_forward_sharp,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
+                ],
               ),
-              const Positioned(
-                right: 12.0,
-                bottom: 12.0,
-                child: Icon(
-                  Icons.arrow_forward_sharp,
-                  color: Colors.white,
-                  size: 24,
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
