@@ -1,22 +1,32 @@
+import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
-import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EOProtocolOnboardingScreen extends StatefulWidget {
-  const EOProtocolOnboardingScreen({super.key});
+class ProtocolOnboardingScreen extends StatefulWidget {
+  // final String title;
+  // final String description;
+  final ContentItem contentItem;
+  //final HealthElement healthElement;
+  const ProtocolOnboardingScreen({
+    super.key,
+    // required this.title,
+    // required this.description,
+    //required this.healthElement,
+    required this.contentItem,
+  });
 
   @override
-  State<EOProtocolOnboardingScreen> createState() =>
-      _EOProtocolOnboardingScreenState();
+  State<ProtocolOnboardingScreen> createState() =>
+      _ProtocolOnboardingScreenState();
 }
 
-class _EOProtocolOnboardingScreenState
-    extends State<EOProtocolOnboardingScreen> {
+class _ProtocolOnboardingScreenState extends State<ProtocolOnboardingScreen> {
   bool _isLoading = false;
   String userId = '';
 
@@ -44,15 +54,15 @@ class _EOProtocolOnboardingScreenState
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Memory Enhancement',
-                        style: TextStyle(
+                      Text(
+                        widget.contentItem.onboardingTitle,
+                        style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 16),
-                      const Text(
-                        BrainConstants.olfactoryEnrichment,
-                        style: TextStyle(
+                      Text(
+                        widget.contentItem.onboardingDescription,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                         ),
@@ -118,23 +128,31 @@ class _EOProtocolOnboardingScreenState
   }
 
   Future<void> _handleButtonClick() async {
+    final healthElementProvider =
+        Provider.of<HealthElementProvider>(context, listen: false);
+    final currentHealthElement = healthElementProvider.currentHealthElement;
     final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
     userId = authProvider.currentUser?.uid ?? '';
     final firebaseServices = FirebaseService();
+    if (currentHealthElement == null) {
+      debugPrint("No current health element found");
+      return;
+    }
 
     if (!mounted) return;
     setState(() => _isLoading = true);
 
     try {
-      bool criteriaCompleted = await firebaseServices.checkOnboardingCompleted(
-          userId, "Criteria completed");
+      bool onboardingCompleted = await firebaseServices
+          .checkOnboardingCompleted(userId, currentHealthElement.title);
 
       if (!mounted) return;
-      if (criteriaCompleted) {
+      if (onboardingCompleted) {
         Navigator.pushNamed(
             context, '/protocol'); // Go to protocol if completed
       } else {
-        await firebaseServices.recordUserAction(userId, "Let's go button");
+        await firebaseServices.recordUserAction(
+            userId, currentHealthElement.title);
         if (!mounted) return;
         Navigator.pushNamed(context, '/criteria');
       }

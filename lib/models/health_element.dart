@@ -26,7 +26,7 @@ class HealthElement {
 class ContentItem {
   final String title;
   final String description;
-  final String route;
+  final String? route;
   String imageUrl; // Changed to non-final to update later
   final Color? cardColor;
   final String? url;
@@ -38,7 +38,7 @@ class ContentItem {
   ContentItem({
     required this.title,
     required this.description,
-    required this.route,
+    this.route,
     required this.imageUrl,
     this.cardColor,
     this.url,
@@ -140,10 +140,11 @@ final List<HealthElement> elements = [
       ),
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: BrainConstants.memoryEnhancement,
-        route: '/eoOnboarding',
+        description: 'Olfactory Enrichment',
         imageUrl: 'brain_protocol1',
-        //cardColor: const Color(0xE9FCAF3B),
+        surveyType: 'protocol',
+        onboardingTitle: 'Memory Enhancement',
+        onboardingDescription: BrainConstants.memoryEnhancment,
       ),
     ],
     learningCenter: [
@@ -259,9 +260,12 @@ final List<HealthElement> elements = [
       ),
       ContentItem(
         title: "Sleep Enhancement Protocol",
-        description: BrainConstants.memoryEnhancement,
-        route: '/eoOnboarding',
+        description: 'Essential Oils',
+        //route: '/eoOnboarding',
         imageUrl: 'sleep_protocol1',
+        surveyType: 'protocol',
+        onboardingTitle: 'Sleep Enhancement',
+        onboardingDescription: SleepConstants.sleepProtocol,
         //cardColor: const Color(0xE9FCAF3B),
       ),
     ],
@@ -348,7 +352,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: BrainConstants.memoryEnhancement,
+        description: BrainConstants.olfactoryEnrichment,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),
@@ -442,7 +446,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: BrainConstants.memoryEnhancement,
+        description: BrainConstants.olfactoryEnrichment,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),
@@ -536,7 +540,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: BrainConstants.memoryEnhancement,
+        description: BrainConstants.olfactoryEnrichment,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),
@@ -630,7 +634,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: BrainConstants.memoryEnhancement,
+        description: BrainConstants.olfactoryEnrichment,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),
@@ -724,7 +728,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: BrainConstants.memoryEnhancement,
+        description: BrainConstants.olfactoryEnrichment,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),
@@ -823,7 +827,7 @@ final List<HealthElement> elements = [
       //protocols
       ContentItem(
         title: "Memory Enhancement Protocol",
-        description: BrainConstants.memoryEnhancement,
+        description: BrainConstants.olfactoryEnrichment,
         route: '/eoOnboarding',
         imageUrl: 'memory_protocol',
         cardColor: const Color(0xE9FCAF3B),

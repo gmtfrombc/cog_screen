@@ -165,6 +165,7 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
     final surveyType = widget.surveyType;
 
     try {
+      debugPrint('Saving results... $totalScore,for $surveyType, and user $userId');
       await firebaseService.saveBrainHealthResults(userId, totalScore, surveyType);
       return true; // Save successful
     } catch (e) {

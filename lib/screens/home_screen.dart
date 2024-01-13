@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/screens/advice_screen.dart';
 import 'package:cog_screen/screens/base_screen.dart';
-import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_progress_indicator.dart';
@@ -93,20 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 10.0),
               Flexible(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 4,
-                    mainAxisSpacing: 4,
-                    childAspectRatio: 0.9,
-                  ),
-                  itemCount: elements.length,
-                  itemBuilder: (context, index) {
-                    final element = elements[index];
-                    return _buildElementCard(context, element);
-                  },
-                ),
+                child: _buildHealthElementGrid(context),
               ),
             ],
           ),
@@ -114,6 +101,29 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+Widget _buildHealthElementGrid(BuildContext context) {
+    return Consumer<HealthElementProvider>(
+      builder: (context, healthElementProvider, child) {
+        final elements = healthElementProvider.healthElements;
+        return GridView.builder(
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 4,
+            mainAxisSpacing: 4,
+            childAspectRatio: 0.9,
+          ),
+          itemCount: elements.length,
+          itemBuilder: (context, index) {
+            final element = elements[index];
+            return _buildElementCard(context, element);
+          },
+        );
+      },
+    );
+  }
+
 
   Widget _buildElementCard(BuildContext context, HealthElement element) {
     String? imageUrl =
@@ -210,25 +220,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _handleButtonClick(HealthElement element) async {
-    final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
-    userId = authProvider.currentUser?.uid ?? '';
     setState(() => isLoading = true);
-
     try {
-      // Check if the onboarding has been completed for the selected element
-      bool onboardingCompleted = await FirebaseService()
-          .checkOnboardingCompleted(userId, element.title);
-
-      if (!mounted) return;
-
-      if (onboardingCompleted) {
-        navigateToAdviceScreen(element);
-      } else {
-        await FirebaseService()
-            .recordOnboardingStatus(userId, element.title, true);
-        if (!mounted) return;
-        navigateToOnboardingScreen(element);
-      }
+      navigateToAdviceScreen(element);
     } catch (e) {
       debugPrint('Error handling button click: $e');
     } finally {
@@ -238,7 +232,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-// Navigate to AdviceScreen with the selected HealthElement
   void navigateToAdviceScreen(HealthElement element) {
     Navigator.push(
       context,
@@ -249,10 +242,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-// Navigate to the onboarding screen for the selected HealthElement
-  void navigateToOnboardingScreen(HealthElement element) {
-    Navigator.pushNamed(context, '/moduleOnboarding', arguments: element);
   }
 }

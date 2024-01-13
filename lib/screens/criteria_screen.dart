@@ -1,4 +1,5 @@
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/utilities/brain_constants.dart';
@@ -178,8 +179,14 @@ class _CriteriaScreenState extends State<CriteriaScreen> {
       _showProgressIndicator();
 
       try {
+        final provider =
+            Provider.of<HealthElementProvider>(context, listen: false);
+
         await firebaseService.recordOnboardingStatus(
-            userId, "Criteria completed", true);
+          userId,
+          provider.currentHealthElement!.title,
+          true,
+        );
         if (!mounted) return;
         Navigator.of(context).pop(); // Close the prerogress indicator dialog
         showCompletionDialog();

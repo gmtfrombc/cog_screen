@@ -32,9 +32,10 @@ class FirebaseService {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  Future<void> recordUserAction(String userId, String actionDetails) async {
+  Future<void> recordUserAction(String userId, String module) async {
     var action = {
-      'actionDetails': actionDetails,
+      'module': module,
+      'action': 'interested',
       'timestamp': Timestamp.now(),
     };
 
@@ -47,8 +48,7 @@ class FirebaseService {
         });
       } else {
         var actions = List.from(doc.data()?['user_actions'] ?? []);
-        var actionExists =
-            actions.any((a) => a['actionDetails'] == actionDetails);
+        var actionExists = actions.any((a) => a['module'] == module);
 
         if (!actionExists) {
           await userDoc.update({
@@ -92,6 +92,7 @@ class FirebaseService {
 
   Future<bool> checkOnboardingCompleted(
       String userId, String moduleName) async {
+    debugPrint('moduleName: $moduleName');
     var userDoc =
         await _firebaseFirestore.collection('users').doc(userId).get();
     // Check if the document for the user exists
@@ -123,19 +124,29 @@ class FirebaseService {
   }
 
   Future<void> saveBrainHealthResults(
-      String userId, int brainHealthScore, String surveyType) async {
+      String userId, int surveyScore, String surveyType) async {
     var userDoc = _firebaseFirestore.collection('users').doc(userId);
     var result = {
-      'brainhealthscore': brainHealthScore,
+      'score': surveyScore,
       'date': Timestamp.now(),
       'surveyType': surveyType,
     };
 
-    await userDoc.update({
-      'user_results': FieldValue.arrayUnion([result]),
-    }).catchError((error) {
+    try {
+      var doc = await userDoc.get();
+      if (doc.exists) {
+        await userDoc.update({
+          'user_results': FieldValue.arrayUnion([result]),
+        });
+      } else {
+        // If the document doesn't exist, create it with the initial result
+        await userDoc.set({
+          'user_results': [result],
+        });
+      }
+    } catch (error) {
       debugPrint("Error saving BrainHealth results: $error");
-    });
+    }
   }
 
   Future<Map<String, List<Map<String, dynamic>>>> getUserResults(

@@ -16,7 +16,6 @@ class BrainConstants {
 
   static const String medAdvice =
       "In order to ensure that there you have no medical contraindications for Olfactory Enrichment, please complete the following questionnaire.";
-  static const String memoryEnhancement = "Olfactory enrichment";
   static const String overnightOlfactory =
       "This study demonstrated that overnight olfactory enrichment using an odorant diffuser improved memory and modified the uncinate fasciculus in older adults. The results suggest that olfactory stimulation may be a promising non-pharmacological intervention for improving memory and cognitive health.";
   static const String lavenderAromatherapy =
@@ -29,8 +28,9 @@ class BrainConstants {
       "For this protocol use a diffuser with the essential oils listed. Feel free to substitute for your favorite essential oils. Follow these steps to ensure proper usage.";
   static const String frequencyDuration =
       "Continue this protocol each night, changing the diffuser water daily before going to bed and rotating the essential oil mix.";
-  static const String olfactoryEnrichment =
+  static const String memoryEnhancment =
       'The Olfactory Enrichment Protocol is based on a study by Chen et al. (2020) that had adult subjects diffuse essential oils at night for six months.\n\n The results demonstrated improvement on memory tests by 226%, as well as positive changes in the brain memory regions.\n\nIf you would like to consider this treatment to support your cognitive health, then select "Get Started" below.\n\nYou will be asked to take a short questionnaire to ensure no medical contraindications.';
+  static const String olfactoryEnrichment = 'Olfactory Enrichment';
   static const String brainCareShort =
       "A comprehensive tool for assessing and improving brain health.";
   static const String braincareStart =

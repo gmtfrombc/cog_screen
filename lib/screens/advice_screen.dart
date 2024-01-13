@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/screens/onboarding/dynamic_onboarding_screen.dart';
+import 'package:cog_screen/screens/onboarding/protocol_onboarding.dart';
 import 'package:cog_screen/screens/view_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
@@ -40,6 +42,9 @@ class _AdviceScreenState extends State<AdviceScreen> {
     // Add a post-frame callback
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
+        final provider =
+            Provider.of<HealthElementProvider>(context, listen: false);
+        provider.setCurrentHealthElement(widget.healthElement);
         setState(() {
           isLoading = false; // Set loading to false after the build is complete
         });
@@ -160,16 +165,16 @@ class _AdviceScreenState extends State<AdviceScreen> {
     BuildContext context,
     ContentItem item,
   ) {
-    debugPrint(
-        'Building top card in AdviceScreen for item: ${item.title} with surveyType: ${item.surveyType}');
+    // debugPrint(
+    //     'Building top card in AdviceScreen for item: ${item.title} with surveyType: ${item.surveyType}');
 
     HealthElementImage image =
         findImageForContentItem(item, widget.healthElement.images);
     String imageUrl = image.url ?? '';
     return InkWell(
       onTap: () {
-        debugPrint(
-            'Navigating to DynamicOnboardingScreen with item: ${item.title} and surveyType: ${item.surveyType}');
+        // debugPrint(
+        //     'Navigating to DynamicOnboardingScreen with item: ${item.title} and surveyType: ${item.surveyType}');
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -254,13 +259,29 @@ class _AdviceScreenState extends State<AdviceScreen> {
         findImageForContentItem(item, widget.healthElement.images);
     String imageUrl = image.url ?? '';
     return InkWell(
-      onTap: () {
-        //todo: not all items will have a _handleButtonClick event (i.e. 'isInterested' button click)
-        _handleButtonClick();
-        Navigator.pushNamed(
-          context,
-          item.route,
-        );
+      onTap: () async {
+        final provider =
+            Provider.of<HealthElementProvider>(context, listen: false);
+        _handleButtonClick(provider.currentHealthElement!);
+        if (item.surveyType == 'protocol') {
+          debugPrint(
+              'Item is a protocol: ${item.title} and ${item.description}');
+          // Handle 'protocol' type: Navigate to a generic onboarding screen
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProtocolOnboardingScreen(
+                contentItem: item,
+                // title: item.onboardingTitle,
+                // description: item.onboardingDescription,
+                //healthElement: provider.currentHealthElement!,
+              ),
+            ),
+          );
+        } else {
+          // Handle other types: Navigate based on the item's route
+          Navigator.pushNamed(context, item.route!);
+        }
       },
       child: Column(
         children: [
@@ -378,7 +399,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
             ),
           );
         } else {
-          Navigator.pushNamed(context, item.route);
+          Navigator.pushNamed(context, item.route!);
         }
       },
       child: Container(
@@ -486,17 +507,15 @@ class _AdviceScreenState extends State<AdviceScreen> {
     );
   }
 
-  void _handleButtonClick() async {
-    // debugPrint(
-    //     'Handling button click in AdviceScreen for element: ${widget.healthElement.title}');
-
-    HealthElement healthElement = widget.healthElement;
+  void _handleButtonClick(HealthElement element) async {
+    debugPrint(
+        'Handling button click in AdviceScreen for element: ${widget.healthElement.title}');
     setState(() {
       isLoading = true;
     });
     try {
-      await FirebaseService().recordUserAction(userId,
-          '${healthElement.title}: Interested'); // Removed the navigation call from here
+      await FirebaseService().recordUserAction(
+          userId, element.title); // Removed the navigation call from here
     } catch (e) {
       debugPrint('Error recording user action: $e');
     } finally {

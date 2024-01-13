@@ -1,13 +1,13 @@
 import 'package:cog_screen/firebase_options.dart';
 import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/providers/cart_provider.dart';
 import 'package:cog_screen/screens/coming_soon_screen.dart';
 import 'package:cog_screen/screens/home_screen.dart';
 import 'package:cog_screen/screens/logins/login.dart';
 import 'package:cog_screen/screens/onboarding/moduleOnboarding.dart';
-import 'package:cog_screen/screens/onboarding/eoprotocol_onboarding.dart';
 import 'package:cog_screen/screens/onboarding/apponboarding_screen.dart';
 import 'package:cog_screen/screens/onboarding/onboarding_welcome.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
@@ -68,6 +68,9 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => CartProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => HealthElementProvider(),
+        )
       ],
       child: const MyApp(),
     ),
@@ -101,7 +104,6 @@ class MyApp extends StatelessWidget {
         '/splashscreen': (context) => const SplashScreen(),
         '/comingsoon': (context) => const ComingSoonScreen(),
         '/onboarding': (context) => const AppOnboardingScreen(),
-        '/eoOnboarding': (context) => const EOProtocolOnboardingScreen(),
         '/onboardingWelcome': (context) => const OnboardingWelcomeScreen(),
       },
       onGenerateRoute: (RouteSettings settings) {
