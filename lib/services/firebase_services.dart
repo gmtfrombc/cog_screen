@@ -123,11 +123,12 @@ class FirebaseService {
   }
 
   Future<void> saveBrainHealthResults(
-      String userId, int brainHealthScore) async {
+      String userId, int brainHealthScore, String surveyType) async {
     var userDoc = _firebaseFirestore.collection('users').doc(userId);
     var result = {
       'brainhealthscore': brainHealthScore,
       'date': Timestamp.now(),
+      'surveyType': surveyType,
     };
 
     await userDoc.update({

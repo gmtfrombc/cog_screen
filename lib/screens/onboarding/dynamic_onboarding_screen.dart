@@ -64,10 +64,13 @@ class DynamicOnboardingScreen extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
+                debugPrint(
+                    'Starting survey for surveyType: ${onboardingContent.surveyType}');
                 final surveyProvider =
                     Provider.of<SurveyProvider>(context, listen: false);
-                surveyProvider.restartSurvey();
                 surveyProvider.setSurveyType(onboardingContent.surveyType);
+                surveyProvider.restartSurvey();
+
                 Navigator.pushNamed(
                   context,
                   '/surveyscreen',

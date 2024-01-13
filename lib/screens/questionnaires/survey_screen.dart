@@ -70,7 +70,8 @@ class _SurveyScreenState extends State<SurveyScreen> {
 
   void _onCriterionSelected(BuildContext context, SurveyProvider surveyProvider,
       int? value, SurveyCriterion criterion, bool isLastCategory) {
-    // debugPrint('Current Survey Type: ${widget.surveyType}'); // Debugging line
+    // debugPrint(
+    //     'Current Survey Type: ${surveyProvider.surveyType}'); // Debugging line
 
     // Obtain the current category from the provider
     final currentCategory = surveyProvider.getCurrentCategory();
@@ -84,13 +85,13 @@ class _SurveyScreenState extends State<SurveyScreen> {
     // Check if it's the last category
     if (isLastCategory) {
       // debugPrint(
-      //     'Navigating to next SurveyScreen with Survey Type: ${widget.surveyType}'); // Debugging line
+      //     'Navigating to next SurveyScreen with Survey Type: ${widget.surveyType}');
 
       // Navigate to the results screen if it's the last category
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const BrainResultsScreen(),
+          builder: (context) => BrainResultsScreen(surveyType: surveyProvider.surveyType!),
         ),
       );
     } else {

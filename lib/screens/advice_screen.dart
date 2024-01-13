@@ -160,16 +160,16 @@ class _AdviceScreenState extends State<AdviceScreen> {
     BuildContext context,
     ContentItem item,
   ) {
-    // debugPrint(
-    //     'Building top card in AdviceScreen for item: ${item.title} with surveyType: ${item.surveyType}');
+    debugPrint(
+        'Building top card in AdviceScreen for item: ${item.title} with surveyType: ${item.surveyType}');
 
     HealthElementImage image =
         findImageForContentItem(item, widget.healthElement.images);
     String imageUrl = image.url ?? '';
     return InkWell(
       onTap: () {
-        // debugPrint(
-        //     'Navigating to DynamicOnboardingScreen with item: ${item.title} and surveyType: ${item.surveyType}');
+        debugPrint(
+            'Navigating to DynamicOnboardingScreen with item: ${item.title} and surveyType: ${item.surveyType}');
         Navigator.push(
           context,
           MaterialPageRoute(

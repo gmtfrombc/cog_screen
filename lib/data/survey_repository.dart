@@ -9,9 +9,9 @@ class SurveyRepository {
   // Static map to hold survey data. The key is the survey type.
   static final Map<String, List<SurveyCategory>> _surveys = {
     'Brain Health': brainCareData,
-    'Sleep': sleepData,
+    'PowerME Sleep Assessment': sleepData,
     'PSQI': psqiData,
-    'Sleep Hygiene': sleepHygiene,
+    'Sleep Hygiene Tool': sleepHygiene,
     // Future surveys can be added here.
   };
   //todo Set this back to normal

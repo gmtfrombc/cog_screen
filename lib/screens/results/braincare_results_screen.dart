@@ -12,7 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BrainResultsScreen extends StatefulWidget {
-  const BrainResultsScreen({super.key});
+  final String surveyType;
+  const BrainResultsScreen({super.key, required this.surveyType});
 
   @override
   State<BrainResultsScreen> createState() => _BrainResultsScreenState();
@@ -161,9 +162,10 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
     final firebaseService = FirebaseService();
     final totalScore = brainHealthProvider.getTotalScore();
     final userId = authProvider.currentUser?.uid ?? '';
+    final surveyType = widget.surveyType;
 
     try {
-      await firebaseService.saveBrainHealthResults(userId, totalScore);
+      await firebaseService.saveBrainHealthResults(userId, totalScore, surveyType);
       return true; // Save successful
     } catch (e) {
       debugPrint('Error saving results: $e');

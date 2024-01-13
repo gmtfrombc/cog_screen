@@ -234,7 +234,7 @@ final List<HealthElement> elements = [
         imageUrl: 'sleep_assessment1',
         onboardingTitle: "The PowerME Sleep Assessment",
         onboardingDescription: SleepConstants.sleepAssessment,
-        surveyType: 'Sleep',
+        surveyType: 'PowerME Sleep Assessment',
         surveyImage: 'lib/assets/images/sleep_assessment_pm.jpeg',
       ),
       ContentItem(
@@ -245,7 +245,7 @@ final List<HealthElement> elements = [
         imageUrl: 'sleep_assessment3',
         onboardingTitle: "Sleep Hygiene Tool",
         onboardingDescription: SleepConstants.sleepHygieneTool,
-        surveyType: 'Sleep Hygiene',
+        surveyType: 'Sleep Hygiene Tool',
         surveyImage: 'lib/assets/images/sleep_assessment_pm.jpeg',
       ),
     ],
