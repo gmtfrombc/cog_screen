@@ -34,6 +34,9 @@ class ContentItem {
   final String onboardingDescription;
   final String surveyType;
   final String surveyImage;
+  final String surveyResultsTop;
+  final String surveyResultsBottom;
+  final int? possibleScore;
 
   ContentItem({
     required this.title,
@@ -46,6 +49,9 @@ class ContentItem {
     this.onboardingDescription = '',
     this.surveyType = '',
     this.surveyImage = '',
+    this.surveyResultsTop = '',
+    this.surveyResultsBottom = '',
+    this.possibleScore,
   });
 }
 
@@ -118,9 +124,12 @@ final List<HealthElement> elements = [
         onboardingTitle: "Brain Care Score",
         surveyType: 'Brain Health',
         surveyImage: 'lib/assets/images/memory_enhancement.png',
+        possibleScore: 21,
+        surveyResultsTop: BrainConstants.brainCareShort,
+        surveyResultsBottom: BrainConstants.brainHealthMore,
       ),
       ContentItem(
-        title: "The CogHealth Screening Test",
+        title: "CogHealth Screening Test",
         description: "A short assessment of memory and cognitive function.",
         route: '/cognitive',
         imageUrl: 'brain_assessment2',
@@ -128,6 +137,8 @@ final List<HealthElement> elements = [
         onboardingDescription: BrainConstants.cogHealthStart,
         onboardingTitle: "CogHealth Screening Test",
         surveyImage: 'lib/assets/images/cog_health_start2.png',
+        surveyType: 'CogHealth Screening Test',
+        possibleScore: 14,
       ),
     ],
     integrativeHealth: [
@@ -226,6 +237,9 @@ final List<HealthElement> elements = [
         onboardingDescription: SleepConstants.sleepPSQI,
         surveyType: 'PSQI',
         surveyImage: 'lib/assets/images/psqi_survey.jpeg',
+        possibleScore: 21,
+        surveyResultsTop: SleepConstants.psqiAssessmentResultsTop,
+        surveyResultsBottom: SleepConstants.psqiAssessmentResultsBottom,
       ),
       ContentItem(
         title: "PowerME Sleep Assessment",
@@ -237,6 +251,9 @@ final List<HealthElement> elements = [
         onboardingDescription: SleepConstants.sleepAssessment,
         surveyType: 'PowerME Sleep Assessment',
         surveyImage: 'lib/assets/images/sleep_assessment_pm.jpeg',
+        surveyResultsTop: SleepConstants.sleepAssessmentResultsTop,
+        surveyResultsBottom: SleepConstants.sleepAssessmentResultsBottom,
+        possibleScore: 10,
       ),
       ContentItem(
         title: "Sleep Hygiene Tool",
@@ -248,6 +265,9 @@ final List<HealthElement> elements = [
         onboardingDescription: SleepConstants.sleepHygieneTool,
         surveyType: 'Sleep Hygiene Tool',
         surveyImage: 'lib/assets/images/sleep_assessment_pm.jpeg',
+        surveyResultsTop: SleepConstants.sleepHygieneResultsTop,
+        surveyResultsBottom: SleepConstants.sleepHygieneResultsBottom,
+        possibleScore: 20,
       ),
     ],
     integrativeHealth: [

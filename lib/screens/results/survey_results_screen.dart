@@ -1,9 +1,10 @@
+import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
-import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_progress_indicator.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
@@ -11,24 +12,29 @@ import 'package:cog_screen/widgets/gradient_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BrainResultsScreen extends StatefulWidget {
+class SurveyResultsScreen extends StatefulWidget {
   final String surveyType;
-  const BrainResultsScreen({super.key, required this.surveyType});
+  final ContentItem contentItem;
+  const SurveyResultsScreen({
+    super.key,
+    required this.surveyType,
+    required this.contentItem,
+  });
 
   @override
-  State<BrainResultsScreen> createState() => _BrainResultsScreenState();
+  State<SurveyResultsScreen> createState() => _SurveyResultsScreenState();
 }
 
-class _BrainResultsScreenState extends State<BrainResultsScreen> {
+class _SurveyResultsScreenState extends State<SurveyResultsScreen> {
   bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    String imagePath = 'lib/assets/images/memory_enhancement.png';
-    final provider = Provider.of<SurveyProvider>(context, listen: false);
-    final totalScore = provider.getTotalScore();
+    //String imagePath = 'lib/assets/images/memory_enhancement.png';
+    final surveyProvider = Provider.of<SurveyProvider>(context, listen: false);
+    final totalScore = surveyProvider.getTotalScore();
     final theme = Theme.of(context);
-
+    final possibleScore = widget.contentItem.possibleScore;
     return BaseScreen(
       authProvider: Provider.of<AuthProviderClass>(context, listen: false),
       customAppBar: CustomAppBar(
@@ -51,7 +57,7 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  'Your Brain Care Score: $totalScore/21',
+                  'Your ${widget.contentItem.title} Score: $totalScore/$possibleScore',
                   style: theme.textTheme.titleLarge?.copyWith(fontSize: 26),
                   textAlign: TextAlign.center,
                 ),
@@ -59,7 +65,7 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
               Padding(
                 padding: const EdgeInsets.all(14.0),
                 child: Text(
-                  BrainConstants.brainHealthExplanation,
+                  widget.contentItem.surveyResultsTop,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontSize: 14,
@@ -70,14 +76,14 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
               const SizedBox(height: 10),
               Center(
                 child: GradientImage(
-                  imagePath: imagePath,
+                  imagePath: widget.contentItem.surveyImage,
                 ),
               ),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.all(14.0),
                 child: Text(
-                  BrainConstants.brainHealthMore,
+                  widget.contentItem.surveyResultsBottom,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontSize: 14,
@@ -107,8 +113,18 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
               padding: const EdgeInsets.all(8.0),
               child: OutlinedButton(
                 onPressed: () {
+                  final healthProvider = Provider.of<HealthElementProvider>(
+                    context,
+                    listen: false,
+                  );
+                  final currentHealthElement =
+                      healthProvider.currentHealthElement;
                   // Navigate to AdviceScreen and reset the survey
-                  Navigator.pushNamed(context, '/advice');
+                  Navigator.pushNamed(
+                    context,
+                    '/advice',
+                    arguments: currentHealthElement,
+                  ); //
                   Provider.of<SurveyProvider>(context, listen: false)
                       .restartSurvey();
                 },
@@ -132,12 +148,22 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
               onPressed: _isLoading
                   ? null
                   : () async {
+                      final healthElementProvider =
+                          Provider.of<HealthElementProvider>(
+                        context,
+                        listen: false,
+                      );
+
                       setState(
                         () => _isLoading = true,
                       );
-                      bool saveSuccessful = await _saveBrainHealthResults();
+                      bool saveSuccessful = await _saveSurveyResults();
                       if (saveSuccessful && mounted) {
-                        Navigator.pushNamed(context, '/advice');
+                        Navigator.pushNamed(
+                          context,
+                          '/advice',
+                          arguments: healthElementProvider.currentHealthElement,
+                        ); //
                         Provider.of<SurveyProvider>(context, listen: false)
                             .restartSurvey();
                       }
@@ -155,18 +181,17 @@ class _BrainResultsScreenState extends State<BrainResultsScreen> {
     );
   }
 
-  Future<bool> _saveBrainHealthResults() async {
+  Future<bool> _saveSurveyResults() async {
     final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
     final brainHealthProvider =
         Provider.of<SurveyProvider>(context, listen: false);
     final firebaseService = FirebaseService();
     final totalScore = brainHealthProvider.getTotalScore();
     final userId = authProvider.currentUser?.uid ?? '';
-    final surveyType = widget.surveyType;
+    final title = widget.contentItem.title;
 
     try {
-      debugPrint('Saving results... $totalScore,for $surveyType, and user $userId');
-      await firebaseService.saveBrainHealthResults(userId, totalScore, surveyType);
+      await firebaseService.saveSurveyResults(userId, totalScore, title);
       return true; // Save successful
     } catch (e) {
       debugPrint('Error saving results: $e');

@@ -20,6 +20,7 @@ class SurveyProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
   void setUserResponse(String category, int rank) {
     _userResponses[category] = rank;
     notifyListeners();
@@ -39,29 +40,22 @@ class SurveyProvider with ChangeNotifier {
   }
 
   void restartSurvey() {
-    debugPrint('Restarting survey for surveyType: $_surveyType');
     _userResponses.clear();
     _totalScore = 0;
     _currentCategoryIndex = 0; // Reset the index when restarting the survey
     notifyListeners();
   }
-//todo put this back to normal
-  // SurveyCategory getCurrentCategory() {
-  //   return SurveyRepository.getSurveyData(_surveyType)[_currentCategoryIndex];
-  // }
 
   SurveyCategory getCurrentCategory() {
     if (_surveyType == null) {
       throw StateError('Survey type not set');
     }
     var data = SurveyRepository.getSurveyData(_surveyType!);
-    debugPrint(
-        'Getting current category for surveyType $_surveyType at index $_currentCategoryIndex');
 
     // Check if the index is valid
     if (_currentCategoryIndex >= data.length) {
       throw RangeError(
-          'Current category index $_currentCategoryIndex is out of range for survey type $_surveyType');
+          'Survey Provider: Current category index $_currentCategoryIndex is out of range for survey type $_surveyType');
     }
     return data[_currentCategoryIndex];
   }
@@ -70,8 +64,6 @@ class SurveyProvider with ChangeNotifier {
 
   void incrementCategoryIndex() {
     _currentCategoryIndex++;
-    debugPrint(
-        'Incrementing category index to $_currentCategoryIndex for surveyType $_surveyType');
 
     notifyListeners();
   }

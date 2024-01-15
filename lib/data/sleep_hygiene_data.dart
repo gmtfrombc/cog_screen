@@ -7,15 +7,15 @@ List<SurveyCategory> sleepHygiene = [
     criteria: [
       SurveyCriterion(
         description: 'Too cold',
-        rank: 1,
+        rank: 0,
       ),
       SurveyCriterion(
         description: 'Too hot',
-        rank: 1,
+        rank: 0,
       ),
       SurveyCriterion(
         description: 'Just right',
-        rank: 0,
+        rank: 1,
       ),
     ],
   ),
@@ -25,59 +25,61 @@ List<SurveyCategory> sleepHygiene = [
     criteria: [
       SurveyCriterion(
         description: 'Too dark',
-        rank: 1,
+        rank: 0,
       ),
       SurveyCriterion(
         description: 'Too light',
-        rank: 1,
+        rank: 0,
       ),
       SurveyCriterion(
         description: 'Just right',
-        rank: 0,
+        rank: 1,
       ),
     ],
   ),
   SurveyCategory(
     category: 'Pre-Bedtime Eating',
-    title: 'On a usual day, how long before bedtime is the last time you tyically eat?',
+    title:
+        'On a usual day, how long before bedtime is the last time you tyically eat?',
     criteria: [
       SurveyCriterion(
         description: 'Less than 30 minutes',
-        rank: 3,
+        rank: 0,
       ),
       SurveyCriterion(
         description: '30 minutes to 1 hour',
-        rank: 2,
-      ),
-      SurveyCriterion(
-        description: '1-2 hours',
         rank: 1,
       ),
       SurveyCriterion(
+        description: '1-2 hours',
+        rank: 2,
+      ),
+      SurveyCriterion(
         description: 'Over 2 hours',
-        rank: 0,
+        rank: 3,
       ),
     ],
   ),
   SurveyCategory(
     category: 'Pre-Bedtime Device Usage',
-    title: '4.	How long before bedtime do you turn off devices (smart phone, computer) excluding apps that you use for relaxation, such as mediation or reading apps?',
+    title:
+        '4.	How long before bedtime do you turn off devices (smart phone, computer) excluding apps that you use for relaxation, such as mediation or reading apps?',
     criteria: [
       SurveyCriterion(
         description: 'Less than 30 minutes',
-        rank: 3,
+        rank: 0,
       ),
       SurveyCriterion(
         description: '30 minutes to 1 hour',
-        rank: 2,
-      ),
-      SurveyCriterion(
-        description: '1-2 hours',
         rank: 1,
       ),
       SurveyCriterion(
+        description: '1-2 hours',
+        rank: 2,
+      ),
+      SurveyCriterion(
         description: 'Over 2 hours',
-        rank: 0,
+        rank: 3,
       ),
     ],
   ),
@@ -87,15 +89,19 @@ List<SurveyCategory> sleepHygiene = [
     criteria: [
       SurveyCriterion(
         description: '6-7 days',
-        rank: 0,
+        rank: 3,
       ),
       SurveyCriterion(
-        description: '3-5 days',
+        description: '3-4 days',
+        rank: 2,
+      ),
+      SurveyCriterion(
+        description: '1-2 days',
         rank: 1,
       ),
       SurveyCriterion(
-        description: '0-2 days',
-        rank: 2,
+        description: '0 days',
+        rank: 0,
       ),
     ],
   ),
@@ -104,19 +110,19 @@ List<SurveyCategory> sleepHygiene = [
     title: 'How many days a week do you have more than one drink of alcohol?',
     criteria: [
       SurveyCriterion(
-        description: '6-7 days',
+        description: '0-1 days',
         rank: 3,
       ),
       SurveyCriterion(
-        description: '4-5 days',
+        description: '2-3 days',
         rank: 2,
       ),
       SurveyCriterion(
-        description: '2-3 days',
+        description: '4-5 days',
         rank: 1,
       ),
       SurveyCriterion(
-        description: '0-1 days',
+        description: '6-7 days',
         rank: 0,
       ),
     ],
@@ -127,19 +133,19 @@ List<SurveyCategory> sleepHygiene = [
         'How many days a week do you have caffeinated beverages within 12 hours of your bedtime?',
     criteria: [
       SurveyCriterion(
-        description: '6-7 days',
+        description: '0-1 days',
         rank: 3,
       ),
       SurveyCriterion(
-        description: '4-5 days',
+        description: '2-3 days',
         rank: 2,
       ),
       SurveyCriterion(
-        description: '2-3 days',
+        description: '4-5 days',
         rank: 1,
       ),
       SurveyCriterion(
-        description: '0-1 days',
+        description: '6-7 days',
         rank: 0,
       ),
     ],
@@ -150,19 +156,19 @@ List<SurveyCategory> sleepHygiene = [
     criteria: [
       SurveyCriterion(
         description: 'Excellent',
-        rank: 0,
+        rank: 3,
       ),
       SurveyCriterion(
         description: 'Good',
-        rank: 1,
-      ),
-      SurveyCriterion(
-        description: 'Fair',
         rank: 2,
       ),
       SurveyCriterion(
+        description: 'Fair',
+        rank: 1,
+      ),
+      SurveyCriterion(
         description: 'Poor',
-        rank: 3,
+        rank: 0,
       ),
     ],
   ),

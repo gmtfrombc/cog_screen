@@ -1,9 +1,10 @@
 import 'package:cog_screen/data/survey_repository.dart';
+import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/models/survey_model.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
-import 'package:cog_screen/screens/results/braincare_results_screen.dart';
+import 'package:cog_screen/screens/results/survey_results_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
@@ -11,7 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SurveyScreen extends StatefulWidget {
-  const SurveyScreen({super.key});
+  final ContentItem contentItem;
+  const SurveyScreen({super.key, required this.contentItem});
 
   @override
   State<SurveyScreen> createState() => _SurveyScreenState();
@@ -20,6 +22,8 @@ class SurveyScreen extends StatefulWidget {
 class _SurveyScreenState extends State<SurveyScreen> {
   @override
   Widget build(BuildContext context) {
+    final contentItem = widget.contentItem;
+
     final surveyProvider = Provider.of<SurveyProvider>(context, listen: false);
     final surveyData =
         SurveyRepository.getSurveyData(surveyProvider.surveyType!);
@@ -59,7 +63,12 @@ class _SurveyScreenState extends State<SurveyScreen> {
                 value: criterion.rank,
                 groupValue: surveyProvider.getUserResponse(category.category),
                 onChanged: (value) => _onCriterionSelected(
-                    context, surveyProvider, value, criterion, isLastCategory),
+                    context,
+                    surveyProvider,
+                    value,
+                    criterion,
+                    isLastCategory,
+                    contentItem),
               ),
             );
           }),
@@ -68,41 +77,35 @@ class _SurveyScreenState extends State<SurveyScreen> {
     );
   }
 
-  void _onCriterionSelected(BuildContext context, SurveyProvider surveyProvider,
-      int? value, SurveyCriterion criterion, bool isLastCategory) {
-    // debugPrint(
-    //     'Current Survey Type: ${surveyProvider.surveyType}'); // Debugging line
-
-    // Obtain the current category from the provider
+  void _onCriterionSelected(
+    BuildContext context,
+    SurveyProvider surveyProvider,
+    int? value,
+    SurveyCriterion criterion,
+    bool isLastCategory,
+    ContentItem contentItem,
+  ) {
     final currentCategory = surveyProvider.getCurrentCategory();
-
-    // Set user response if different from existing value
-    if (surveyProvider.getUserResponse(currentCategory.category) != value) {
-      surveyProvider.setUserResponse(currentCategory.category, value ?? -1);
-      surveyProvider.incrementTotalScore(criterion.rank);
-    }
-
-    // Check if it's the last category
+    surveyProvider.setUserResponse(currentCategory.category, value ?? -1);
+    surveyProvider.incrementTotalScore(value!);
     if (isLastCategory) {
-      // debugPrint(
-      //     'Navigating to next SurveyScreen with Survey Type: ${widget.surveyType}');
-
-      // Navigate to the results screen if it's the last category
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => BrainResultsScreen(surveyType: surveyProvider.surveyType!),
+          builder: (context) => SurveyResultsScreen(
+            surveyType: surveyProvider.surveyType!,
+            contentItem: contentItem,
+          ),
         ),
       );
     } else {
-      // Increment the current category index for the next category
       surveyProvider.incrementCategoryIndex();
-
-      // Navigate to the same SurveyScreen with the next category
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const SurveyScreen(),
+          builder: (context) => SurveyScreen(
+            contentItem: contentItem,
+          ),
         ),
       );
     }

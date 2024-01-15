@@ -33,6 +33,9 @@ class AppNavigationProvider with ChangeNotifier {
       notifyListeners();
     }
 
-    Navigator.pushNamed(context, route);
+    Navigator.pushNamed(context, route) // Navigate to the route
+        .then((value) {
+      debugPrint('Returned from route $route');
+    }); // Reset the index when returning
   }
 }

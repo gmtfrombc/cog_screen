@@ -9,15 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProtocolOnboardingScreen extends StatefulWidget {
-  // final String title;
-  // final String description;
   final ContentItem contentItem;
-  //final HealthElement healthElement;
   const ProtocolOnboardingScreen({
     super.key,
-    // required this.title,
-    // required this.description,
-    //required this.healthElement,
     required this.contentItem,
   });
 

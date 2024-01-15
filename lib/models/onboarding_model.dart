@@ -12,7 +12,7 @@ List<OnboardingModel> onboardingData = [
   OnboardingModel(
     imagePath: 'lib/assets/images/onboarding_image1.png',
     description:
-        "Welcome to the PowerME Integrative Health App from PowerME Labs! \n\nHere you can explore into a wealth of insights and practical strategies, designed to enhance key aspects of your health such as energy, memory, emotional health, sleep, healthy aging, and more.",
+        "Welcome to the PowerME Integrative Health App from PowerME Labs! \n\nGet ready to explore a broad range of practical health and wellness strategies\n\nThese strategies are designed to help enhance key aspects of your health such as energy, memory, emotional health, sleep, healthy aging, and more.",
   ),
   OnboardingModel(
     imagePath: 'lib/assets/images/onboarding_image3.png',

@@ -11,4 +11,16 @@ class SleepConstants {
       " A complete assessment of your sleep quality and sleep patterns.";
   static const String sleepProtocol =
       'The following Sleep Protocol is based on recent research that has investigaed essential oils and sleep.\n\n Study results have demonstrated that a number of essential oils can aid with both sleep onset and maintenance.\n\nIf you would like to consider this treatment to support your cognitive health, then select "Get Started" below.\n\nYou will be asked to take a short questionnaire to ensure no medical contraindications.';
+  static const String sleepHygieneResultsTop =
+      "The Sleep Hygiene tool provides an assessment of your sleep behavior and environment. \n\nIf appropriate, after you've made changes to your sleep environment, try retaking the survey and compare your results.";
+  static const String sleepHygieneResultsBottom =
+      "Also, be sure to check out our content on sleep health, as well as our Sleep Protocol for additional recommendations on how to improve your sleep.";
+  static const String sleepAssessmentResultsTop =
+      "The PowerME Sleep assessment is a a shorter survey than the Pittsburgh Sleep Quality Index. It will help you understand your sleep quality and identify areas for improvement.";
+  static const String sleepAssessmentResultsBottom =
+      "Once you have worked on your sleep behavior, you can recheck your score. You can also compare your results in the 'Results' section. Make sure to check out our content on sleep health, and our Sleep Protocol for additional strategies for improving sleep.";
+  static const String psqiAssessmentResultsTop =
+      "The Pittsburgh Sleep Quality Index (PSQI) is a self-rated questionnaire designed to measure the quality and patterns of sleep in adults. It differentiates between 'good' and 'poor' sleepers by evaluating seven areas of sleep\n\nNote that with the PSQI, a lower score indicates better sleep quality.";
+  static const String psqiAssessmentResultsBottom =
+      "The PSQI can be repeated and you can also compare your results in the 'Results' section. You are welcome to check out our content on sleep health, and our Sleep Protocol for additional strateiges on how to improve your sleep.";
 }

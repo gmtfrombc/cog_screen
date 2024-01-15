@@ -89,65 +89,113 @@ class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> {
     String imagePath = onboardingModelList[index].imagePath;
     String onboardingDescription = onboardingModelList[index].description;
 
-    return Column(
-      children: [
-        const SizedBox(height: 100),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            double aspectRatio = 4 / 3; // Adjust as needed
-            double idealHeight = constraints.maxWidth / aspectRatio;
+    return AnimatedBuilder(
+      animation: _pageController,
+      builder: (context, child) {
+        double pageOffset = 0;
+        if (_pageController.position.haveDimensions) {
+          pageOffset = _pageController.page! - index;
+        }
 
-            // Increase the height proportionally
-            double maxHeight =
-                screenHeight * 0.8; // Adjust this value as needed
+        double dx = 0;
+        if (index == 1) {
+          dx = -300 * pageOffset; // From the left for the second page
+        } else if (index == 2) {
+          dx = 200 * pageOffset; // From the right for the third page
+        }
 
-            // Ensure the height does not exceed maxHeight while maintaining aspect ratio
-            double finalHeight = min(idealHeight, maxHeight);
+        double dy = 0;
+        if (index == 0) {
+          dy = -300 * pageOffset; // From the top for the first page
+        }
 
-            return SizedBox(
-              width: constraints.maxWidth, // Full width of the parent container
-              height:
-                  finalHeight, // Height adjusted based on aspect ratio and maxHeight
-              child: Image.asset(imagePath, fit: BoxFit.contain),
-            );
-          },
-        ),
+        return Transform.translate(
+          offset: Offset(
+            dx,
+            dy,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 100),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  double aspectRatio = 4 / 3; // Adjust as needed
+                  double idealHeight = constraints.maxWidth / aspectRatio;
+                  double maxHeight = screenHeight * 0.8;
+                  double finalHeight = min(idealHeight, maxHeight);
 
-        Expanded(
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 0.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 20),
-                Text(
-                  onboardingDescription,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    letterSpacing: 0.5,
-                    fontFamily: GoogleFonts.robotoSlab().fontFamily,
-                    height: 1.4,
+                  return SizedBox(
+                    width: constraints.maxWidth,
+                    height: finalHeight,
+                    child: Image.asset(imagePath, fit: BoxFit.contain),
+                  );
+                },
+              ),
+
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0, vertical: 0.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.asset('lib/assets/images/pm_icon_small.png',
+                              fit: BoxFit.fill, scale: 3.0),
+                          Text(
+                            'Welcome to PowerME',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              letterSpacing: 0.5,
+                              fontFamily: GoogleFonts.robotoSlab().fontFamily,
+                              height: 1.4,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        onboardingDescription,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[600],
+                          letterSpacing: 0.5,
+                          fontFamily: GoogleFonts.robotoSlab().fontFamily,
+                          height: 1.4,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+              if (index == 2) // Show the button only on the last page
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: ElevatedButton(
+                    onPressed: () => _showLearnMoreSheet(
+                      context,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(200, 50),
+                    ),
+                    child: const Text("Next"),
+                  ),
+                ),
+              const SizedBox(height: 20), // Additional space, adjust as needed
+            ],
           ),
-        ),
-        if (index == 2) // Show the button only on the last page
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-            child: ElevatedButton(
-              onPressed: () => _showLearnMoreSheet(context),
-              child: const Text("Onward!"),
-            ),
-          ),
-        const SizedBox(height: 20), // Additional space, adjust as needed
-      ],
+        );
+      },
+      child: Container(),
     );
   }
 

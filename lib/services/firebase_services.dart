@@ -123,13 +123,13 @@ class FirebaseService {
     });
   }
 
-  Future<void> saveBrainHealthResults(
-      String userId, int surveyScore, String surveyType) async {
+  Future<void> saveSurveyResults(
+      String userId, int surveyScore, String title) async {
     var userDoc = _firebaseFirestore.collection('users').doc(userId);
     var result = {
       'score': surveyScore,
       'date': Timestamp.now(),
-      'surveyType': surveyType,
+      'title': title,
     };
 
     try {
@@ -149,28 +149,42 @@ class FirebaseService {
     }
   }
 
-  Future<Map<String, List<Map<String, dynamic>>>> getUserResults(
-      String userId) async {
+  Future<List<Map<String, dynamic>>> getUserResultsByTitle(
+      String userId, String assessmentTitle) async {
     var userDoc = _firebaseFirestore.collection('users').doc(userId);
     var doc = await userDoc.get();
+
     if (doc.exists) {
-      Map<String, List<Map<String, dynamic>>> results = {};
       var userResults =
           List<Map<String, dynamic>>.from(doc.data()?['user_results'] ?? []);
-      results['coghealth'] = userResults
-          .where((result) => result.containsKey('coghealthscore'))
+      // Filter the results based on the selected assessment title
+      var filteredResults = userResults
+          .where((result) => result['title'] == assessmentTitle)
           .toList();
-      results['brainhealth'] = userResults
-          .where((result) => result.containsKey('brainhealthscore'))
-          .toList();
-      return results;
+      return filteredResults;
     } else {
-      return {
-        'coghealth': [],
-        'brainhealth': []
-      }; // Return empty lists if no results
+      // Return an empty list if no results found
+      return [];
     }
   }
+
+  Future<List<String>> fetchAssessmentTitles() async {
+    try {
+      var doc = await _firebaseFirestore
+          .collection('assessments')
+          .doc('assessments')
+          .get();
+      if (doc.exists) {
+        List<dynamic> titles = doc.data()?['items'] ?? [];
+        return titles.cast<String>(); // Cast dynamic list to List<String>
+      }
+      return [];
+    } catch (e) {
+      debugPrint("Error fetching assessment titles: $e");
+      return [];
+    }
+  }
+
   // Getters for accessing the Firebase services
 
   FirebaseAuth get firebaseAuth => _firebaseAuth;

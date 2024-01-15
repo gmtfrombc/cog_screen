@@ -264,9 +264,6 @@ class _AdviceScreenState extends State<AdviceScreen> {
             Provider.of<HealthElementProvider>(context, listen: false);
         _handleButtonClick(provider.currentHealthElement!);
         if (item.surveyType == 'protocol') {
-          debugPrint(
-              'Item is a protocol: ${item.title} and ${item.description}');
-          // Handle 'protocol' type: Navigate to a generic onboarding screen
           await Navigator.push(
             context,
             MaterialPageRoute(
@@ -508,8 +505,6 @@ class _AdviceScreenState extends State<AdviceScreen> {
   }
 
   void _handleButtonClick(HealthElement element) async {
-    debugPrint(
-        'Handling button click in AdviceScreen for element: ${widget.healthElement.title}');
     setState(() {
       isLoading = true;
     });

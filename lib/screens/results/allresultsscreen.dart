@@ -14,8 +14,30 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class AllResultsScreen extends StatelessWidget {
+class AllResultsScreen extends StatefulWidget {
   const AllResultsScreen({super.key});
+
+  @override
+  State<AllResultsScreen> createState() => _AllResultsScreenState();
+}
+
+class _AllResultsScreenState extends State<AllResultsScreen> {
+  String? selectedAssessment;
+  List<String> assessmentTitles = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAssessmentTitles();
+  }
+
+  Future<void> _fetchAssessmentTitles() async {
+    var titles = await FirebaseService().fetchAssessmentTitles();
+    setState(() {
+      debugPrint('titles: $titles');
+      assessmentTitles = titles..sort(); // Sort the titles alphabetically
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,73 +64,79 @@ class AllResultsScreen extends StatelessWidget {
         appNavigationProvider: appNavigationProvider,
       ),
       child: Scaffold(
-        body: FutureBuilder<Map<String, List<Map<String, dynamic>>>>(
-          future: FirebaseService().getUserResults(userId),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CustomProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text("Error: ${snapshot.error}");
-            } else if (snapshot.hasData) {
-              var cogHealthResults = snapshot.data!['coghealth'];
-              var brainHealthResults = snapshot.data!['brainhealth'];
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    if (cogHealthResults != null && cogHealthResults.isNotEmpty)
-                      _buildTestResultsSection(
-                        'CogHealth Test Results',
-                        cogHealthResults,
-                        'coghealthscore',
-                      )
-                    else
-                      const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Text(
-                            'There are no CogHealth Test results available. Please complete a CogHealth Test to see results.',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(
+                  8.0), // Add some padding around the dropdown
+              child: DropdownButton<String>(
+                isExpanded: true, // This makes the dropdown take the full width
+                value: selectedAssessment,
+                items: assessmentTitles
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedAssessment = newValue;
+                  });
+                },
+              ),
+            ),
+            Expanded(
+              child: selectedAssessment == null
+                  ? const Center(
+                      child:
+                          Text('Please select an assessment to view results'))
+                  : FutureBuilder<List<Map<String, dynamic>>>(
+                      // Fetch results based on the selected assessment title
+                      future: FirebaseService()
+                          .getUserResultsByTitle(userId, selectedAssessment!),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CustomProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error}");
+                        } else if (snapshot.hasData) {
+                          var assessmentResults = snapshot.data;
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                if (assessmentResults != null &&
+                                    assessmentResults.isNotEmpty)
+                                  _buildTestResultsSection(
+                                    selectedAssessment!, // Use the selected title
+                                    assessmentResults,
+                                    'brainhealthscore', // Update this key if necessary
+                                  )
+                                else
+                                  Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Text(
+                                        'There are no results available for $selectedAssessment. Please complete the assessment to see results.',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    // Divider only if both sections are available
-                    if (cogHealthResults != null &&
-                        cogHealthResults.isNotEmpty &&
-                        brainHealthResults != null &&
-                        brainHealthResults.isNotEmpty)
-                      const Divider(),
-                    if (brainHealthResults != null &&
-                        brainHealthResults.isNotEmpty)
-                      _buildTestResultsSection(
-                        'Brain Care Score',
-                        brainHealthResults,
-                        'brainhealthscore',
-                      )
-                    else
-                      const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Text(
-                            'There are no Brain Care Score results available. Please complete a Brain Care Score to see results.',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-              );
-            } else {
-              return const Text("No results found");
-            }
-          },
+                          );
+                        } else {
+                          return const Text("No results found");
+                        }
+                      },
+                    ),
+            ),
+          ],
         ),
       ),
     );
@@ -139,7 +167,15 @@ class AllResultsScreen extends StatelessWidget {
           ? (daysSinceFirst / totalSpan) * (sortedResults.length - 1)
           : 0;
 
-      double y = result[scoreKey].toDouble();
+      double y = 0;
+      if (result['score'] != null) {
+        debugPrint('The value of result[score]: ${result['score']}');
+        y = (result['score'] as num).toDouble();
+      } else {
+        debugPrint('else clause: The value of result[score]: null');
+        y = 10.0; // Or any other default value if needed
+        continue;
+      }
       barGroups.add(BarChartGroupData(
         x: relativePosition.round(),
         barRods: [
@@ -151,6 +187,7 @@ class AllResultsScreen extends StatelessWidget {
         ],
       ));
     }
+
     double maxY = (scoreKey == 'coghealthscore') ? 10 : 25;
 
     return Center(
@@ -238,10 +275,9 @@ class AllResultsScreen extends StatelessWidget {
                       ),
                     ),
                     ...List.generate(results.length, (index) {
+                      debugPrint('The value of index: $index');
                       var result = results[index];
-                      String scoreKey = title.contains('CogHealth')
-                          ? 'coghealthscore'
-                          : 'brainhealthscore';
+                      debugPrint('The value of result: $result');
                       String formattedDate = DateFormat('MM/dd/yyyy')
                           .format(result['date'].toDate());
 
@@ -263,7 +299,7 @@ class AllResultsScreen extends StatelessWidget {
                             Expanded(
                               flex: 3,
                               child: Text(
-                                '${result[scoreKey]}',
+                                'Score: ${result['score']}',
                                 style: const TextStyle(
                                   fontSize: 14,
                                 ),

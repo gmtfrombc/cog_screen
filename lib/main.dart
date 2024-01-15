@@ -1,6 +1,7 @@
 import 'package:cog_screen/firebase_options.dart';
 import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/providers/content_item_provider.dart';
 import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/providers/cart_provider.dart';
@@ -11,7 +12,6 @@ import 'package:cog_screen/screens/onboarding/moduleOnboarding.dart';
 import 'package:cog_screen/screens/onboarding/apponboarding_screen.dart';
 import 'package:cog_screen/screens/onboarding/onboarding_welcome.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
-import 'package:cog_screen/screens/questionnaires/survey_screen.dart';
 import 'package:cog_screen/screens/research_screen.dart';
 import 'package:cog_screen/screens/results/allresultsscreen.dart';
 import 'package:cog_screen/screens/shopping_screen.dart';
@@ -70,6 +70,9 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => HealthElementProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ContentItemProvider(),
         )
       ],
       child: const MyApp(),
@@ -104,6 +107,7 @@ class MyApp extends StatelessWidget {
         '/splashscreen': (context) => const SplashScreen(),
         '/comingsoon': (context) => const ComingSoonScreen(),
         '/onboarding': (context) => const AppOnboardingScreen(),
+        //'/advice': (context) => const AdviceScreen(),
         '/onboardingWelcome': (context) => const OnboardingWelcomeScreen(),
       },
       onGenerateRoute: (RouteSettings settings) {
@@ -142,10 +146,10 @@ class MyApp extends StatelessWidget {
                 builder: (context) => const HomeScreen(),
               );
             }
-          case '/surveyscreen':
-            return MaterialPageRoute(
-              builder: (context) => const SurveyScreen(),
-            );
+          // case '/surveyscreen':
+          //   return MaterialPageRoute(
+          //     builder: (context) => const SurveyScreen(),
+          //   );
           default:
             // Handle other routes or return null for unhandled routes
             return null;

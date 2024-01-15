@@ -3,6 +3,7 @@ import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
+import 'package:cog_screen/screens/questionnaires/survey_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
@@ -21,9 +22,6 @@ class DynamicOnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(
-        'Building DynamicOnboardingScreen for content: ${onboardingContent.title}');
-
     final appNavigationProvider = Provider.of<AppNavigationProvider>(context);
     final theme = Theme.of(context);
     String imagePath = onboardingContent.surveyImage;
@@ -64,19 +62,17 @@ class DynamicOnboardingScreen extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                debugPrint(
-                    'Starting survey for surveyType: ${onboardingContent.surveyType}');
                 final surveyProvider =
                     Provider.of<SurveyProvider>(context, listen: false);
                 surveyProvider.setSurveyType(onboardingContent.surveyType);
                 surveyProvider.restartSurvey();
-
-                Navigator.pushNamed(
+                Navigator.push(
                   context,
-                  '/surveyscreen',
-                  arguments: {
-                    'surveyType': onboardingContent.surveyType,
-                  },
+                  MaterialPageRoute(
+                    builder: (context) => SurveyScreen(
+                      contentItem: onboardingContent,
+                    ),
+                  ),
                 );
               },
               child: const Text('Begin'),

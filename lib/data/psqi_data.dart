@@ -49,7 +49,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleep Disturbances',
+    category: 'Sleep Disturbances - Onset',
     title:
         'During the past month, how often have you had trouble sleeping because you cannot get to sleep within 30 minutes?',
     criteria: [
@@ -60,7 +60,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleep Disturbances',
+    category: 'Sleep Disturbances - Maintenance',
     title:
         'During the past month, how often have you had trouble sleeping because you wake up in the middle of the night or early morning?',
     criteria: [
@@ -71,9 +71,9 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleep Disturbances',
+    category: 'Sleep Disturbances - Restroom',
     title:
-        'During the past month, how often have you had trouble sleeping because you have to get up to use the bathroom?',
+        'During the past month, how often have you had trouble sleeping because you have to get up to use the restroom?',
     criteria: [
       SurveyCriterion(description: 'Not during the past month', rank: 0),
       SurveyCriterion(description: 'Less than once a week', rank: 1),
@@ -81,19 +81,9 @@ List<SurveyCategory> psqiData = [
       SurveyCriterion(description: 'Three or more times a week', rank: 3),
     ],
   ),
+
   SurveyCategory(
-    category: 'Sleep Disturbances',
-    title:
-        'During the past month, how often have you had trouble sleeping because you cannot breathe comfortably?',
-    criteria: [
-      SurveyCriterion(description: 'Not during the past month', rank: 0),
-      SurveyCriterion(description: 'Less than once a week', rank: 1),
-      SurveyCriterion(description: 'Once or twice a week', rank: 2),
-      SurveyCriterion(description: 'Three or more times a week', rank: 3),
-    ],
-  ),
-  SurveyCategory(
-    category: 'Sleep Disturbances',
+    category: 'Sleep Disturbances - Breathing',
     title:
         'During the past month, how often have you had trouble sleeping because you cannot breathe comfortably?',
     criteria: [
@@ -104,7 +94,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleep Disturbances',
+    category: 'Sleep Disturbances - Snoring',
     title:
         'During the past month, how often have you had trouble sleeping because you cough or snore loudly?',
     criteria: [
@@ -115,7 +105,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleep Disturbances',
+    category: 'Sleep Disturbances - Cold',
     title:
         'During the past month, how often have you had trouble sleeping because you feel too cold?',
     criteria: [
@@ -126,7 +116,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleep Disturbances',
+    category: 'Sleep Disturbances - Hot',
     title:
         'During the past month, how often have you had trouble sleeping because you feel too hot?',
     criteria: [
@@ -137,7 +127,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleep Disturbances',
+    category: 'Sleep Disturbances - Bad Dreams',
     title:
         'During the past month, how often have you had trouble sleeping because you had bad dreams?',
     criteria: [
@@ -148,7 +138,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleep Disturbances',
+    category: 'Sleep Disturbances - Discomfort',
     title:
         'During the past month, how often have you had trouble sleeping because you cannot get comfortable due to pain?',
     criteria: [
@@ -159,7 +149,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleep Disturbances',
+    category: 'Sleep Disturbances - Others',
     title:
         'During the past month, how often have you had trouble sleeping because you have to get up to care for a child or another adult?',
     criteria: [
@@ -215,7 +205,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleeping Parners',
+    category: 'Sleeping Parners - Snoring',
     title:
         'If you have a room mate or bed partner, ask him/her how often in the past month you had loud snoring?',
     criteria: [
@@ -226,7 +216,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleeping Parners',
+    category: 'Sleeping Parners - Breathing',
     title:
         'If you have a room mate or bed partner, ask him/her how often in the past month you have had long pauses between breaths while asleep?',
     criteria: [
@@ -237,7 +227,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleeping Parners',
+    category: 'Sleeping Parners - Restless Legs',
     title:
         'If you have a room mate or bed partner, ask him/her how often in the past month you have had legs twitching or jerking while you sleep?',
     criteria: [
@@ -248,7 +238,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleeping Parners',
+    category: 'Sleeping Parners - Confusion',
     title:
         'If you have a room mate or bed partner, ask him/her how often in the past month you have had episodes of disorientation or confusion during sleep',
     criteria: [
@@ -259,7 +249,7 @@ List<SurveyCategory> psqiData = [
     ],
   ),
   SurveyCategory(
-    category: 'Sleeping Parners',
+    category: 'Sleeping Parners - Restlessness',
     title:
         'If you have a room mate or bed partner, ask him/her how often in the past month you have had other restlessness issues while asleep?',
     criteria: [
