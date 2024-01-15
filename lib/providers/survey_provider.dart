@@ -21,13 +21,16 @@ class SurveyProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setUserResponse(String category, int rank) {
-    _userResponses[category] = rank;
+  void setUserResponse(String category, int index, int rank) {
+    String key = '$category-$index';
+    _userResponses[key] = rank;
     notifyListeners();
   }
 
-  int getUserResponse(String category) {
-    return _userResponses[category] ?? -1;
+  int getUserResponse(String category, int index) {
+      String key = '$category-$index';
+
+    return _userResponses[key] ?? -1;
   }
 
   void incrementTotalScore(int rank) {

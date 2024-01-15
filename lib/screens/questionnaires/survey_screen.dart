@@ -56,19 +56,24 @@ class _SurveyScreenState extends State<SurveyScreen> {
               style: const TextStyle(fontSize: 16),
             ),
           ),
-          ...category.criteria.map((criterion) {
+          ...category.criteria.asMap().entries.map((entry) {
+            final index = entry.key;
+            SurveyCriterion criterion = entry.value;
             return ListTile(
               title: Text(criterion.description),
               leading: Radio<int>(
                 value: criterion.rank,
-                groupValue: surveyProvider.getUserResponse(category.category),
+                groupValue:
+                    surveyProvider.getUserResponse(category.category, index),
                 onChanged: (value) => _onCriterionSelected(
-                    context,
-                    surveyProvider,
-                    value,
-                    criterion,
-                    isLastCategory,
-                    contentItem),
+                  context,
+                  surveyProvider,
+                  value,
+                  criterion,
+                  isLastCategory,
+                  contentItem,
+                  index,
+                ),
               ),
             );
           }),
@@ -84,9 +89,11 @@ class _SurveyScreenState extends State<SurveyScreen> {
     SurveyCriterion criterion,
     bool isLastCategory,
     ContentItem contentItem,
+    int index,
   ) {
     final currentCategory = surveyProvider.getCurrentCategory();
-    surveyProvider.setUserResponse(currentCategory.category, value ?? -1);
+    surveyProvider.setUserResponse(
+        currentCategory.category, index, value ?? -1);
     surveyProvider.incrementTotalScore(value!);
     if (isLastCategory) {
       Navigator.push(
@@ -99,11 +106,14 @@ class _SurveyScreenState extends State<SurveyScreen> {
         ),
       );
     } else {
+      surveyProvider.setUserResponse(currentCategory.category, index, -1);
+
       surveyProvider.incrementCategoryIndex();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => SurveyScreen(
+            key: ValueKey(surveyProvider.currentCategoryIndex),
             contentItem: contentItem,
           ),
         ),

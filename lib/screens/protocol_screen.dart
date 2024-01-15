@@ -1,3 +1,6 @@
+import 'package:cog_screen/models/health_element.dart';
+import 'package:cog_screen/models/protocol_model.dart';
+import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/screens/essential_oils_screen.dart';
 import 'package:cog_screen/widgets/highlighter.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +14,8 @@ class ProtocolScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final healthElementProvider = Provider.of<HealthElementProvider>(context);
+    final healthElement = healthElementProvider.currentHealthElement;
     final appNavigationProvider = Provider.of<AppNavigationProvider>(context);
     return Scaffold(
       body: Stack(
@@ -18,7 +23,7 @@ class ProtocolScreen extends StatelessWidget {
           SingleChildScrollView(
             child: Column(
               children: [
-                _buildTopImageSection(context),
+                _buildHeaderSection(context, healthElement!),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -31,22 +36,9 @@ class ProtocolScreen extends StatelessWidget {
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 20),
-                      _buildEssentialOilList(),
+                      _buildEssentialOilList(healthElement),
                       const SizedBox(height: 20),
-                      _buildUsageInstructions(),
-                      const SizedBox(height: 20),
-                      const HighlightedTitle(
-                        text: 'Frequency and Duration',
-                        highlightColor:
-                            Colors.orangeAccent, // Choose your highlight color
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        BrainConstants.frequencyDuration,
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
+                      _buildUsageInstructions(healthElement),
                     ],
                   ),
                 ),
@@ -74,22 +66,16 @@ class ProtocolScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildEssentialOilList() {
-    List<String> oils = [
-      'Rose',
-      'Orange',
-      'Eucalyptus',
-      'Lemon',
-      'Peppermint',
-      'Rosemary',
-      'Lavender'
-    ];
+  Widget _buildEssentialOilList(HealthElement healthElement) {
+    ProtocolModel protocolModel = healthElement.protocol!;
+    EOList oilList = protocolModel.oils;
+    List<String> oils = oilList.oils;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const HighlightedTitle(
-          text: 'Essential Oils',
+          text: 'Recommended Essential Oils',
           highlightColor: Colors.yellow, // Choose your highlight color
         ),
         const SizedBox(height: 10),
@@ -98,28 +84,41 @@ class ProtocolScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildUsageInstructions() {
-    return const Column(
+  Widget _buildUsageInstructions(HealthElement healthElement) {
+    ProtocolModel protocolModel = healthElement.protocol!;
+    ProtocolInstructions instructions = protocolModel.protcolInstructions;
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         HighlightedTitle(
-          text: 'Protocol Instructions',
+          text: instructions.title,
           highlightColor: Colors.greenAccent, // Choose your highlight color
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
-          '1. Place the diffuser near your bed.\n'
-          '2. Fill the diffuser with the essential oil of the night.\n'
-          '3. Turn on the diffuser when going to bed.\n'
-          '4. Diffuse the essential oil for at least 2 hours.\n'
-          '5. Rotate through a different essential oil each night.',
-          style: TextStyle(fontSize: 16),
+          instructions.instructions,
+          style: const TextStyle(fontSize: 16),
+        ),
+        const SizedBox(height: 20),
+        const HighlightedTitle(
+          text: 'Frequency and Duration',
+          highlightColor: Colors.orangeAccent, // Choose your highlight color
+        ),
+        const SizedBox(height: 10),
+        Text(
+          instructions.frequencyDuration,
+          style: const TextStyle(
+            fontSize: 16,
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildTopImageSection(BuildContext context) {
+  Widget _buildHeaderSection(
+      BuildContext context, HealthElement healthElement) {
+    ProtocolModel protocolModel = healthElement.protocol!;
+    final header = protocolModel.header;
     return Stack(
       children: [
         ClipPath(
@@ -130,17 +129,17 @@ class ProtocolScreen extends StatelessWidget {
               BlendMode.colorBurn,
             ),
             child: Image.asset(
-              'lib/assets/images/dT_EO8.jpeg',
+              header.image,
               fit: BoxFit.cover,
             ),
           ),
         ),
-        const Positioned(
+        Positioned(
           bottom: 80,
           left: 30,
           child: Text(
-            'Olfactory Enrichment \nProtocol',
-            style: TextStyle(
+            header.title,
+            style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
               color: Colors.black,

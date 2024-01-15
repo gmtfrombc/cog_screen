@@ -89,6 +89,7 @@ flutter:
     - lib/assets/images/sleep_assessment_pm.jpeg
     - lib/assets/images/psqi_survey.jpeg
     - lib/assets/images/sleep_hygiene.jpeg
+    - lib/assets/images/survey_results_onboarding.png
     - lib/assets/images/welcome.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

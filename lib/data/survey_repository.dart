@@ -1,4 +1,5 @@
 import 'package:cog_screen/data/brain_care_data.dart';
+import 'package:cog_screen/data/cog_health_data.dart';
 import 'package:cog_screen/data/pm_sleep_data.dart';
 import 'package:cog_screen/data/psqi_data.dart';
 import 'package:cog_screen/data/sleep_hygiene_data.dart';
@@ -11,10 +12,11 @@ class SurveyRepository {
     'PowerME Sleep Assessment': sleepData,
     'PSQI': psqiData,
     'Sleep Hygiene Tool': sleepHygiene,
+    'CogHealth Screening Test': cogHealth,
     // Future surveys can be added here.
   };
-    static List<SurveyCategory> getSurveyData(String surveyType) {
-        // debugPrint('Fetching survey data in getSurveyData for type: $surveyType');
+  static List<SurveyCategory> getSurveyData(String surveyType) {
+    // debugPrint('Fetching survey data in getSurveyData for type: $surveyType');
 
     // debugPrint('Requested Survey Type: $surveyType');
     final data = _surveys[surveyType] ?? [];

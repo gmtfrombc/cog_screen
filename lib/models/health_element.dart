@@ -1,3 +1,6 @@
+import 'package:cog_screen/data/essential_oils_data.dart';
+import 'package:cog_screen/models/essential_oils_model.dart';
+import 'package:cog_screen/models/protocol_model.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:cog_screen/utilities/sleep_constants.dart';
@@ -10,7 +13,9 @@ class HealthElement {
   final List<ContentItem> assessments;
   final List<ContentItem> integrativeHealth;
   final List<ContentItem> learningCenter;
-  final List<HealthElementImage> images; // New field for images
+  final List<HealthElementImage> images;
+  final EssentialOilsModel essentialOils;
+  final ProtocolModel? protocol;
 
   HealthElement({
     required this.title,
@@ -19,7 +24,9 @@ class HealthElement {
     required this.assessments,
     required this.integrativeHealth,
     required this.learningCenter,
-    required this.images, // New parameter for images
+    required this.images,
+    required this.essentialOils,
+    this.protocol,
   });
 }
 
@@ -138,7 +145,9 @@ final List<HealthElement> elements = [
         onboardingTitle: "CogHealth Screening Test",
         surveyImage: 'lib/assets/images/cog_health_start2.png',
         surveyType: 'CogHealth Screening Test',
-        possibleScore: 14,
+        possibleScore: 10,
+        surveyResultsTop: BrainConstants.cogHealthExplanation,
+        surveyResultsBottom: BrainConstants.cogHealthMore,
       ),
     ],
     integrativeHealth: [
@@ -177,6 +186,47 @@ final List<HealthElement> elements = [
             'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
       ),
     ],
+    essentialOils: EssentialOilsModel(
+      header: EOScreenHeader(
+        title: 'Essential Oils \nand Brain Health',
+        image: 'lib/assets/images/dT_EO9-cropped.jpeg',
+      ),
+      articles: EOScreenArticles(
+        title: 'Recent Articles',
+        color: AppTheme.primaryColor,
+        description:
+            'Read our latest article on essential oils and cognitive health, memory, and more.',
+        image: 'lib/assets/images/diffusers.png',
+      ),
+      research: eoCogResearch,
+    ),
+    protocol: ProtocolModel(
+      header: EOScreenHeader(
+        title: 'Olfactory Enrichment \nProtocol',
+        image: 'lib/assets/images/dT_EO8.jpeg',
+      ),
+      oils: EOList(
+        title: 'Recommended Essential Oils',
+        oils: [
+          'Rose',
+          'Orange',
+          'Eucalyptus',
+          'Lemon',
+          'Peppermint',
+          'Rosemary',
+          'Lavender'
+        ],
+      ),
+      protcolInstructions: ProtocolInstructions(
+        title: 'Protocol Instructions',
+        instructions: '1. Place the diffuser near your bed.\n'
+            '2. Fill the diffuser with the essential oil of the night.\n'
+            '3. Turn on the diffuser when going to bed.\n'
+            '4. Diffuse the essential oil for at least 2 hours.\n'
+            '5. Rotate through a different essential oil each night.',
+        frequencyDuration: BrainConstants.frequencyDuration,
+      ),
+    ),
   ),
   HealthElement(
     title: "Sleep",
@@ -309,6 +359,47 @@ final List<HealthElement> elements = [
             'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
       ),
     ],
+    essentialOils: EssentialOilsModel(
+        header: EOScreenHeader(
+          title: 'Essential Oils \nand Sleep',
+          image: 'lib/assets/images/dT_EO9-cropped.jpeg',
+        ),
+        articles: EOScreenArticles(
+          title: 'Recent Articles',
+          color: AppTheme.secondaryColor,
+          description:
+              'Read our most recent article on essential oils and sleep health and more.',
+          image: 'lib/assets/images/diffusers.png',
+        ),
+        research: eoSleepResearch),
+    protocol: ProtocolModel(
+      header: EOScreenHeader(
+        title: 'Sleep Enhancement \nProtocol',
+        image: 'lib/assets/images/dT_EO8.jpeg',
+      ),
+      oils: EOList(
+        title: 'Recommended Essential Oils',
+        oils: [
+          'Lavendar',
+          'Chamomile',
+          'Bergamot',
+          'Ylang Ylang',
+          'Sandalwood',
+          'Clary Sage'
+        ],
+      ),
+      protcolInstructions: ProtocolInstructions(
+        title: 'Protocol Instructions',
+        instructions:
+            '1. Finish eating 2-3 hours before going to bed, avoiding caffeine and alcohol.\n'
+            '2. Turn off devices an 30-60 minutes before bedtime; consider reading a book or listening to soft music.\n'
+            '3. Make sure your bedroom is dark and at a cool temperature.\n'
+            '4. Start diffusing your favorite essential oil 30 minutes before bed.\n'
+            '5. Consider a warm bath or breathing exercises 30 minutes before you turn in.\n'
+            '6. Diffuse your essential oil for at least 2 hours.\n',
+        frequencyDuration: SleepConstants.sleepFrequencyDuration,
+      ),
+    ),
   ),
   HealthElement(
     title: "Stress",
@@ -403,6 +494,18 @@ final List<HealthElement> elements = [
             'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
       ),
     ],
+    essentialOils: EssentialOilsModel(
+      header: EOScreenHeader(
+        title: 'Essential Oils and Brain Health',
+        image: 'brain_health_2',
+      ),
+      articles: EOScreenArticles(
+        title: 'Essential Oils and Brain Health',
+        description: 'Learn',
+        image: 'dT_EO2',
+      ),
+      research: eoCogResearch,
+    ),
   ),
   HealthElement(
     title: "Gut Health",
@@ -497,6 +600,18 @@ final List<HealthElement> elements = [
             'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
       ),
     ],
+    essentialOils: EssentialOilsModel(
+      header: EOScreenHeader(
+        title: 'Essential Oils and Brain Health',
+        image: 'brain_health_2',
+      ),
+      articles: EOScreenArticles(
+        title: 'Essential Oils and Brain Health',
+        description: 'Learn',
+        image: 'dT_EO2',
+      ),
+      research: eoCogResearch,
+    ),
   ),
   HealthElement(
     title: "Metabolic Health",
@@ -591,6 +706,17 @@ final List<HealthElement> elements = [
             'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
       ),
     ],
+    essentialOils: EssentialOilsModel(
+        header: EOScreenHeader(
+          title: 'Essential Oils and Brain Health',
+          image: 'brain_health_2',
+        ),
+        articles: EOScreenArticles(
+          title: 'Essential Oils and Brain Health',
+          description: 'Learn',
+          image: 'dT_EO2',
+        ),
+        research: eoCogResearch),
   ),
   HealthElement(
     title: "Healthy Aging",
@@ -685,6 +811,18 @@ final List<HealthElement> elements = [
             'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
       ),
     ],
+    essentialOils: EssentialOilsModel(
+      header: EOScreenHeader(
+        title: 'Essential Oils and Brain Health',
+        image: 'brain_health_2',
+      ),
+      articles: EOScreenArticles(
+        title: 'Essential Oils and Brain Health',
+        description: 'Learn',
+        image: 'dT_EO2',
+      ),
+      research: eoCogResearch,
+    ),
   ),
   HealthElement(
     title: "Emotional Health",
@@ -779,6 +917,18 @@ final List<HealthElement> elements = [
             'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
       ),
     ],
+    essentialOils: EssentialOilsModel(
+      header: EOScreenHeader(
+        title: 'Essential Oils and Brain Health',
+        image: 'brain_health_2',
+      ),
+      articles: EOScreenArticles(
+        title: 'Essential Oils and Brain Health',
+        description: 'Learn',
+        image: 'dT_EO2',
+      ),
+      research: eoCogResearch,
+    ),
   ),
   HealthElement(
     title: "Functional Movement",
@@ -878,5 +1028,45 @@ final List<HealthElement> elements = [
             'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
       ),
     ],
+    essentialOils: EssentialOilsModel(
+      header: EOScreenHeader(
+        title: 'Essential Oils and Brain Health',
+        image: 'brain_health_2',
+      ),
+      articles: EOScreenArticles(
+        title: 'Essential Oils and Brain Health',
+        description: 'Learn',
+        image: 'dT_EO2',
+      ),
+      research: [
+        EOResearch(
+          title:
+              "Overnight olfactory enrichment using an odorant diffuser improves memory and modifies the uncinate fasciculus in older adults",
+          description: '4 min',
+          image: 'lib/assets/images/research1.jpeg',
+          link: '/viewScreen',
+          url:
+              'https://powermeacademy.com/topic/study-on-olfactory-enrichments-in-older-adults/',
+        ),
+        EOResearch(
+          title:
+              "Overnight olfactory enrichment using an odorant diffuser improves memory and modifies the uncinate fasciculus in older adults",
+          description: '4 min',
+          image: 'lib/assets/images/research1.jpeg',
+          link: '/viewScreen',
+          url:
+              'https://powermeacademy.com/topic/study-on-olfactory-enrichments-in-older-adults/',
+        ),
+        EOResearch(
+          title:
+              "Overnight olfactory enrichment using an odorant diffuser improves memory and modifies the uncinate fasciculus in older adults",
+          description: '4 min',
+          image: 'lib/assets/images/research1.jpeg',
+          link: '/viewScreen',
+          url:
+              'https://powermeacademy.com/topic/study-on-olfactory-enrichments-in-older-adults/',
+        ),
+      ],
+    ),
   ),
 ];

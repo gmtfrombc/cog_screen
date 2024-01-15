@@ -269,9 +269,6 @@ class _AdviceScreenState extends State<AdviceScreen> {
             MaterialPageRoute(
               builder: (context) => ProtocolOnboardingScreen(
                 contentItem: item,
-                // title: item.onboardingTitle,
-                // description: item.onboardingDescription,
-                //healthElement: provider.currentHealthElement!,
               ),
             ),
           );

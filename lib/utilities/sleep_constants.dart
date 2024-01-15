@@ -23,4 +23,6 @@ class SleepConstants {
       "The Pittsburgh Sleep Quality Index (PSQI) is a self-rated questionnaire designed to measure the quality and patterns of sleep in adults. It differentiates between 'good' and 'poor' sleepers by evaluating seven areas of sleep\n\nNote that with the PSQI, a lower score indicates better sleep quality.";
   static const String psqiAssessmentResultsBottom =
       "The PSQI can be repeated and you can also compare your results in the 'Results' section. You are welcome to check out our content on sleep health, and our Sleep Protocol for additional strateiges on how to improve your sleep.";
+  static const String sleepFrequencyDuration =
+      "Perform your sleep hygiene routine every night before bed. \n\nYou can also use the essential oils every night before bed. \n\nChange your essential oil as desired \n\nWe suggest rechecking your sleep hygeine assessment 1-2 months after practicing your routine.";
 }

@@ -1,6 +1,8 @@
-import 'package:cog_screen/models/research_model.dart';
+import 'package:cog_screen/models/essential_oils_model.dart';
+import 'package:cog_screen/models/health_element.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
+import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
@@ -28,6 +30,8 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
   String userId = '';
   @override
   Widget build(BuildContext context) {
+    final healthElementProvider = Provider.of<HealthElementProvider>(context);
+    final healthElement = healthElementProvider.currentHealthElement;
     final appNavigationProvider = Provider.of<AppNavigationProvider>(context);
     final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
     userId = authProvider.currentUser?.uid ?? '';
@@ -51,17 +55,19 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildHeader(context),
-            _buildTextURL(context),
+            _buildHeader(context, healthElement),
+            _buildMiddleCard(context, healthElement),
             _buildResearchHeader(context),
-            _buildResearchGrid(context)
+            _buildResearchGrid(context, healthElement)
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, HealthElement? healthElement) {
+    EssentialOilsModel essentialOilsModel = healthElement!.essentialOils;
+    final header = essentialOilsModel.header;
     return Stack(
       children: [
         Padding(
@@ -74,7 +80,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                 BlendMode.colorBurn,
               ),
               child: Image.asset(
-                'lib/assets/images/dT_EO9-cropped.jpeg',
+                header.image,
                 fit: BoxFit.cover,
               ),
             ),
@@ -85,7 +91,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
           //bottom: 100,
           left: 20,
           child: Text(
-            'Essential Oils \nand Brain Health',
+            header.title,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -100,11 +106,13 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     );
   }
 
-  Widget _buildTextURL(BuildContext context) {
+  Widget _buildMiddleCard(BuildContext context, HealthElement? healthElement) {
+    final EssentialOilsModel essentialOilsModel=healthElement!.essentialOils;
+    final EOScreenArticles articles = essentialOilsModel.articles;
     return Container(
       width: double.infinity,
       height: 220, // Spans the entire width of the screen
-      color: AppTheme.secondaryColor, // Background color
+      color: articles.color, // Background color
       padding: const EdgeInsets.all(10), // Padding around the content
       child: Stack(
         children: [
@@ -116,7 +124,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  'Recent Articles',
+                  articles.title,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -126,11 +134,11 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                   ),
                 ),
                 const SizedBox(height: 8), // Spacing between widgets
-                const SizedBox(
+                 SizedBox(
                   width: 240,
                   child: Text(
-                    'Read our latest article on essential oils and cognitive health, memory, and more.',
-                    style: TextStyle(
+                    articles.description,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                       letterSpacing: 0.5,
@@ -173,7 +181,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
             right: 10, // Distance from right
             bottom: 10, // Distance from bottom
             child: Image.asset(
-              'lib/assets/images/diffusers.png', // Replace with your image asset path
+              articles.image, // Replace with your image asset path
               width: 120, // Adjust the width as needed
               height: 120, // Adjust the height as needed
               fit: BoxFit.cover,
@@ -247,7 +255,9 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     );
   }
 
-  Widget _buildResearchGrid(BuildContext context) {
+  Widget _buildResearchGrid(BuildContext context, HealthElement? healthElement) {
+    final EssentialOilsModel essentialOilsModel=healthElement!.essentialOils;
+    final List<EOResearch> researchList = essentialOilsModel.research;
     return GridView.builder(
       shrinkWrap: true, // This will make GridView take the minimum space
       physics:
@@ -258,29 +268,24 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         mainAxisSpacing: 4,
         childAspectRatio: 0.8,
       ),
-      itemCount: elements.length,
+      itemCount: researchList.length,
       itemBuilder: (context, index) {
-        final element = elements[index];
-        return _buildSupportCard(context, element.title, element.description,
-            element.link, element.image, element.url);
+        final EOResearch researchArticle = researchList[index];
+        return _buildSupportCard(context, researchArticle);
       },
     );
   }
 
   Widget _buildSupportCard(
     BuildContext context,
-    String title,
-    String description,
-    String route,
-    String imagePath,
-    String url,
+    EOResearch researchArticle,
   ) {
     return InkWell(
       onTap: () async {
         setState(() {
           isLoading = true;
         });
-        await Navigator.pushNamed(context, '/viewScreen', arguments: url);
+        await Navigator.pushNamed(context, '/viewScreen', arguments: researchArticle.url);
         setState(
           () {
             isLoading = false;
@@ -307,7 +312,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.asset(
-                    imagePath,
+                    researchArticle.image,
                     width: double.infinity,
                     height: 240,
                     fit: BoxFit.cover,
@@ -348,7 +353,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                           const SizedBox(width: 4.0),
                           Expanded(
                             child: Text(
-                              description,
+                              researchArticle.description,
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
@@ -369,7 +374,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                     height: 100,
                     width: 140,
                     child: Text(
-                      title,
+                      researchArticle.title,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

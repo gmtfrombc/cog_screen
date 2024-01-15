@@ -65,32 +65,97 @@ class _AllResultsScreenState extends State<AllResultsScreen> {
       ),
       child: Scaffold(
         body: Column(
+          //mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             Padding(
-              padding: const EdgeInsets.all(
-                  8.0), // Add some padding around the dropdown
-              child: DropdownButton<String>(
-                isExpanded: true, // This makes the dropdown take the full width
-                value: selectedAssessment,
-                items: assessmentTitles
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedAssessment = newValue;
-                  });
-                },
+              padding: const EdgeInsets.all(15.0),
+              child: Text(
+                'SELECT AN ASSESSMENT',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.robotoSlab(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    letterSpacing: 0.5),
               ),
             ),
-            Expanded(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Colors.grey[300]!, width: 2), // Faint border
+                  borderRadius: BorderRadius.circular(8), // Rounded corners
+                ),
+                child: DropdownButton<String>(
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                  isExpanded: true,
+                  underline:
+                      const SizedBox(), // This makes the dropdown take the full width
+                  value: selectedAssessment,
+                  items: assessmentTitles
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Center(
+                        child: Text(
+                          value,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedAssessment = newValue;
+                    });
+                  },
+                ),
+              ),
+            ),
+            Flexible(
               child: selectedAssessment == null
-                  ? const Center(
-                      child:
-                          Text('Please select an assessment to view results'))
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          const SizedBox(height: 20),
+                          Image.asset(
+                            'lib/assets/images/survey_results_onboarding.png',
+                            width: 250,
+                          ),
+                          const SizedBox(
+                              height:
+                                  20), // Provides space between the image and the text
+                          Row(
+                            children: [
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Flexible(
+                                child: Text(
+                                  'Choose an assessment to view your results',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.robotoSlab(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
                   : FutureBuilder<List<Map<String, dynamic>>>(
                       // Fetch results based on the selected assessment title
                       future: FirebaseService()
@@ -114,18 +179,33 @@ class _AllResultsScreenState extends State<AllResultsScreen> {
                                     'brainhealthscore', // Update this key if necessary
                                   )
                                 else
-                                  Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Text(
-                                        'There are no results available for $selectedAssessment. Please complete the assessment to see results.',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textAlign: TextAlign.center,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(
+                                        height: 20,
                                       ),
-                                    ),
+                                      Image.asset(
+                                        'lib/assets/images/survey_results_onboarding.png',
+                                        width: 250,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 40.0,
+                                          vertical: 20.0,
+                                        ),
+                                        child: Text(
+                                          'There are no results available for $selectedAssessment. \n\nComplete an the assessment first to view your results.',
+                                          style: GoogleFonts.robotoSlab(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            letterSpacing: 0.5,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                               ],
                             ),
