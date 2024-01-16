@@ -11,6 +11,7 @@ import 'package:cog_screen/screens/logins/login.dart';
 import 'package:cog_screen/screens/onboarding/moduleOnboarding.dart';
 import 'package:cog_screen/screens/onboarding/apponboarding_screen.dart';
 import 'package:cog_screen/screens/onboarding/onboarding_welcome.dart';
+import 'package:cog_screen/screens/onboarding/protocol_onboarding.dart';
 import 'package:cog_screen/screens/protocol_screen.dart';
 import 'package:cog_screen/screens/research_screen.dart';
 import 'package:cog_screen/screens/results/allresultsscreen.dart';
@@ -106,8 +107,7 @@ class MyApp extends StatelessWidget {
         '/research': (context) => const ResearchScreen(),
         '/splashscreen': (context) => const SplashScreen(),
         '/comingsoon': (context) => const ComingSoonScreen(),
-        '/onboarding': (context) => const AppOnboardingScreen(),
-        //'/advice': (context) => const AdviceScreen(),
+        '/onboarding': (context) => const AppOnboardingScreen(),        //'/advice': (context) => const AdviceScreen(),
         '/onboardingWelcome': (context) => const OnboardingWelcomeScreen(),
       },
       onGenerateRoute: (RouteSettings settings) {
@@ -117,6 +117,17 @@ class MyApp extends StatelessWidget {
               final HealthElement element = settings.arguments as HealthElement;
               return MaterialPageRoute(
                 builder: (context) => ModuleOnboarding(healthElement: element),
+              );
+            } else {
+              return MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              );
+            }
+            case '/protocolOnboarding':
+            if (settings.arguments is ContentItem) {
+              final ContentItem item = settings.arguments as ContentItem;
+              return MaterialPageRoute(
+                builder: (context) => ProtocolOnboardingScreen(contentItem: item),
               );
             } else {
               return MaterialPageRoute(

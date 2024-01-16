@@ -5,7 +5,6 @@ import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/screens/onboarding/dynamic_onboarding_screen.dart';
-import 'package:cog_screen/screens/onboarding/protocol_onboarding.dart';
 import 'package:cog_screen/screens/view_screen.dart';
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
@@ -31,7 +30,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
   final double verticalMargin = 4.0;
   final EdgeInsets cardPadding = const EdgeInsets.all(8.0);
   final Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
-  bool isLoading = true;
+  bool _isLoading = true;
   String userId = '';
   double defaultImageSize = 250.0;
   Map<String, String> imageUrls = {};
@@ -46,7 +45,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
             Provider.of<HealthElementProvider>(context, listen: false);
         provider.setCurrentHealthElement(widget.healthElement);
         setState(() {
-          isLoading = false; // Set loading to false after the build is complete
+          _isLoading =
+              false; // Set loading to false after the build is complete
         });
       }
     });
@@ -75,7 +75,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
         context: context,
         appNavigationProvider: appNavigationProvider,
       ),
-      child: isLoading
+      child: _isLoading
           ? Center(
               child: CircularProgressIndicator(
                 valueColor:
@@ -263,19 +263,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
         final provider =
             Provider.of<HealthElementProvider>(context, listen: false);
         _handleButtonClick(provider.currentHealthElement!);
-        if (item.surveyType == 'protocol') {
-          await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProtocolOnboardingScreen(
-                contentItem: item,
-              ),
-            ),
-          );
-        } else {
-          // Handle other types: Navigate based on the item's route
-          Navigator.pushNamed(context, item.route!);
-        }
+        _shouldOnboardUser(provider.currentHealthElement!, item);
       },
       child: Column(
         children: [
@@ -503,7 +491,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
 
   void _handleButtonClick(HealthElement element) async {
     setState(() {
-      isLoading = true;
+      _isLoading = true;
     });
     try {
       await FirebaseService().recordUserAction(
@@ -513,9 +501,50 @@ class _AdviceScreenState extends State<AdviceScreen> {
     } finally {
       if (mounted) {
         setState(() {
-          isLoading = false;
+          _isLoading = false;
         });
       }
+    }
+  }
+
+  void _shouldOnboardUser(
+      HealthElement currentHealthElement, ContentItem item) async {
+    if (!mounted) return;
+    setState(() => _isLoading = true);
+
+    try {
+      final shouldNavigateToOnboarding =
+          await _shouldNavigateToOnboarding(userId, currentHealthElement.title);
+      _navigateBasedOnCondition(
+        shouldNavigateToOnboarding,
+        item,
+      );
+    } catch (e) {
+      debugPrint('Error in _handleButtonClick: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
+
+  Future<bool> _shouldNavigateToOnboarding(
+      String userId, String healthElementTitle) async {
+    final firebaseServices = FirebaseService();
+    return !(await firebaseServices.checkOnboardingCompleted(
+        userId, healthElementTitle));
+  }
+
+  void _navigateBasedOnCondition(
+      bool shouldNavigateToCriteria, ContentItem item) {
+    if (shouldNavigateToCriteria) {
+      Navigator.pushNamed(
+        context,
+        '/protocolOnboarding',
+        arguments: item,
+      );
+    } else {
+      Navigator.pushNamed(context, '/protocol');
     }
   }
 

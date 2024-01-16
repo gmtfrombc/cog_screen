@@ -96,7 +96,7 @@ class _ProtocolOnboardingScreenState extends State<ProtocolOnboardingScreen> {
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
               ),
-              child: const Text('No thanks'),
+              child: const Text('Back'),
             ),
           ),
         ),
@@ -120,7 +120,8 @@ class _ProtocolOnboardingScreenState extends State<ProtocolOnboardingScreen> {
       ],
     );
   }
-Future<void> _handleButtonClick() async {
+
+  Future<void> _handleButtonClick() async {
     if (!mounted) return;
 
     final healthElementProvider =
@@ -137,6 +138,13 @@ Future<void> _handleButtonClick() async {
     setState(() => _isLoading = true);
 
     try {
+      if (currentHealthElement.title != 'Brain Health') {
+        await FirebaseService().recordOnboardingStatus(
+          userId,
+          currentHealthElement.title,
+          true,
+        );
+      }
       final shouldNavigateToCriteria =
           await _shouldNavigateToCriteria(userId, currentHealthElement.title);
       _navigateBasedOnCondition(shouldNavigateToCriteria);
@@ -163,46 +171,6 @@ Future<void> _handleButtonClick() async {
     final routeName = shouldNavigateToCriteria ? '/criteria' : '/protocol';
     Navigator.pushNamed(context, routeName);
   }
-
-
-
-  // Future<void> _handleButtonClick() async {
-  //   final healthElementProvider =
-  //       Provider.of<HealthElementProvider>(context, listen: false);
-  //   final currentHealthElement = healthElementProvider.currentHealthElement;
-  //   final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
-  //   userId = authProvider.currentUser?.uid ?? '';
-  //   final firebaseServices = FirebaseService();
-  //   if (currentHealthElement == null) {
-  //     debugPrint("No current health element found");
-  //     return;
-  //   }
-
-  //   if (!mounted) return;
-  //   setState(() => _isLoading = true);
-
-  //   try {
-  //     bool onboardingCompleted = await firebaseServices
-  //         .checkOnboardingCompleted(userId, currentHealthElement.title);
-
-  //     if (!mounted) return;
-  //     if (onboardingCompleted) {
-  //       Navigator.pushNamed(
-  //           context, '/protocol'); // Go to protocol if completed
-  //     } else {
-  //       await firebaseServices.recordUserAction(
-  //           userId, currentHealthElement.title);
-  //       if (!mounted) return;
-  //       Navigator.pushNamed(context, '/criteria');
-  //     }
-  //   } catch (e) {
-  //     debugPrint('Error in _handleButtonClick: $e');
-  //   } finally {
-  //     if (mounted) {
-  //       setState(() => _isLoading = false);
-  //     }
-  //   }
-  // }
 }
 
 class WaveClipper extends CustomClipper<Path> {

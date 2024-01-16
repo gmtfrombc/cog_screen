@@ -10,7 +10,7 @@ class SleepConstants {
   static const String psqiAssessment =
       " A complete assessment of your sleep quality and sleep patterns.";
   static const String sleepProtocol =
-      'The following Sleep Protocol is based on recent research that has investigaed essential oils and sleep.\n\n Study results have demonstrated that a number of essential oils can aid with both sleep onset and maintenance.\n\nIf you would like to consider this treatment to support your cognitive health, then select "Get Started" below.\n\nYou will be asked to take a short questionnaire to ensure no medical contraindications.';
+      'The following Sleep Protocol is based on recent research that has investigaed essential oils and sleep.\n\n Study results have demonstrated that a variety of essential oils can aid with both sleep onset and maintenance.\n\nIf you would like to consider this treatment with essential oils to support your sleep health, then select "Get Started" below.';
   static const String sleepHygieneResultsTop =
       "The Sleep Hygiene tool provides an assessment of your sleep behavior and environment. \n\nIf appropriate, after you've made changes to your sleep environment, try retaking the survey and compare your results.";
   static const String sleepHygieneResultsBottom =
