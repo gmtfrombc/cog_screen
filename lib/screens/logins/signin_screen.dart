@@ -182,7 +182,7 @@ class _SignInState extends State<SignIn> {
         password,
       );
       if (mounted) {
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, '/onboardingWelcome');
       }
     } catch (e) {
       if (mounted) {

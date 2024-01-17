@@ -187,7 +187,7 @@ class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> {
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(200, 50),
                     ),
-                    child: const Text("Next"),
+                    child: const Text("View Form"),
                   ),
                 ),
               const SizedBox(height: 20), // Additional space, adjust as needed

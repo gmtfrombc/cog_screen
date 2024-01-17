@@ -87,6 +87,7 @@ flutter:
     - lib/assets/images/research3.jpeg
     - lib/assets/images/research4.jpeg
     - lib/assets/images/sleep_assessment_pm.jpeg
+    - lib/assets/images/sleep_assessment3.png
     - lib/assets/images/psqi_survey.jpeg
     - lib/assets/images/sleep_hygiene.jpeg
     - lib/assets/images/survey_results_onboarding.png

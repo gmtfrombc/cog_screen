@@ -1,4 +1,5 @@
 import 'package:cog_screen/models/health_element.dart';
+import 'package:cog_screen/models/healthelement_image_model.dart';
 import 'package:cog_screen/screens/logins/login.dart';
 import 'package:cog_screen/services/firebase_storage_services.dart';
 import 'package:flutter/material.dart';
@@ -151,15 +152,11 @@ class SplashScreenState extends State<SplashScreen>
     try {
       List<Future> preloadTasks = [];
       for (HealthElement element in elements) {
-        //debugPrint('Processing element: ${element.title}');
-
         if (element.isActive) {
-          // debugPrint('Element is active. Preloading all images.');
           for (HealthElementImage image in element.images) {
             await preloadImage(image, preloadTasks);
           }
         } else {
-          //debugPrint('Element is inactive. Preloading only /Home image.');
           HealthElementImage? homeImage = element.images.firstWhere(
               (img) => img.folder == 'Home',
               orElse: () => HealthElementImage(
@@ -185,13 +182,10 @@ class SplashScreenState extends State<SplashScreen>
   Future<void> preloadImage(
       HealthElementImage image, List<Future> preloadTasks) async {
     String filePath = '${image.folder}/${image.name}.${image.type}';
-    //debugPrint('Fetching URL for $filePath'); // Check file path for each image
 
     try {
       String imageUrl = await storageService.getDownloadURL(filePath);
       image.url = imageUrl;
-      // debugPrint(
-      //     'Fetched URL for $filePath: $imageUrl'); // Confirm successful fetch
       if (mounted) {
         var preloadTask = precacheImage(NetworkImage(imageUrl), context);
         preloadTasks.add(preloadTask);

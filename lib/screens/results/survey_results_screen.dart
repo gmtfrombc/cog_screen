@@ -55,12 +55,35 @@ class _SurveyResultsScreenState extends State<SurveyResultsScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Your ${widget.contentItem.title} Score: $totalScore/$possibleScore',
+                  widget.contentItem.title,
                   style: theme.textTheme.titleLarge?.copyWith(fontSize: 26),
                   textAlign: TextAlign.center,
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Score: $totalScore/$possibleScore',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      debugPrint('Learn more pressed');
+                      _showLearnMoreSheet(context);
+                    },
+                    icon: Icon(
+                      Icons.info_outlined,
+                      color: AppTheme.primaryColor,
+                      size: 30,
+                    ),
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.all(14.0),
@@ -79,7 +102,7 @@ class _SurveyResultsScreenState extends State<SurveyResultsScreen> {
                   imagePath: widget.contentItem.surveyImage,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(14.0),
                 child: Text(
@@ -197,5 +220,123 @@ class _SurveyResultsScreenState extends State<SurveyResultsScreen> {
       debugPrint('Error saving results: $e');
       return false; // Save failed
     }
+  }
+
+  void _showLearnMoreSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Allow the bottom sheet to take full height
+      builder: (BuildContext context) {
+        double screenHeight = MediaQuery.of(context).size.height;
+        return SingleChildScrollView(
+          child: Container(
+            constraints: BoxConstraints(minHeight: screenHeight),
+            child: _learnMoreBottomSheet(context),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _learnMoreBottomSheet(
+    BuildContext context,
+  ) {
+    final healthElementProvider = Provider.of<HealthElementProvider>(
+      context,
+      listen: false,
+    );
+    final currentHealthElement = healthElementProvider.currentHealthElement;
+    final resultsInfo = currentHealthElement!.resultsInfo;
+    return Column(
+      children: [
+        const SizedBox(
+          height: 30,
+        ),
+        const ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+            bottomLeft: Radius.zero,
+            bottomRight: Radius.zero,
+          ),
+          child: Image(
+            height: 200,
+            image: AssetImage(
+              'lib/assets/images/sleep_assessment3.png',
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          resultsInfo!.title,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6),
+          child: Text(
+            resultsInfo.introText,
+            style: const TextStyle(
+              fontSize: 14,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        for (var item in resultsInfo.resultListItems)
+          ListTile(
+            title: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text: item.boldText,
+                    style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                  TextSpan(
+                    text: item.regularText,
+                    style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 6.0,
+          ),
+          child: Text(
+            resultsInfo.conclusionText,
+            style: const TextStyle(
+              fontSize: 14,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        ElevatedButton(
+          child: const Text('Done'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
   }
 }

@@ -1,6 +1,9 @@
 import 'package:cog_screen/data/essential_oils_data.dart';
+import 'package:cog_screen/data/results_info_data.dart';
 import 'package:cog_screen/models/essential_oils_model.dart';
+import 'package:cog_screen/models/healthelement_image_model.dart';
 import 'package:cog_screen/models/protocol_model.dart';
+import 'package:cog_screen/models/results_info_model.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:cog_screen/utilities/sleep_constants.dart';
@@ -16,6 +19,7 @@ class HealthElement {
   final List<HealthElementImage> images;
   final EssentialOilsModel essentialOils;
   final ProtocolModel? protocol;
+  final ResultsInfoModel? resultsInfo;
 
   HealthElement({
     required this.title,
@@ -26,6 +30,7 @@ class HealthElement {
     required this.learningCenter,
     required this.images,
     required this.essentialOils,
+    this.resultsInfo,
     this.protocol,
   });
 }
@@ -60,21 +65,6 @@ class ContentItem {
     this.surveyResultsBottom = '',
     this.possibleScore,
   });
-}
-
-class HealthElementImage {
-  final String name;
-  final String type;
-  final String folder;
-  String? url;
-  HealthElementImage({
-    required this.name,
-    required this.type,
-    required this.folder,
-    this.url,
-  });
-  String get fullPath =>
-      '/$folder/$name.$type'; // Full path to the image in Firebase Storage
 }
 
 final List<HealthElement> elements = [
@@ -400,6 +390,7 @@ final List<HealthElement> elements = [
         frequencyDuration: SleepConstants.sleepFrequencyDuration,
       ),
     ),
+    resultsInfo: resultsInfoData
   ),
   HealthElement(
     title: "Stress",

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cog_screen/models/health_element.dart';
+import 'package:cog_screen/models/healthelement_image_model.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/health_element_provider.dart';
@@ -262,8 +263,13 @@ class _AdviceScreenState extends State<AdviceScreen> {
       onTap: () async {
         final provider =
             Provider.of<HealthElementProvider>(context, listen: false);
-        _handleButtonClick(provider.currentHealthElement!);
-        _shouldOnboardUser(provider.currentHealthElement!, item);
+        provider.setCurrentHealthElement(widget.healthElement);
+        if (item.surveyType != 'protocol') {
+          Navigator.pushNamed(context, item.route!);
+        } else {
+          _handleButtonClick(provider.currentHealthElement!);
+          _shouldOnboardUser(provider.currentHealthElement!, item);
+        }
       },
       child: Column(
         children: [
