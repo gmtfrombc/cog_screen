@@ -49,6 +49,7 @@ class ContentItem {
   final String surveyResultsTop;
   final String surveyResultsBottom;
   final int? possibleScore;
+  final ResultsInfoModel? resultsInfo;
 
   ContentItem({
     required this.title,
@@ -64,6 +65,7 @@ class ContentItem {
     this.surveyResultsTop = '',
     this.surveyResultsBottom = '',
     this.possibleScore,
+    this.resultsInfo,
   });
 }
 
@@ -294,21 +296,22 @@ final List<HealthElement> elements = [
         surveyResultsTop: SleepConstants.sleepAssessmentResultsTop,
         surveyResultsBottom: SleepConstants.sleepAssessmentResultsBottom,
         possibleScore: 10,
+        resultsInfo: sleepAssessmentInfo,
       ),
       ContentItem(
-        title: "Sleep Hygiene Tool",
-        description: SleepConstants.sleepHygieneTool,
-        route: '/brainehealthquestionnaire',
-        cardColor: const Color.fromARGB(255, 62, 6, 147),
-        imageUrl: 'sleep_assessment3',
-        onboardingTitle: "Sleep Hygiene Tool",
-        onboardingDescription: SleepConstants.sleepHygieneTool,
-        surveyType: 'Sleep Hygiene Tool',
-        surveyImage: 'lib/assets/images/sleep_assessment_pm.jpeg',
-        surveyResultsTop: SleepConstants.sleepHygieneResultsTop,
-        surveyResultsBottom: SleepConstants.sleepHygieneResultsBottom,
-        possibleScore: 20,
-      ),
+          title: "Sleep Hygiene Tool",
+          description: SleepConstants.sleepHygieneTool,
+          route: '/brainehealthquestionnaire',
+          cardColor: const Color.fromARGB(255, 62, 6, 147),
+          imageUrl: 'sleep_assessment3',
+          onboardingTitle: "Sleep Hygiene Tool",
+          onboardingDescription: SleepConstants.sleepHygieneTool,
+          surveyType: 'Sleep Hygiene Tool',
+          surveyImage: 'lib/assets/images/sleep_assessment_pm.jpeg',
+          surveyResultsTop: SleepConstants.sleepHygieneResultsTop,
+          surveyResultsBottom: SleepConstants.sleepHygieneResultsBottom,
+          possibleScore: 20,
+          resultsInfo: sleepHygeineToolInfo),
     ],
     integrativeHealth: [
       //integrative health
@@ -390,7 +393,6 @@ final List<HealthElement> elements = [
         frequencyDuration: SleepConstants.sleepFrequencyDuration,
       ),
     ),
-    resultsInfo: resultsInfoData
   ),
   HealthElement(
     title: "Stress",
@@ -497,6 +499,7 @@ final List<HealthElement> elements = [
       ),
       research: eoCogResearch,
     ),
+ resultsInfo: sleepAssessmentInfo
   ),
   HealthElement(
     title: "Gut Health",

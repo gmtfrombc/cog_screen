@@ -47,7 +47,6 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // Run the app
   runApp(
     MultiProvider(
       providers: [
@@ -93,7 +92,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/splashscreen',
       routes: {
         '/': (context) => const LoginScreen(),
-        '/home': (context) => const HomeScreen(), // Add your StartScreen route
+        '/home': (context) => const HomeScreen(), 
         '/cognitive': (context) =>
             const CognitiveScreen(), // Add your StartScreen route
         '/survey': (context) => const CogHealthSurveyScreen(),
@@ -107,7 +106,7 @@ class MyApp extends StatelessWidget {
         '/research': (context) => const ResearchScreen(),
         '/splashscreen': (context) => const SplashScreen(),
         '/comingsoon': (context) => const ComingSoonScreen(),
-        '/onboarding': (context) => const AppOnboardingScreen(),        //'/advice': (context) => const AdviceScreen(),
+        '/onboarding': (context) => const AppOnboardingScreen(),  
         '/onboardingWelcome': (context) => const OnboardingWelcomeScreen(),
       },
       onGenerateRoute: (RouteSettings settings) {
@@ -157,12 +156,8 @@ class MyApp extends StatelessWidget {
                 builder: (context) => const HomeScreen(),
               );
             }
-          // case '/surveyscreen':
-          //   return MaterialPageRoute(
-          //     builder: (context) => const SurveyScreen(),
-          //   );
+
           default:
-            // Handle other routes or return null for unhandled routes
             return null;
         }
       },

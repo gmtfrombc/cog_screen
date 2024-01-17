@@ -231,7 +231,7 @@ class _SurveyResultsScreenState extends State<SurveyResultsScreen> {
         return SingleChildScrollView(
           child: Container(
             constraints: BoxConstraints(minHeight: screenHeight),
-            child: _learnMoreBottomSheet(context),
+            child: _learnMoreBottomSheet(context, widget.contentItem),
           ),
         );
       },
@@ -240,20 +240,16 @@ class _SurveyResultsScreenState extends State<SurveyResultsScreen> {
 
   Widget _learnMoreBottomSheet(
     BuildContext context,
+    ContentItem contentItem,
   ) {
-    final healthElementProvider = Provider.of<HealthElementProvider>(
-      context,
-      listen: false,
-    );
-    final currentHealthElement = healthElementProvider.currentHealthElement;
-    final resultsInfo = currentHealthElement!.resultsInfo;
+    final resultsInfo = contentItem.resultsInfo;
     return Column(
       children: [
         const SizedBox(
           height: 30,
         ),
-        const ClipRRect(
-          borderRadius: BorderRadius.only(
+        ClipRRect(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
             bottomLeft: Radius.zero,
@@ -262,7 +258,7 @@ class _SurveyResultsScreenState extends State<SurveyResultsScreen> {
           child: Image(
             height: 200,
             image: AssetImage(
-              'lib/assets/images/sleep_assessment3.png',
+              resultsInfo!.imagePath,
             ),
             fit: BoxFit.cover,
           ),
@@ -271,7 +267,7 @@ class _SurveyResultsScreenState extends State<SurveyResultsScreen> {
           height: 10,
         ),
         Text(
-          resultsInfo!.title,
+          resultsInfo.title,
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -281,11 +277,11 @@ class _SurveyResultsScreenState extends State<SurveyResultsScreen> {
           height: 10,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
           child: Text(
             resultsInfo.introText,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 12,
             ),
           ),
         ),
@@ -323,7 +319,7 @@ class _SurveyResultsScreenState extends State<SurveyResultsScreen> {
           child: Text(
             resultsInfo.conclusionText,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 12,
             ),
           ),
         ),
