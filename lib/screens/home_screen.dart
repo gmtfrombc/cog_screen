@@ -172,7 +172,7 @@ Widget _buildHealthElementGrid(BuildContext context) {
                   ),
                 ),
               ),
-              Padding(
+               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

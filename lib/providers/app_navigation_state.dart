@@ -6,6 +6,7 @@ class AppNavigationProvider with ChangeNotifier {
   int get currentIndex => _currentIndex;
 
   void changeIndex(int index) {
+    debugPrint('Current index is: $index');
     _currentIndex = index;
     notifyListeners();
   }
@@ -14,10 +15,10 @@ class AppNavigationProvider with ChangeNotifier {
     // Logic to determine the index based on the route
     int newIndex;
     switch (route) {
-      case '/start':
+      case '/home':
         newIndex = 0;
         break;
-      case '/results':
+      case '/allresults':
         newIndex = 1;
         break;
       case '/shoppingCart':
@@ -25,7 +26,8 @@ class AppNavigationProvider with ChangeNotifier {
         break;
       // Add other cases for different routes...
       default:
-        newIndex = _currentIndex; // Keep the current index for other routes
+        newIndex = _currentIndex;
+// Keep the current index for other routes
     }
 
     if (newIndex != _currentIndex) {
@@ -34,8 +36,6 @@ class AppNavigationProvider with ChangeNotifier {
     }
 
     Navigator.pushNamed(context, route) // Navigate to the route
-        .then((value) {
-      debugPrint('Returned from route $route');
-    }); // Reset the index when returning
+        .then((value) {}); // Reset the index when returning
   }
 }

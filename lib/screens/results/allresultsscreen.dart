@@ -34,7 +34,6 @@ class _AllResultsScreenState extends State<AllResultsScreen> {
   Future<void> _fetchAssessmentTitles() async {
     var titles = await FirebaseService().fetchAssessmentTitles();
     setState(() {
-      debugPrint('titles: $titles');
       assessmentTitles = titles..sort(); // Sort the titles alphabetically
     });
   }
@@ -91,32 +90,35 @@ class _AllResultsScreenState extends State<AllResultsScreen> {
                       color: Colors.grey[300]!, width: 2), // Faint border
                   borderRadius: BorderRadius.circular(8), // Rounded corners
                 ),
-                child: DropdownButton<String>(
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                  ),
-                  isExpanded: true,
-                  underline:
-                      const SizedBox(), // This makes the dropdown take the full width
-                  value: selectedAssessment,
-                  items: assessmentTitles
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Center(
-                        child: Text(
-                          value,
-                          textAlign: TextAlign.center,
+                child: SizedBox(
+                  height: 50,
+                  child: DropdownButton<String>(
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                    isExpanded: true,
+                    underline:
+                        const SizedBox(), // This makes the dropdown take the full width
+                    value: selectedAssessment,
+                    items: assessmentTitles
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Center(
+                          child: Text(
+                            value,
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedAssessment = newValue;
-                    });
-                  },
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedAssessment = newValue;
+                      });
+                    },
+                  ),
                 ),
               ),
             ),
@@ -249,10 +251,8 @@ class _AllResultsScreenState extends State<AllResultsScreen> {
 
       double y = 0;
       if (result['score'] != null) {
-        debugPrint('The value of result[score]: ${result['score']}');
         y = (result['score'] as num).toDouble();
       } else {
-        debugPrint('else clause: The value of result[score]: null');
         y = 10.0; // Or any other default value if needed
         continue;
       }
@@ -355,9 +355,7 @@ class _AllResultsScreenState extends State<AllResultsScreen> {
                       ),
                     ),
                     ...List.generate(results.length, (index) {
-                      debugPrint('The value of index: $index');
                       var result = results[index];
-                      debugPrint('The value of result: $result');
                       String formattedDate = DateFormat('MM/dd/yyyy')
                           .format(result['date'].toDate());
 

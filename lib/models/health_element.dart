@@ -126,6 +126,7 @@ final List<HealthElement> elements = [
         possibleScore: 21,
         surveyResultsTop: BrainConstants.brainCareShort,
         surveyResultsBottom: BrainConstants.brainHealthMore,
+        resultsInfo: mccanceInfo,
       ),
       ContentItem(
         title: "CogHealth Screening Test",
@@ -140,6 +141,7 @@ final List<HealthElement> elements = [
         possibleScore: 10,
         surveyResultsTop: BrainConstants.cogHealthExplanation,
         surveyResultsBottom: BrainConstants.cogHealthMore,
+        resultsInfo: cogHealthInfo,
       ),
     ],
     integrativeHealth: [
@@ -282,6 +284,7 @@ final List<HealthElement> elements = [
         possibleScore: 21,
         surveyResultsTop: SleepConstants.psqiAssessmentResultsTop,
         surveyResultsBottom: SleepConstants.psqiAssessmentResultsBottom,
+        resultsInfo: psqiInfo,
       ),
       ContentItem(
         title: "PowerME Sleep Assessment",
@@ -395,112 +398,111 @@ final List<HealthElement> elements = [
     ),
   ),
   HealthElement(
-    title: "Stress",
-    onboardingRoute: "/comingsoon",
-    isActive: false,
-    images: [
-      HealthElementImage(
-        name: 'stress',
-        type: 'jpeg',
-        folder: 'Home',
+      title: "Stress",
+      onboardingRoute: "/comingsoon",
+      isActive: false,
+      images: [
+        HealthElementImage(
+          name: 'stress',
+          type: 'jpeg',
+          folder: 'Home',
+        ),
+        HealthElementImage(
+          name: 'sleep_assessment1',
+          type: 'png',
+          folder: 'Sleep',
+        ),
+        HealthElementImage(
+          name: 'sleep_assessment2',
+          type: 'png',
+          folder: 'Sleep',
+        ),
+        HealthElementImage(
+          name: 'sleep_protocol1',
+          type: 'jpeg',
+          folder: 'Sleep',
+        ),
+        HealthElementImage(
+          name: 'sleep_learning1',
+          type: 'jpeg',
+          folder: 'Sleep',
+        ),
+        HealthElementImage(
+          name: 'sleep_learning2',
+          type: 'jpeg',
+          folder: 'Sleep',
+        ),
+        HealthElementImage(
+          name: 'sleep_learning3',
+          type: 'jpeg',
+          folder: 'Sleep',
+        ),
+      ],
+      assessments: [
+        //Assessments
+        ContentItem(
+          title: "McCANCE Brain Care Score'",
+          description: BrainConstants.brainCareShort,
+          route: '/brainehealthquestionnaire',
+          imageUrl: 'memory_health',
+          cardColor: AppTheme.primaryColor,
+        ),
+        ContentItem(
+          title: "The CogHealth Screening Test'",
+          description: "A short assessment of memory and cognitive function.",
+          route: '/cognitive',
+          imageUrl: 'cog_health_test2',
+          cardColor: const Color(0xE9FCAF3B),
+        ),
+      ],
+      integrativeHealth: [
+        //protocols
+        ContentItem(
+          title: "Memory Enhancement Protocol",
+          description: BrainConstants.olfactoryEnrichment,
+          route: '/eoOnboarding',
+          imageUrl: 'memory_protocol',
+          cardColor: const Color(0xE9FCAF3B),
+        ),
+      ],
+      learningCenter: [
+        //learning center
+        ContentItem(
+          title: 'Essential oils, memory, and cognitive health',
+          description: 'Learn',
+          route: '/essentialOils',
+          imageUrl: 'dT_EO2',
+        ),
+        ContentItem(
+          title: 'Basic facts about brain health',
+          description: '3 min',
+          route: '/viewScreen',
+          imageUrl: 'brain_health_2',
+          url:
+              'https://powermeacademy.com/lessons/understanding-cognitive-health/',
+        ),
+        ContentItem(
+          title: 'Lifestyle strategies for a health brain',
+          description: '3 min',
+          route: '/viewScreen',
+          imageUrl: 'brain_outdoor_dog',
+          url:
+              'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
+        ),
+      ],
+      essentialOils: EssentialOilsModel(
+        header: EOScreenHeader(
+          title: 'Essential Oils and Brain Health',
+          image: 'brain_health_2',
+        ),
+        articles: EOScreenArticles(
+          title: 'Essential Oils and Brain Health',
+          description: 'Learn',
+          image: 'dT_EO2',
+        ),
+        research: eoCogResearch,
       ),
-      HealthElementImage(
-        name: 'sleep_assessment1',
-        type: 'png',
-        folder: 'Sleep',
-      ),
-      HealthElementImage(
-        name: 'sleep_assessment2',
-        type: 'png',
-        folder: 'Sleep',
-      ),
-      HealthElementImage(
-        name: 'sleep_protocol1',
-        type: 'jpeg',
-        folder: 'Sleep',
-      ),
-      HealthElementImage(
-        name: 'sleep_learning1',
-        type: 'jpeg',
-        folder: 'Sleep',
-      ),
-      HealthElementImage(
-        name: 'sleep_learning2',
-        type: 'jpeg',
-        folder: 'Sleep',
-      ),
-      HealthElementImage(
-        name: 'sleep_learning3',
-        type: 'jpeg',
-        folder: 'Sleep',
-      ),
-    ],
-    assessments: [
-      //Assessments
-      ContentItem(
-        title: "McCANCE Brain Care Score'",
-        description: BrainConstants.brainCareShort,
-        route: '/brainehealthquestionnaire',
-        imageUrl: 'memory_health',
-        cardColor: AppTheme.primaryColor,
-      ),
-      ContentItem(
-        title: "The CogHealth Screening Test'",
-        description: "A short assessment of memory and cognitive function.",
-        route: '/cognitive',
-        imageUrl: 'cog_health_test2',
-        cardColor: const Color(0xE9FCAF3B),
-      ),
-    ],
-    integrativeHealth: [
-      //protocols
-      ContentItem(
-        title: "Memory Enhancement Protocol",
-        description: BrainConstants.olfactoryEnrichment,
-        route: '/eoOnboarding',
-        imageUrl: 'memory_protocol',
-        cardColor: const Color(0xE9FCAF3B),
-      ),
-    ],
-    learningCenter: [
-      //learning center
-      ContentItem(
-        title: 'Essential oils, memory, and cognitive health',
-        description: 'Learn',
-        route: '/essentialOils',
-        imageUrl: 'dT_EO2',
-      ),
-      ContentItem(
-        title: 'Basic facts about brain health',
-        description: '3 min',
-        route: '/viewScreen',
-        imageUrl: 'brain_health_2',
-        url:
-            'https://powermeacademy.com/lessons/understanding-cognitive-health/',
-      ),
-      ContentItem(
-        title: 'Lifestyle strategies for a health brain',
-        description: '3 min',
-        route: '/viewScreen',
-        imageUrl: 'brain_outdoor_dog',
-        url:
-            'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
-      ),
-    ],
-    essentialOils: EssentialOilsModel(
-      header: EOScreenHeader(
-        title: 'Essential Oils and Brain Health',
-        image: 'brain_health_2',
-      ),
-      articles: EOScreenArticles(
-        title: 'Essential Oils and Brain Health',
-        description: 'Learn',
-        image: 'dT_EO2',
-      ),
-      research: eoCogResearch,
-    ),
- resultsInfo: sleepAssessmentInfo
-  ),
+      resultsInfo: sleepAssessmentInfo),
   HealthElement(
     title: "Gut Health",
     onboardingRoute: "/comingsoon",

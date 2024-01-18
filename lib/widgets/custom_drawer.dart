@@ -1,6 +1,6 @@
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/criteria_provider.dart';
-import 'package:cog_screen/providers/cog_provider.dart';
+import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +13,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProviderClass>(context);
-    final surveyProvider = Provider.of<CogProvider>(context, listen: false);
+    final surveyProvider = Provider.of<SurveyProvider>(context, listen: false);
 
     return Drawer(
       child: Container(

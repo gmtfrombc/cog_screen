@@ -74,7 +74,6 @@ class _SurveyResultsScreenState extends State<SurveyResultsScreen> {
                   ),
                   IconButton(
                     onPressed: () {
-                      debugPrint('Learn more pressed');
                       _showLearnMoreSheet(context);
                     },
                     icon: Icon(

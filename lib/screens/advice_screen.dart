@@ -127,7 +127,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
     BuildContext context,
     List<ContentItem> items,
     String sectionTitle,
-    Function(BuildContext, ContentItem) buildCardFunction,
+    Function(BuildContext, ContentItem) buildContentItemCard,
     double cardHeight,
   ) {
     if (sectionTitle == 'Integrative Health') {
@@ -137,7 +137,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
         children: [
           SectionTitle(title: sectionTitle),
           ...items.map(
-            (item) => buildCardFunction(context, item),
+            (item) => buildContentItemCard(context, item),
           ),
         ],
       );
@@ -153,7 +153,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
               scrollDirection: Axis.horizontal,
               itemCount: items.length,
               itemBuilder: (context, index) {
-                return buildCardFunction(context, items[index]);
+                return buildContentItemCard(context, items[index]);
               },
             ),
           ),

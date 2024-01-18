@@ -1,13 +1,13 @@
 // main_screen.dart
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cog_screen/screens/home_screen.dart';
 import 'package:cog_screen/screens/results/allresultsscreen.dart';
 import 'package:cog_screen/screens/shopping_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:flutter/material.dart';
-import 'package:cog_screen/screens/onboarding/coghealthtest_onboarding.dart';
 import 'package:provider/provider.dart';
 import 'package:cog_screen/providers/app_navigation_state.dart';
 
@@ -16,6 +16,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('Building MainScreen');
     // Use Consumer to listen to the navigation state
     return Consumer<AppNavigationProvider>(
         builder: (context, navigationState, child) {
@@ -27,7 +28,7 @@ class MainScreen extends StatelessWidget {
         body: IndexedStack(
           index: navigationState.currentIndex,
           children: <Widget>[
-            const CognitiveScreen(),
+            const HomeScreen(),
             AllResultsScreen(),
             const ShoppingScreen(),
             // Add other screens as needed
@@ -51,6 +52,7 @@ class MainScreen extends StatelessWidget {
           currentIndex: navigationState.currentIndex,
           selectedItemColor: Colors.amber[800],
           onTap: (index) {
+            debugPrint('Current index is: $index');
             navigationState.changeIndex(index);
           },
         ),

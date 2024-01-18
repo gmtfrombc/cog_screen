@@ -148,9 +148,9 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _loadImageUrls() async {
-    // debugPrint('Starting _loadImageUrls');
-    try {
       List<Future> preloadTasks = [];
+
+    try {
       for (HealthElement element in elements) {
         if (element.isActive) {
           for (HealthElementImage image in element.images) {

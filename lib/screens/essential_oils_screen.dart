@@ -20,50 +20,58 @@ class EssentialOilScreen extends StatefulWidget {
 }
 
 class _EssentialOilScreenState extends State<EssentialOilScreen> {
-  final double horizontalMargin = 8.0;
-  final double verticalMargin = 4.0;
-  final EdgeInsets cardPadding = const EdgeInsets.all(8.0);
-  final Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
-  final String articlePath =
+  static const String articlePath =
       'https://powermeacademy.com/lessons/how-essential-oils-benefit-memory-and-cognitive-health/';
   bool isLoading = false;
-  String userId = '';
+    static  Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
+
+
   @override
   Widget build(BuildContext context) {
-    final healthElementProvider = Provider.of<HealthElementProvider>(context);
-    final healthElement = healthElementProvider.currentHealthElement;
-    final appNavigationProvider = Provider.of<AppNavigationProvider>(context);
-    final authProvider = Provider.of<AuthProviderClass>(context, listen: false);
-    userId = authProvider.currentUser?.uid ?? '';
+    return Consumer3<HealthElementProvider, AppNavigationProvider,
+        AuthProviderClass>(
+      builder: (context, healthElementProvider, appNavigationProvider,
+          authProvider, _) {
+        final healthElement = healthElementProvider.currentHealthElement;
+        //final String userId = authProvider.currentUser?.uid ?? '';
 
-    return BaseScreen(
-      authProvider: Provider.of<AuthProviderClass>(context, listen: false),
-      customAppBar: CustomAppBar(
-        title: const CustomTextForTitle(),
-        backgroundColor: AppTheme.primaryBackgroundColor,
-        showEndDrawerIcon: true,
-        showLeading: true,
-      ),
-      showDrawer: true,
-      showAppBar: true,
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: appNavigationProvider.currentIndex,
-        context: context,
-        appNavigationProvider: appNavigationProvider,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildHeader(context, healthElement),
-            _buildMiddleCard(context, healthElement),
-            _buildResearchHeader(context),
-            _buildResearchGrid(context, healthElement)
-          ],
-        ),
-      ),
+        return BaseScreen(
+          authProvider: authProvider,
+          customAppBar: CustomAppBar(
+            title: const CustomTextForTitle(),
+            backgroundColor: AppTheme.primaryBackgroundColor,
+            showEndDrawerIcon: true,
+            showLeading: true,
+          ),
+          showDrawer: true,
+          showAppBar: true,
+          bottomNavigationBar: CustomBottomNavigationBar(
+            currentIndex: appNavigationProvider.currentIndex,
+            context: context,
+            appNavigationProvider: appNavigationProvider,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildHeader(context, healthElement),
+                _buildMiddleCard(context, healthElement),
+                _buildResearchHeader(context),
+                _buildResearchGrid(context, healthElement)
+
+                // Your widgets here...
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
+
+  // _buildHeader(context, healthElement),
+  // _buildMiddleCard(context, healthElement),
+  // _buildResearchHeader(context),
+  // _buildResearchGrid(context, healthElement)
 
   Widget _buildHeader(BuildContext context, HealthElement? healthElement) {
     EssentialOilsModel essentialOilsModel = healthElement!.essentialOils;
@@ -107,7 +115,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
   }
 
   Widget _buildMiddleCard(BuildContext context, HealthElement? healthElement) {
-    final EssentialOilsModel essentialOilsModel=healthElement!.essentialOils;
+    final EssentialOilsModel essentialOilsModel = healthElement!.essentialOils;
     final EOScreenArticles articles = essentialOilsModel.articles;
     return Container(
       width: double.infinity,
@@ -134,7 +142,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                   ),
                 ),
                 const SizedBox(height: 8), // Spacing between widgets
-                 SizedBox(
+                SizedBox(
                   width: 240,
                   child: Text(
                     articles.description,
@@ -255,8 +263,9 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     );
   }
 
-  Widget _buildResearchGrid(BuildContext context, HealthElement? healthElement) {
-    final EssentialOilsModel essentialOilsModel=healthElement!.essentialOils;
+  Widget _buildResearchGrid(
+      BuildContext context, HealthElement? healthElement) {
+    final EssentialOilsModel essentialOilsModel = healthElement!.essentialOils;
     final List<EOResearch> researchList = essentialOilsModel.research;
     return GridView.builder(
       shrinkWrap: true, // This will make GridView take the minimum space
@@ -285,7 +294,8 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         setState(() {
           isLoading = true;
         });
-        await Navigator.pushNamed(context, '/viewScreen', arguments: researchArticle.url);
+        await Navigator.pushNamed(context, '/viewScreen',
+            arguments: researchArticle.url);
         setState(
           () {
             isLoading = false;

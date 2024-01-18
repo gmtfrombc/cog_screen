@@ -54,12 +54,15 @@ class DynamicOnboardingScreen extends StatelessWidget {
                     ?.copyWith(fontSize: 16, fontWeight: FontWeight.w300),
               ),
             ),
+            const SizedBox(height: 20),
             Text(
               "When you are ready, select 'Begin'",
-              style: theme.textTheme.bodyMedium
-                  ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 final surveyProvider =
