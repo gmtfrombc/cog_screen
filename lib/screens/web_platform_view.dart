@@ -37,9 +37,14 @@ class _WebViewState extends State<WebView> {
 
   @override
   Widget build(BuildContext context) {
-    return HtmlElementView(
-      viewType: 'iframeElement',
-      key: UniqueKey(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('WebView'),
+      ),
+      body: HtmlElementView(
+        viewType: 'iframeElement',
+        key: UniqueKey(),
+      ),
     );
   }
 }

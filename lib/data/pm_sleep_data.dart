@@ -71,11 +71,11 @@ List<SurveyCategory> sleepData = [
     criteria: [
       SurveyCriterion(
         description: 'Less than 5 minutes',
-        rank: 1,
+        rank: 2,
       ),
       SurveyCriterion(
         description: '5-30 minutes',
-        rank: 2,
+        rank: 1,
       ),
       SurveyCriterion(
         description: '30-60 minutes',

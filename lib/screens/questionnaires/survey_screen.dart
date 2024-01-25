@@ -42,6 +42,36 @@ class _SurveyScreenState extends State<SurveyScreen> {
       showAppBar: true,
       child: ListView(
         children: [
+          if (surveyProvider.currentCategoryIndex > 0)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () => _navigateBack(context, surveyProvider),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize
+                        .min, // To keep the Row size to its children
+                    children: <Widget>[
+                      Icon(
+                        Icons.arrow_back, // The back arrow icon
+                        size: 20, // You can adjust the size as per your need
+                      ),
+                      SizedBox(width: 8), // Space between icon and text
+                      Text(
+                        'Previous Question',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => _cancelSurvey(context, surveyProvider),
+                  child: const Text('Cancel'),
+                ),
+              ],
+            ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
@@ -82,6 +112,20 @@ class _SurveyScreenState extends State<SurveyScreen> {
     );
   }
 
+  void _navigateBack(BuildContext context, SurveyProvider surveyProvider) {
+
+    surveyProvider.popResponse();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SurveyScreen(
+          key: ValueKey(surveyProvider.currentCategoryIndex),
+          contentItem: widget.contentItem,
+        ),
+      ),
+    );
+  }
+
   void _onCriterionSelected(
     BuildContext context,
     SurveyProvider surveyProvider,
@@ -91,33 +135,40 @@ class _SurveyScreenState extends State<SurveyScreen> {
     ContentItem contentItem,
     int index,
   ) {
-    final currentCategory = surveyProvider.getCurrentCategory();
-    surveyProvider.setUserResponse(
-        currentCategory.category, index, value ?? -1);
-    surveyProvider.incrementTotalScore(value!);
-    if (isLastCategory) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SurveyResultsScreen(
-            surveyType: surveyProvider.surveyType!,
-            contentItem: contentItem,
-          ),
-        ),
-      );
-    } else {
-      surveyProvider.setUserResponse(currentCategory.category, index, -1);
 
-      surveyProvider.incrementCategoryIndex();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SurveyScreen(
-            key: ValueKey(surveyProvider.currentCategoryIndex),
-            contentItem: contentItem,
+
+    if (value != null) {
+      surveyProvider.pushResponse(surveyProvider.currentCategoryIndex, value);
+
+      // Check if it's the last question in the survey
+      if (isLastCategory) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SurveyResultsScreen(
+              surveyType: surveyProvider.surveyType!,
+              contentItem: contentItem,
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        // Increment the category index here
+        surveyProvider.incrementCategoryIndex();
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SurveyScreen(
+              key: ValueKey(surveyProvider.currentCategoryIndex),
+              contentItem: contentItem,
+            ),
+          ),
+        );
+      }
     }
+  }
+
+  void _cancelSurvey(BuildContext context, SurveyProvider surveyProvider) {
+    surveyProvider.restartSurvey();
+    Navigator.pop(context);
   }
 }

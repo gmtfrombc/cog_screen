@@ -1,9 +1,9 @@
 // main_screen.dart
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cog_screen/screens/coming_soon.dart';
 import 'package:cog_screen/screens/home_screen.dart';
 import 'package:cog_screen/screens/results/allresultsscreen.dart';
-import 'package:cog_screen/screens/shopping_screen.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
@@ -30,7 +30,7 @@ class MainScreen extends StatelessWidget {
           children: <Widget>[
             const HomeScreen(),
             AllResultsScreen(),
-            const ShoppingScreen(),
+            const ComingSoonScreen(),
             // Add other screens as needed
           ],
         ),

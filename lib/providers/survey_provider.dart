@@ -7,6 +7,7 @@ class SurveyProvider with ChangeNotifier {
   int _totalScore = 0;
   int _currentCategoryIndex = 0;
   String? _surveyType;
+  final List<QuestionResponse> _responseHistory = [];
 
   String? get surveyType => _surveyType;
 
@@ -21,14 +22,33 @@ class SurveyProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void pushResponse(int categoryIndex, int rank) {
+    _responseHistory.add(QuestionResponse(categoryIndex, rank));
+    _totalScore += rank;
+    notifyListeners();
+  }
+
+  void popResponse() {
+    if (_responseHistory.isNotEmpty) {
+      var lastResponse = _responseHistory.removeLast();
+      _totalScore -= lastResponse.rank;
+      _currentCategoryIndex = lastResponse.categoryIndex;
+    } else {
+      _currentCategoryIndex =
+          0; // Reset to the first question if the history is empty
+    }
+    notifyListeners();
+  }
+
   void setUserResponse(String category, int index, int rank) {
     String key = '$category-$index';
     _userResponses[key] = rank;
+
     notifyListeners();
   }
 
   int getUserResponse(String category, int index) {
-      String key = '$category-$index';
+    String key = '$category-$index';
 
     return _userResponses[key] ?? -1;
   }
@@ -67,7 +87,7 @@ class SurveyProvider with ChangeNotifier {
 
   void incrementCategoryIndex() {
     _currentCategoryIndex++;
-
+    // Check responses at this point
     notifyListeners();
   }
 }

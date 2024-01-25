@@ -6,13 +6,17 @@ import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/screens/onboarding/dynamic_onboarding_screen.dart';
-import 'package:cog_screen/screens/view_screen.dart';
+//import 'package:cog_screen/screens/view_screen.dart';
+//import 'package:cog_screen/screens/webview.dart';
+import 'platform_specific_webview.dart';
+
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:cog_screen/widgets/section_title_widget.dart';
+//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -166,16 +170,11 @@ class _AdviceScreenState extends State<AdviceScreen> {
     BuildContext context,
     ContentItem item,
   ) {
-    // debugPrint(
-    //     'Building top card in AdviceScreen for item: ${item.title} with surveyType: ${item.surveyType}');
-
     HealthElementImage image =
         findImageForContentItem(item, widget.healthElement.images);
     String imageUrl = image.url ?? '';
     return InkWell(
       onTap: () {
-        // debugPrint(
-        //     'Navigating to DynamicOnboardingScreen with item: ${item.title} and surveyType: ${item.surveyType}');
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -305,13 +304,12 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 children: [
                   Opacity(
                     opacity: 0.0,
-                    child: Image.network(
-                      imageUrl,
+                    child: Image(
+                      image: CachedNetworkImageProvider(imageUrl),
                       width: defaultImageSize,
                       height: defaultImageSize,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        debugPrint('Error loading image: $error');
                         return const Text('Image not available');
                       },
                     ),
@@ -383,7 +381,8 @@ class _AdviceScreenState extends State<AdviceScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ViewScreen(url: item.url!),
+              builder: (context) => WebView(url: item.url!),
+              //kIsWeb ? WebView(url: item.url!) : ViewScreen(url: item.url!),
             ),
           );
         } else {
@@ -391,7 +390,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
         }
       },
       child: Container(
-        width: 180,
+        width: 210,
         height: 250, // Set the height of the container
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
@@ -410,8 +409,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
                 child: Image(
                   image: CachedNetworkImageProvider(imageUrl),
                   width: double.infinity,
-                  height:
-                      250, // Ensure the image height matches the container height
+                  height: 250,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return const Text('Image not available'); // Error handling

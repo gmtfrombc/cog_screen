@@ -4,10 +4,16 @@ import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
+//import 'package:cog_screen/screens/web_view.dart';
+//import 'package:cog_screen/screens/view_screen.dart';
+//import 'package:cog_screen/screens/web_view.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
+import 'platform_specific_webview.dart';
+
+//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart'; // Import constants
@@ -23,8 +29,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
   static const String articlePath =
       'https://powermeacademy.com/lessons/how-essential-oils-benefit-memory-and-cognitive-health/';
   bool isLoading = false;
-    static  Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
-
+  static Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
 
   @override
   Widget build(BuildContext context) {
@@ -159,8 +164,12 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                     setState(() {
                       isLoading = true;
                     });
-                    await Navigator.pushNamed(context, '/viewScreen',
-                        arguments: articlePath);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const WebView(url: articlePath),
+                      ),
+                    );
                     setState(
                       () {
                         isLoading = false;
@@ -211,8 +220,12 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                     setState(() {
                       isLoading = true;
                     });
-                    await Navigator.pushNamed(context, '/viewScreen',
-                        arguments: articlePath);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const WebView(url: articlePath),
+                      ),
+                    );
                     setState(
                       () {
                         isLoading = false;
@@ -294,8 +307,14 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         setState(() {
           isLoading = true;
         });
-        await Navigator.pushNamed(context, '/viewScreen',
-            arguments: researchArticle.url);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WebView(
+              url: researchArticle.url,
+            ),
+          ),
+        );
         setState(
           () {
             isLoading = false;
@@ -339,7 +358,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                   top: 20,
                   right: 20,
                   child: Container(
-                    width: 77,
+                    width: 82,
                     height: 30,
                     decoration: BoxDecoration(
                       border: Border.all(

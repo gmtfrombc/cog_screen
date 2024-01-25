@@ -19,3 +19,10 @@ class SurveyCriterion {
     required this.rank,
   });
 }
+
+class QuestionResponse {
+  final int categoryIndex;
+  final int rank;
+
+  QuestionResponse(this.categoryIndex, this.rank);
+}

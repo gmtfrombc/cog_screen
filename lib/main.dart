@@ -5,6 +5,7 @@ import 'package:cog_screen/providers/content_item_provider.dart';
 import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/providers/cart_provider.dart';
+import 'package:cog_screen/screens/coming_soon.dart';
 import 'package:cog_screen/screens/home_screen.dart';
 import 'package:cog_screen/screens/logins/login.dart';
 import 'package:cog_screen/screens/onboarding/apponboarding_screen.dart';
@@ -27,13 +28,13 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:cog_screen/screens/splashscreen.dart';
 
+//flutter run -d chrome --web-port=65177
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   // Set preferred orientations
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -46,9 +47,6 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => AppNavigationProvider(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (context) => CogProvider(questions: hardcodedQuestions),
-        // ),
         ChangeNotifierProvider(
           create: (_) => SurveyProvider(),
         ),
@@ -86,13 +84,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
-        // '/cognitive': (context) =>
-        //     const CognitiveScreen(), // Add your StartScreen route
-        // '/survey': (context) => const CogHealthSurveyScreen(),
-        // '/results': (context) => const CogHealthResultsScreen(),
         '/allresults': (context) => const AllResultsScreen(),
-        // '/surveyResultScreen': (context) => const CogHealthResultsScreen(),
         '/shoppingCart': (context) => const ShoppingScreen(),
+        '/comingsoon': (context) => const ComingSoonScreen(),
         '/criteria': (context) => const CriteriaScreen(),
         '/essentialOils': (context) => const EssentialOilScreen(),
         '/protocol': (context) => const ProtocolScreen(),
@@ -119,7 +113,7 @@ class MyApp extends StatelessWidget {
             final String? url = settings.arguments as String?;
             if (url != null) {
               return MaterialPageRoute(
-                builder: (context) => ViewScreen(url: url),
+                builder: (context) => WebView(url: url),
               );
             } else {
               return MaterialPageRoute(

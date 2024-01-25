@@ -21,8 +21,6 @@ class CriteriaProvider extends ChangeNotifier {
     notifyListeners();
   }
   bool canProceed() {
-    // Add logic to determine if the user can proceed based on their responses
-    // For instance, if any 'Yes' response excludes the user, you can check for that
     return criteriaList.any((criteria) => criteria.response == true);
   }
 }

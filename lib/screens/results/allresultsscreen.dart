@@ -53,7 +53,7 @@ class _AllResultsScreenState extends State<AllResultsScreen> {
         title: const CustomTextForTitle(),
         backgroundColor: AppTheme.primaryBackgroundColor,
         showEndDrawerIcon: true,
-        showLeading: false,
+        showLeading: true,
       ),
       showDrawer: true,
       showAppBar: true,

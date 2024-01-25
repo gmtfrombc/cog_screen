@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class ViewScreen extends StatefulWidget {
+class WebView extends StatefulWidget {
   final String url;
-  const ViewScreen({super.key, required this.url});
+  const WebView({super.key, required this.url});
 
   @override
   // ignore: library_private_types_in_public_api
-  _ViewScreenState createState() => _ViewScreenState();
+  _WebViewState createState() => _WebViewState();
 }
 
-class _ViewScreenState extends State<ViewScreen> {
+class _WebViewState extends State<WebView> {
   late WebViewController _controller;
   double _loadingProgress = 0;
 
@@ -55,11 +55,9 @@ class _ViewScreenState extends State<ViewScreen> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
-    // Instantiate CustomAppBar inside the build method
     CustomAppBar customAppBar = CustomAppBar(
-      title: const Text('Web View Example'),
+      title: const Text('PowerMe'),
       backgroundColor: AppTheme.primaryBackgroundColor,
       bottom: _loadingProgress < 1
           ? PreferredSize(

@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-Widget _buildHealthElementGrid(BuildContext context) {
+  Widget _buildHealthElementGrid(BuildContext context) {
     return Consumer<HealthElementProvider>(
       builder: (context, healthElementProvider, child) {
         final elements = healthElementProvider.healthElements;
@@ -123,7 +123,6 @@ Widget _buildHealthElementGrid(BuildContext context) {
       },
     );
   }
-
 
   Widget _buildElementCard(BuildContext context, HealthElement element) {
     String? imageUrl =
@@ -172,7 +171,7 @@ Widget _buildHealthElementGrid(BuildContext context) {
                   ),
                 ),
               ),
-               Padding(
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -184,7 +183,7 @@ Widget _buildHealthElementGrid(BuildContext context) {
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 28,
-                        letterSpacing: 1.2,
+                        //letterSpacing: 1.2,
                         shadows: [
                           Shadow(
                             offset: Offset(1.0, 1.0),

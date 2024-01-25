@@ -29,7 +29,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
               route = '/allresults';
               break;
             case 2:
-              route = '/shoppingCart';
+              route = '/comingsoon';
               break;
             // Add other cases for different indices...
             default:
