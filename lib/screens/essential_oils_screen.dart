@@ -26,8 +26,7 @@ class EssentialOilScreen extends StatefulWidget {
 }
 
 class _EssentialOilScreenState extends State<EssentialOilScreen> {
-  static const String articlePath =
-      'https://powermeacademy.com/lessons/how-essential-oils-benefit-memory-and-cognitive-health/';
+  String articlePath = '';
   bool isLoading = false;
   static Color cardShadowColor = AppTheme.secondaryColor.withOpacity(0.7);
 
@@ -38,7 +37,9 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
       builder: (context, healthElementProvider, appNavigationProvider,
           authProvider, _) {
         final healthElement = healthElementProvider.currentHealthElement;
-        //final String userId = authProvider.currentUser?.uid ?? '';
+        articlePath = healthElement!.title == 'Sleep'
+            ? 'https://powermeacademy.com/topic/the-soothing-power-of-essential-oils-and-blends-for-sleep'
+            : 'https://powermeacademy.com/lessons/how-essential-oils-benefit-memory-and-cognitive-health/';
 
         return BaseScreen(
           authProvider: authProvider,
@@ -167,7 +168,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const WebView(url: articlePath),
+                        builder: (context) => WebView(url: articlePath),
                       ),
                     );
                     setState(
@@ -223,7 +224,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const WebView(url: articlePath),
+                        builder: (context) => WebView(url: articlePath),
                       ),
                     );
                     setState(

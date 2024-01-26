@@ -41,37 +41,33 @@ final List<EOResearch> eoCogResearch = [
 final List<EOResearch> eoSleepResearch = [
   EOResearch(
     title:
-        "The effect of essential oils on sleep quality in primary care practice",
-    description: '2 min',
-    image: 'lib/assets/images/research2.jpeg',
-    link: '/viewScreen',
-    url:
-        'https://powermeacademy.com/topic/the-memory-boosting-effects-of-lavender-and-rosemary/',
-  ),
-  EOResearch(
-    title:
-        "The effect of the essential oils of lavender and rosemary on the human short-term memory",
+        "Lavender Essential Oil and Insomnia: A Review of the Clinical Evidence",
     description: '2 min',
     image: 'lib/assets/images/research3.jpeg',
     link: '/viewScreen',
     url:
-        'https://powermeacademy.com/topic/the-memory-boosting-effects-of-lavender-and-rosemary/',
+        'https://powermeacademy.com/topic/lavender-essential-oil-and-insomnia/',
   ),
   EOResearch(
     title:
-        "Essential oils as a potential neuroprotective remedy for Alzheimer's Disease",
+        "Bergamot and Sleep Quality: A Review of the Clinical Evidence and Underlying Mechanisms",
+    description: '2 min',
+    image: 'lib/assets/images/research2.jpeg',
+    link: '/viewScreen',
+    url: 'https://powermeacademy.com/topic/bergamot-and-sleep-quality/',
+  ),
+  EOResearch(
+    title: "Aromatherapy with Bitter Orange for Improving Sleep Quality",
+    description: '3 min',
+    image: 'lib/assets/images/research4.jpeg',
+    link: '/viewScreen',
+    url: 'https://powermeacademy.com/topic/bitter-orange-and-sleep-issues/',
+  ),
+  EOResearch(
+    title: "Essential Oils, Sleep, and the Nervous System",
     description: '3 min',
     image: 'lib/assets/images/research1.jpeg',
     link: '/viewScreen',
-    url: 'https://powermeacademy.com/topic/essential-oils-in-dementia/',
-  ),
-  EOResearch(
-    title:
-        "Lavender aromatherapy: A systematic review from essential oil quality and administration methods to cognitive enhancing effects",
-    description: '3 min',
-    image: 'lib/assets/images/research2.jpeg',
-    link: '/viewScreen',
-    url:
-        'https://powermeacademy.com/topic/a-review-of-essential-oils-and-the-nervous-system/',
+    url: 'https://powermeacademy.com/topic/review-essential-oils-and-sleep/',
   ),
 ];

@@ -145,7 +145,6 @@ final List<HealthElement> elements = [
       ),
     ],
     integrativeHealth: [
-      //integrative health
       ContentItem(
         title: 'Essential oils and cognitive health',
         description: 'Explore the benefits of essential oils and memory',
@@ -336,23 +335,21 @@ final List<HealthElement> elements = [
       ),
     ],
     learningCenter: [
-      //learning center
-
       ContentItem(
-        title: 'Basic facts about sleep',
+        title: 'A Guide to Sleep Hygiene',
         description: '3 min',
         route: '/viewScreen',
         imageUrl: 'sleep_learning2',
         url:
-            'https://powermeacademy.com/lessons/understanding-cognitive-health/',
+            'https://powermeacademy.com/topic/the-science-of-sweet-dreams-a-guide-to-sleep-hygiene/',
       ),
       ContentItem(
-        title: 'Lifestyle strategies for a good sleep',
+        title: 'Harmonizing Sleep and Diet',
         description: '3 min',
         route: '/viewScreen',
         imageUrl: 'sleep_learning3',
         url:
-            'https://powermeacademy.com/topic/lifestyle-strategies-for-a-healthy-brain/',
+            'https://powermeacademy.com/topic/harmonizing-sleep-and-diet-a-path-to-better-rest/',
       ),
     ],
     essentialOils: EssentialOilsModel(

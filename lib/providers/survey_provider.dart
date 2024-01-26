@@ -34,8 +34,7 @@ class SurveyProvider with ChangeNotifier {
       _totalScore -= lastResponse.rank;
       _currentCategoryIndex = lastResponse.categoryIndex;
     } else {
-      _currentCategoryIndex =
-          0; // Reset to the first question if the history is empty
+      _currentCategoryIndex = 0;
     }
     notifyListeners();
   }
@@ -65,7 +64,7 @@ class SurveyProvider with ChangeNotifier {
   void restartSurvey() {
     _userResponses.clear();
     _totalScore = 0;
-    _currentCategoryIndex = 0; // Reset the index when restarting the survey
+    _currentCategoryIndex = 0;
     notifyListeners();
   }
 
@@ -87,7 +86,6 @@ class SurveyProvider with ChangeNotifier {
 
   void incrementCategoryIndex() {
     _currentCategoryIndex++;
-    // Check responses at this point
     notifyListeners();
   }
 }
