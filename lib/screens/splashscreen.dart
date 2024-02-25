@@ -128,16 +128,32 @@ class SplashScreenState extends State<SplashScreen>
               bottom: 30,
               left: 93,
               child: FadeTransition(
-                opacity: _opacityAnimation,
-                child: const Text(
-                  "LABS",
-                  style: TextStyle(
-                    fontSize: 38,
-                    fontWeight: FontWeight.w400, // Thinner font weight
-                    color: Colors.black,
-                  ),
-                ),
-              ),
+                  opacity: _opacityAnimation,
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: 'LABS',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 38,
+                          ),
+                        ),
+                        WidgetSpan(
+                          child: Transform.translate(
+                            offset: const Offset(0, -15),
+                            child: const Text(
+                              'TM',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
             ),
             if (_isLoadingImages && _controller.isCompleted)
               const CircularProgressIndicator(),
@@ -148,7 +164,7 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _loadImageUrls() async {
-      List<Future> preloadTasks = [];
+    List<Future> preloadTasks = [];
 
     try {
       for (HealthElement element in elements) {

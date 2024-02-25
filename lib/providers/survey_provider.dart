@@ -74,7 +74,6 @@ class SurveyProvider with ChangeNotifier {
     }
     var data = SurveyRepository.getSurveyData(_surveyType!);
 
-    // Check if the index is valid
     if (_currentCategoryIndex >= data.length) {
       throw RangeError(
           'Survey Provider: Current category index $_currentCategoryIndex is out of range for survey type $_surveyType');

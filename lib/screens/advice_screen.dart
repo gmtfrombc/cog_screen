@@ -6,17 +6,13 @@ import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
 import 'package:cog_screen/screens/onboarding/dynamic_onboarding_screen.dart';
-//import 'package:cog_screen/screens/view_screen.dart';
-//import 'package:cog_screen/screens/webview.dart';
 import 'platform_specific_webview.dart';
-
 import 'package:cog_screen/services/firebase_services.dart';
 import 'package:cog_screen/themes/app_theme.dart';
 import 'package:cog_screen/widgets/bottom_bar_navigator.dart';
 import 'package:cog_screen/widgets/custom_app_bar.dart';
 import 'package:cog_screen/widgets/custom_text_for_title.dart';
 import 'package:cog_screen/widgets/section_title_widget.dart';
-//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -258,6 +254,7 @@ class _AdviceScreenState extends State<AdviceScreen> {
     HealthElementImage image =
         findImageForContentItem(item, widget.healthElement.images);
     String imageUrl = image.url ?? '';
+    String userAction = 'protocol,';
     return InkWell(
       onTap: () async {
         final provider =
@@ -266,7 +263,10 @@ class _AdviceScreenState extends State<AdviceScreen> {
         if (item.surveyType != 'protocol') {
           Navigator.pushNamed(context, item.route!);
         } else {
-          _handleButtonClick(provider.currentHealthElement!);
+          _handleButtonClick(
+            provider.currentHealthElement!,
+            userAction,
+          );
           _shouldOnboardUser(provider.currentHealthElement!, item);
         }
       },
@@ -375,8 +375,16 @@ class _AdviceScreenState extends State<AdviceScreen> {
     HealthElementImage image =
         findImageForContentItem(item, widget.healthElement.images);
     String imageUrl = image.url ?? '';
+    String userAction = 'learning,';
     return InkWell(
       onTap: () {
+        final provider =
+            Provider.of<HealthElementProvider>(context, listen: false);
+        provider.setCurrentHealthElement(widget.healthElement);
+        _handleButtonClick(
+          provider.currentHealthElement!,
+          userAction,
+        );
         if (item.url != null) {
           Navigator.push(
             context,
@@ -493,13 +501,16 @@ class _AdviceScreenState extends State<AdviceScreen> {
     );
   }
 
-  void _handleButtonClick(HealthElement element) async {
+  void _handleButtonClick(HealthElement element, String userAction) async {
     setState(() {
       _isLoading = true;
     });
     try {
       await FirebaseService().recordUserAction(
-          userId, element.title); // Removed the navigation call from here
+        userId,
+        '${element.title} $userAction',
+        userAction,
+      ); // Removed the navigation call from here
     } catch (e) {
       debugPrint('Error recording user action: $e');
     } finally {

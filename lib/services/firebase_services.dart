@@ -32,10 +32,11 @@ class FirebaseService {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  Future<void> recordUserAction(String userId, String module) async {
+  Future<void> recordUserAction(
+      String userId, String module, String userAction) async {
     var action = {
       'module': module,
-      'action': 'interested',
+      'action': userAction,
       'timestamp': Timestamp.now(),
     };
 
@@ -92,7 +93,6 @@ class FirebaseService {
 
   Future<bool> checkOnboardingCompleted(
       String userId, String moduleName) async {
-    debugPrint('moduleName: $moduleName');
     var userDoc =
         await _firebaseFirestore.collection('users').doc(userId).get();
     // Check if the document for the user exists

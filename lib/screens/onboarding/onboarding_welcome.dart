@@ -187,7 +187,7 @@ class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> {
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(200, 50),
                     ),
-                    child: const Text("View Form"),
+                    child: const Text("Terms of Use"),
                   ),
                 ),
               const SizedBox(height: 20), // Additional space, adjust as needed
@@ -211,40 +211,42 @@ class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> {
   ) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            BrainConstants.loremIpsum,
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                child: const Text('I Agree'),
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(
-                    context,
-                    '/home',
-                  ); // Navigate Advice
-                },
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                }, // Close the bottom sheet
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      Colors.grey, // Optional: style for the cancel button
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              BrainConstants.loremIpsum,
+              textAlign: TextAlign.left,
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  child: const Text('I Agree'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(
+                      context,
+                      '/home',
+                    ); // Navigate Advice
+                  },
                 ),
-                child: const Text('Cancel'),
-              ),
-            ],
-          ),
-        ],
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }, // Close the bottom sheet
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Colors.grey, // Optional: style for the cancel button
+                  ),
+                  child: const Text('Cancel'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

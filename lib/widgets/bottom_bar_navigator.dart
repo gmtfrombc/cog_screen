@@ -1,4 +1,6 @@
 import 'package:cog_screen/providers/app_navigation_state.dart';
+import 'package:cog_screen/services/firebase_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -15,6 +17,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String userAction = '';
     return SizedBox(
       height: 110,
       child: BottomNavigationBar(
@@ -23,18 +26,22 @@ class CustomBottomNavigationBar extends StatelessWidget {
           String route;
           switch (index) {
             case 0:
+              userAction = 'Home';
               route = '/home';
               break;
             case 1:
+              userAction = 'Results';
               route = '/allresults';
               break;
             case 2:
+              userAction = 'Store';
               route = '/comingsoon';
               break;
             // Add other cases for different indices...
             default:
               route = '/';
           }
+          _handleButtonClick(userAction);
           appNavigationProvider.navigateToScreen(route, context);
         },
         items: const [
@@ -52,10 +59,21 @@ class CustomBottomNavigationBar extends StatelessWidget {
             ),
             label: 'Store',
           ),
-          // Add other items here...
         ],
-        //selectedItemColor: Theme.of(context).primaryColor,
       ),
     );
+  }
+
+  void _handleButtonClick(String userAction) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    try {
+      await FirebaseService().recordUserAction(
+        userId,
+        'Bottom Nav Bar: $userAction',
+        userAction,
+      ); // Removed the navigation call from here
+    } catch (e) {
+      debugPrint('Error recording user action: $e');
+    }
   }
 }

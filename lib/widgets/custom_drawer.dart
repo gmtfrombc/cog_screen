@@ -2,7 +2,9 @@ import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/criteria_provider.dart';
 import 'package:cog_screen/providers/survey_provider.dart';
 import 'package:cog_screen/themes/app_theme.dart';
+import 'package:cog_screen/utilities/brain_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -78,7 +80,7 @@ class CustomDrawer extends StatelessWidget {
               },
             ),
             _buildDrawerItem(
-              Icons.settings,
+              Icons.settings_outlined,
               'Settings',
               () {
                 // Navigate to settings screen
@@ -96,6 +98,13 @@ class CustomDrawer extends StatelessWidget {
                 }
               },
             ),
+            _buildDrawerItem(
+              Icons.description_outlined,
+              'Terms of Use',
+              () {
+                _showTermsOfUseDialog(context);
+              },
+            )
           ],
         ),
       ),
@@ -113,6 +122,38 @@ class CustomDrawer extends StatelessWidget {
           style: const TextStyle(fontSize: 14),
         ),
       ),
+    );
+  }
+
+  void _showTermsOfUseDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Terms of Use'),
+          content: SingleChildScrollView(
+            child: Text(
+              BrainConstants.loremIpsum,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[600],
+                letterSpacing: 0.5,
+                fontFamily: GoogleFonts.robotoSlab().fontFamily,
+                height: 1.4,
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

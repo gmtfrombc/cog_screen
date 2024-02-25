@@ -22,9 +22,6 @@ List<OnboardingModel> onboardingData = [
   OnboardingModel(
     imagePath: 'lib/assets/images/onboarding_image2.png',
     description:
-        "In order for us to provide you with clinically-related information, we do ask you to sign the following medical consent form.\n\n And stay tuned for more features as our program evolves. ",
+        "In order for us to provide you with clinically-related information, we ask you to accept the terms of use below.\n\n And stay tuned for more features as our program evolves. ",
   ),
-  // Add other onboarding models as needed
 ];
-//      "Welcome to the PowerME Integrative Health App from PowerME Labs! \n\nHere you can dive into a wealth of insights and practical strategies, designed to enhance vital aspects of your health such as brain function, sleep quality, metabolic balance, and more."\n\n"During this test phase, we won't collect health information. But stay tuned for more features as our program evolves." \n\nWelcome aboard!\n\nYour PowerME Team ";
-

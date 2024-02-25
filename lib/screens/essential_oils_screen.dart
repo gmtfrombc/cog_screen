@@ -4,6 +4,7 @@ import 'package:cog_screen/providers/app_navigation_state.dart';
 import 'package:cog_screen/providers/auth_provider.dart';
 import 'package:cog_screen/providers/health_element_provider.dart';
 import 'package:cog_screen/screens/base_screen.dart';
+import 'package:cog_screen/services/firebase_services.dart';
 //import 'package:cog_screen/screens/web_view.dart';
 //import 'package:cog_screen/screens/view_screen.dart';
 //import 'package:cog_screen/screens/web_view.dart';
@@ -74,11 +75,6 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     );
   }
 
-  // _buildHeader(context, healthElement),
-  // _buildMiddleCard(context, healthElement),
-  // _buildResearchHeader(context),
-  // _buildResearchGrid(context, healthElement)
-
   Widget _buildHeader(BuildContext context, HealthElement? healthElement) {
     EssentialOilsModel essentialOilsModel = healthElement!.essentialOils;
     final header = essentialOilsModel.header;
@@ -123,6 +119,7 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
   Widget _buildMiddleCard(BuildContext context, HealthElement? healthElement) {
     final EssentialOilsModel essentialOilsModel = healthElement!.essentialOils;
     final EOScreenArticles articles = essentialOilsModel.articles;
+    String userAction = '';
     return Container(
       width: double.infinity,
       height: 220, // Spans the entire width of the screen
@@ -165,6 +162,8 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                     setState(() {
                       isLoading = true;
                     });
+                    userAction = 'recent article';
+                    _handleButtonClick(healthElement, userAction);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -221,6 +220,8 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
                     setState(() {
                       isLoading = true;
                     });
+                    userAction = 'recent article';
+                    _handleButtonClick(healthElement, userAction);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -303,11 +304,17 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
     BuildContext context,
     EOResearch researchArticle,
   ) {
+    String userAction = '';
+    final HealthElement healthElement =
+        Provider.of<HealthElementProvider>(context, listen: false)
+            .currentHealthElement!;
     return InkWell(
       onTap: () async {
         setState(() {
           isLoading = true;
         });
+        userAction = 'research article';
+        _handleButtonClick(healthElement, userAction);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -431,6 +438,20 @@ class _EssentialOilScreenState extends State<EssentialOilScreen> {
         ),
       ),
     );
+  }
+
+  void _handleButtonClick(HealthElement element, String userAction) async {
+    final userId =
+        Provider.of<AuthProviderClass>(context, listen: false).currentUser!.uid;
+    try {
+      await FirebaseService().recordUserAction(
+        userId,
+        '${element.title} $userAction',
+        userAction,
+      ); // Removed the navigation call from here
+    } catch (e) {
+      debugPrint('Error recording user action: $e');
+    }
   }
 }
 
